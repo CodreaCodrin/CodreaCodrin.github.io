@@ -8,9 +8,13 @@ import {
   RouterProvider 
 } from '@tanstack/react-router'
 
-import Home from './pages/Home.tsx'
+import Home from './pages/Home/Home.tsx'
+import About from './pages/About/About.tsx'
+import Projects from './pages/Projects/Projects.tsx'
+import Hobbies from './pages/Hobbies/Hobbies.tsx'
+import Contact from './pages/Contact/Contact.tsx'
+import NotFound from './pages/NotFound/NotFound.tsx'
 
-// 1. Definim Root Route (Structura de bază a site-ului)
 const rootRoute = createRootRoute({
   component: () => (
     <>
@@ -19,7 +23,6 @@ const rootRoute = createRootRoute({
         <Link to="/projects">Projects</Link>
       </nav>
       
-      {/* Aici vor fi injectate componentele Home sau Projects */}
       <main>
         <Outlet />
       </main>
@@ -36,16 +39,32 @@ const indexRoute = createRoute({
 const projectsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/projects',
-  component: () => (
-    <div>
-      <h1>Projects</h1>
-      <p>Lista de proiecte va fi aici.</p>
-    </div>
-  ),
+  component: Projects,
 })
 
-const routeTree = rootRoute.addChildren([indexRoute, projectsRoute])
-const router = createRouter({ routeTree })
+const aboutRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/aboutme',
+  component: About
+})
+
+const hobbiesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/hobbies',
+  component: Hobbies
+})
+
+const contactRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/contactme',
+  component: Contact
+})
+
+const routeTree = rootRoute.addChildren([indexRoute, projectsRoute, aboutRoute, hobbiesRoute, contactRoute])
+const router = createRouter({ 
+  routeTree,
+  defaultNotFoundComponent: NotFound
+ })
 
 declare module '@tanstack/react-router' {
   interface Register {

@@ -1,8 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import './NotFound.css';
 
-const BASE_URL = (import.meta.env.VITE_API_URL as string) ?? "http://localhost:8000";
-
 export default function NotFound() {
     return (
         <div className="flex h-screen w-full flex-col items-center justify-center bg-[#0a0a0a] text-white font-mono overflow-hidden relative">
@@ -47,19 +45,6 @@ export default function NotFound() {
                         <span className="relative z-10 group-hover:text-purple-600 transition-colors">Go Home</span>
                         <div className="absolute inset-0 h-full w-full bg-white transform translate-x-2 translate-y-2 -z-10 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform border border-white opacity-30"></div>
                     </Link>
-
-                    <button 
-                        onClick={() => {
-                            fetch(BASE_URL + "/")
-                            .then(res => res.json())
-                            .then(data => alert(JSON.stringify(data)))
-                            .catch(err => alert("Error: " + err));
-                        }}
-                        className="group relative px-8 py-3 bg-white text-black font-bold uppercase tracking-wider transition-all hover:bg-gray-200"
-                    >
-                        <span className="relative z-10 group-hover:text-purple-600 transition-colors">Test</span>
-                        <div className="absolute inset-0 h-full w-full bg-white transform translate-x-2 translate-y-2 -z-10 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform border border-white opacity-30"></div>
-                    </button>
                 </div>
             </div>
 
