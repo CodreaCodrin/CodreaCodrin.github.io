@@ -1,7 +1,9 @@
 import { useNavigate } from "@tanstack/react-router";
 import OnPageNavButton from "../../components/navigation/onPageNavButton";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
+import PageWrapper from '../../components/layout/PageWrapper';
 
 const navButtons = [
   { title: "Ab", text: "about", path: "/aboutme" },
@@ -17,114 +19,145 @@ const GREETINGS: string[] = [
   "Hello!"
 ];
 
+const socialLinks = [
+  { icon: Github, href: "https://github.com", label: "GitHub" },
+  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: Mail, href: "mailto:contact@example.com", label: "Email" },
+];
+
 export default function Home() {
   const navigate = useNavigate();
   const [selectedGreeting, setSelectedGreeting] = useState<string>("");
+  const [exiting, setExiting] = useState(false);
+  const [exitTarget, setExitTarget] = useState('');
 
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * GREETINGS.length);
     setSelectedGreeting(GREETINGS[randomIndex]);
   }, []);
 
+  const handleNavigate = useCallback((path: string) => {
+    if (exiting) return;
+    setExiting(true);
+    setExitTarget(path);
+  }, [exiting]);
+
+  // Navigate after exit animation completes
+  useEffect(() => {
+    if (exiting && exitTarget) {
+      const timer = setTimeout(() => {
+        navigate({ to: exitTarget });
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [exiting, exitTarget, navigate]);
+
+  const socialSection = (
+    <section className="flex justify-center gap-12 mt-8">
+      {socialLinks.map(({ icon: Icon, href, label }) => (
+        <motion.a
+          key={label}
+          layoutId={`social-${label}`}
+          href={href}
+          target={href.startsWith("mailto") ? undefined : "_blank"}
+          rel="noopener noreferrer"
+          aria-label={label}
+          className="p-3 rounded-full transition-colors duration-200"
+          style={{ color: "var(--color-text-muted)" }}
+          onMouseEnter={e => { e.currentTarget.style.color = "var(--color-primary)"; }}
+          onMouseLeave={e => { e.currentTarget.style.color = "var(--color-text-muted)"; }}
+        >
+          <Icon size={28} />
+        </motion.a>
+      ))}
+    </section>
+  );
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-64px)] px-4">
-      <div
-        className="rounded-2xl px-12 py-14 max-w-3xl w-full flex flex-col items-center"
-        style={{ backgroundColor: "rgba(17, 17, 17, 0.85)", backdropFilter: "blur(8px)" }}
-      >
-        {/* Hero */}
-        <section className="w-full mb-14 text-center">
-          <h1
-            className="text-6xl md:text-7xl font-extrabold mb-8"
+    <PageWrapper className="max-w-3xl" outerContent={socialSection}>
+      {/* Hero */}
+      <section className="w-full mb-14 text-center">
+        <motion.h1
+          className="text-6xl md:text-7xl font-extrabold mb-8"
+          style={{ color: "var(--color-primary)" }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: exiting ? 0 : 1, y: exiting ? -20 : 0 }}
+          transition={{ duration: 0.4, delay: exiting ? 0 : 0.2 }}
+        >
+          {selectedGreeting}
+        </motion.h1>
+
+        <motion.p
+          className="text-lg leading-relaxed"
+          style={{ color: "var(--color-text-muted)" }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: exiting ? 0 : 1, y: exiting ? -20 : 0 }}
+          transition={{ duration: 0.4, delay: exiting ? 0.08 : 0.35 }}
+        >
+          I'm{" "}
+          <span
+            onClick={() => handleNavigate("/aboutme")}
+            className="font-semibold cursor-pointer"
             style={{ color: "var(--color-primary)" }}
           >
-            {selectedGreeting}
-          </h1>
-
-          <p
-            className="text-lg leading-relaxed"
-            style={{ color: "var(--color-text-muted)" }}
+            Teodosie Codrin
+          </span>
+          , a Computer Science student that enjoys building{" "}
+          <span
+            onClick={() => handleNavigate("/projects")}
+            className="font-semibold cursor-pointer"
+            style={{ color: "var(--color-primary)" }}
           >
-            I'm{" "}
-            <span
-              onClick={() => navigate({ to: "/aboutme" })}
-              className="font-semibold cursor-pointer"
-              style={{ color: "var(--color-primary)" }}
-            >
-              Teodosie Codrin
-            </span>
-            , a Computer Science student that enjoys building{" "}
-            <span
-              onClick={() => navigate({ to: "/projects" })}
-              className="font-semibold cursor-pointer"
-              style={{ color: "var(--color-primary)" }}
-            >
-              things
-            </span>
-            . I'm especially drawn to game development and the{" "}
-            <span
-              onClick={() => navigate({ to: "/hobbies" })}
-              className="font-semibold cursor-pointer"
-              style={{ color: "var(--color-primary)" }}
-            >
-              gaming world
-            </span>
-            , where
-            I feel most at home as a creator. Outside of my projects, I'm always
-            involved in a lot of different{" "}
-            <span
-              onClick={() => navigate({ to: "/hobbies" })}
-              className="font-semibold cursor-pointer"
-              style={{ color: "var(--color-primary)" }}
-            >
-              sports
-            </span>
-            . Beyond those, maintaining an
-            athletic routine is my way of staying competitive and active.
-          </p>
-        </section>
-
-        {/* Divider */}
-        <hr
-          className="w-full mb-10"
-          style={{ borderColor: "var(--color-border)" }}
-        />
-
-        {/* Nav buttons */}
-        <section className="flex flex-wrap justify-center gap-8">
-          {navButtons.map((btn) => (
-            <OnPageNavButton
-              key={btn.path}
-              title={btn.title}
-              text={btn.text}
-              onClick={() => navigate({ to: btn.path })}
-            />
-          ))}
-        </section>
-      </div>
-
-      {/* Social links */}
-      <section className="flex justify-center gap-12 mt-8">
-        {[
-          { icon: Github, href: "https://github.com", label: "GitHub" },
-          { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-          { icon: Mail, href: "mailto:contact@example.com", label: "Email" },
-        ].map(({ icon: Icon, href, label }) => (
-          <a
-            key={label}
-            href={href}
-            target={href.startsWith("mailto") ? undefined : "_blank"}
-            rel="noopener noreferrer"
-            aria-label={label}
-            className="p-3 rounded-full transition-all duration-200"
-            style={{ color: "var(--color-text-muted)" }}
-            onMouseEnter={e => { e.currentTarget.style.color = "var(--color-primary)"; }}
-            onMouseLeave={e => { e.currentTarget.style.color = "var(--color-text-muted)"; }}
+            things
+          </span>
+          . I'm especially drawn to game development and the{" "}
+          <span
+            onClick={() => handleNavigate("/hobbies")}
+            className="font-semibold cursor-pointer"
+            style={{ color: "var(--color-primary)" }}
           >
-            <Icon size={28} />
-          </a>
-        ))}
+            gaming world
+          </span>
+          , where
+          I feel most at home as a creator. Outside of my projects, I'm always
+          involved in a lot of different{" "}
+          <span
+            onClick={() => handleNavigate("/hobbies")}
+            className="font-semibold cursor-pointer"
+            style={{ color: "var(--color-primary)" }}
+          >
+            sports
+          </span>
+          . Beyond those, maintaining an
+          athletic routine is my way of staying competitive and active.
+        </motion.p>
       </section>
-    </div>
+
+      {/* Divider */}
+      <motion.hr
+        className="w-full mb-10"
+        style={{ borderColor: "var(--color-border)" }}
+        initial={{ opacity: 0, scaleX: 0 }}
+        animate={{ opacity: exiting ? 0 : 1, scaleX: exiting ? 0 : 1 }}
+        transition={{ duration: 0.4, delay: exiting ? 0.15 : 0.5 }}
+      />
+
+      {/* Nav buttons */}
+      <motion.section
+        className="flex flex-wrap justify-center gap-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: exiting ? 0 : 1, y: exiting ? 20 : 0 }}
+        transition={{ duration: 0.4, delay: exiting ? 0.22 : 0.6 }}
+      >
+        {navButtons.map((btn) => (
+          <OnPageNavButton
+            key={btn.path}
+            title={btn.title}
+            text={btn.text}
+            onClick={() => handleNavigate(btn.path)}
+          />
+        ))}
+      </motion.section>
+    </PageWrapper>
   );
 }
