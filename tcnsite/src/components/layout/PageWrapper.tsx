@@ -9,7 +9,7 @@ interface PageWrapperProps {
 
 export default function PageWrapper({ children, className = '', outerContent }: PageWrapperProps) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-64px)] px-4">
+    <div className="flex flex-col items-center min-h-[calc(100vh-64px)] px-4 py-10 justify-center">
       <motion.div
         layoutId="page-container"
         className={`rounded-2xl px-12 py-14 w-full flex flex-col items-center ${className}`}

@@ -1,0 +1,20 @@
+[
+    {
+        "projectName": "PriceTracker",
+        "description": "An automated price tracking tool for multiple stores",
+        "tags": [
+            "Python", "playwright", "SQLite", "Markdown"
+        ],
+        "githubLink": "https://github.com/CodreaCodrin/PriceTracker",
+        "demoLink": ""
+    },
+    {
+        "projectName": "Spleen",
+        "description": "2d pixel-art wave-clear slasher game",
+        "tags": [
+            "Unity", "C#", "Aseprite"
+        ],
+        "githubLink": "https://github.com/CodreaCodrin/SpleenAt",
+        "demoLink": "https://github.com/redusca/SpleenBuild"
+    }
+]
