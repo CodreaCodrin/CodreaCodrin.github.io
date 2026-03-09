@@ -3,9 +3,9 @@ import { Github, Linkedin, Mail } from 'lucide-react';
 import PageWrapper from '../../components/layout/PageWrapper';
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: Mail, href: "mailto:contact@example.com", label: "Email" },
+  { icon: Github, href: "https://github.com/CodreaCodrin", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/teodosiecodrin/", label: "LinkedIn" },
+  { icon: Mail, href: "mailto:codrinteodosie@gmail.com", label: "Email" },
 ];
 
 export default function Contact() {
@@ -20,6 +20,8 @@ export default function Contact() {
       >
         Contact me
       </motion.h1>
+
+      <hr className="w-full mt-8" style={{ borderColor: 'var(--color-border)' }} />
 
       <section className="flex justify-center gap-12 mt-10">
         {socialLinks.map(({ icon: Icon, href, label }) => (
