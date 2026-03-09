@@ -1,11 +1,9 @@
-import React from 'react'
 import { 
   Outlet, 
-  Link, 
   createRootRoute, 
   createRoute, 
   createRouter, 
-  RouterProvider 
+  RouterProvider
 } from '@tanstack/react-router'
 
 import Home from './pages/Home/Home.tsx'
@@ -14,20 +12,21 @@ import Projects from './pages/Projects/Projects.tsx'
 import Hobbies from './pages/Hobbies/Hobbies.tsx'
 import Contact from './pages/Contact/Contact.tsx'
 import NotFound from './pages/NotFound/NotFound.tsx'
+import NavBar from './components/navigation/NavBar.tsx'
 
-const rootRoute = createRootRoute({
-  component: () => (
+function RootComponent() {
+  return (
     <>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/projects">Projects</Link>
-      </nav>
-      
+      <NavBar />
       <main>
         <Outlet />
       </main>
     </>
-  ),
+  );
+}
+
+const rootRoute = createRootRoute({
+  component: RootComponent,
 })
 
 const indexRoute = createRoute({
