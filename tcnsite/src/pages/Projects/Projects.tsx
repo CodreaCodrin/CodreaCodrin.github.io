@@ -16,6 +16,14 @@ const tagColors: Record<string, string> = {
   playwright: '#2EAD33',
   SQLite: '#003B57',
   Markdown: '#083fa1',
+  React: '#61dafb',
+  'React shadcnui': '#2563eb',
+  PostgreSQL: '#336791',
+  'RoBERT AI': '#ff9d00',
+  'framer-motion': '#00d5ff',
+  RAG: '#e91e63',
+  Go: '#00add8',
+  Firebase: '#ffca28',
 };
 
 export default function Projects() {

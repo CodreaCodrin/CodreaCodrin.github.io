@@ -11,13 +11,21 @@ export default function NavBar() {
   return (
     <>
       <nav className="flex items-center justify-between px-4 py-2">
-        <span
-          onClick={() => navigate({ to: '/' })}
-          className="text-2xl font-extrabold tracking-tight select-none cursor-pointer"
-          style={{ color: 'var(--color-primary)' }}
-        >
-          Miel
-        </span>
+        <div className="flex items-center gap-1">
+          <span
+            onClick={() => navigate({ to: '/' })}
+            className="text-2xl font-extrabold tracking-tight select-none cursor-pointer"
+            style={{ color: 'var(--color-primary)' }}
+          >
+            Miel
+          </span>
+          <span
+            className="text-[10px] opacity-50 select-none whitespace-nowrap"
+            style={{ color: 'var(--color-text)' }}
+          >
+            ← shortcut to home
+          </span>
+        </div>
         <div className="flex items-center gap-2">
           <ThemeDropdown />
           <button

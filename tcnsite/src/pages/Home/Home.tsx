@@ -20,9 +20,9 @@ const GREETINGS: string[] = [
 ];
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: Mail, href: "mailto:contact@example.com", label: "Email" },
+  { icon: Github, href: "https://github.com/CodreaCodrin", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/teodosiecodrin/", label: "LinkedIn" },
+  { icon: Mail, href: "mailto:codrinteodosie@gmail.com", label: "Email" },
 ];
 
 export default function Home() {

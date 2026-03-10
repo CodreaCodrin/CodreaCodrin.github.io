@@ -13,13 +13,13 @@ const sections = [
     icon: Crown,
     title: 'Chess',
     content:
-      'Chess is the one game where I can sit still and still feel like I\'m competing. I enjoy studying openings, solving puzzles and playing rapid games whenever I get the chance.',
+      'I started playing chess six years ago and have kept playing daily but i made very little progress since I\'ve never got to study openings or strategies. Playing is still fun even after thousands of games and competing with my father and my friends will never let me abandon this game.',
   },
   {
     icon: Gamepad2,
     title: 'Gaming',
     content:
-      'I\'ve played a huge variety of games across every genre — from competitive shooters and strategy titles to story-driven RPGs and indie gems. Gaming has always been a creative outlet and a constant source of inspiration for my own projects.',
+      'I\'ve played a huge variety of games across every genre — especially metroidvanias, soulslikes, roguelikes and competitive games. I\'m really into fast-paced games that push my reaction time to the limit. For me, the overall experience is key, so I pay close attention to the soundtrack, atmosphere, and visual style (except competitive games of course, where there are other criteria).',
   },
 ];
 

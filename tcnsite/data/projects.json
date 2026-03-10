@@ -16,5 +16,50 @@
         ],
         "githubLink": "https://github.com/CodreaCodrin/SpleenAt",
         "demoLink": "https://github.com/redusca/SpleenBuild"
+    },
+    {
+        "projectName": "BTChatBotAssistant",
+        "description": "Virtual assistant for bt employee",
+        "tags": [
+            "RAG", "Python", "React"
+        ],
+        "githubLink": "https://github.com/CodreaCodrin/BTChatBotAssistant",
+        "demoLink": ""
+    },
+    {
+        "projectName": "StudyFlow",
+        "description": "An app that replicates the core functionalities of Microsoft Team",
+        "tags": [
+            "Go", "React shadcnui", "Firebase"
+        ],
+        "githubLink": "https://github.com/Skybby15/ProiectColectivFrontEnd",
+        "demoLink": ""
+    },
+    {
+        "projectName": "RAG Powered Chatbot",
+        "description": "An AI educational platform for students and professors to speed up learning.",
+        "tags": [
+            "RAG", "Python", "React"
+        ],
+        "githubLink": "https://github.com/CodreaCodrin/StudentHelpdesk",
+        "demoLink": ""
+    },
+    {
+        "projectName": "Mangold",
+        "description": "A wellbeing app that streamlines psychological assessments through AI diagnostics and patient progress monitoring.",
+        "tags": [
+            "Python", "React shadcnui", "PostgreSQL", "RoBERT AI"
+        ],
+        "githubLink": "https://github.com/CodreaCodrin/LicentaTCN",
+        "demoLink": ""
+    },
+    {
+        "projectName": "Portofolio Site",
+        "description": "You are on it.",
+        "tags": [
+            "React", "framer-motion"
+        ],
+        "githubLink": "https://github.com/CodreaCodrin/PersonalSite",
+        "demoLink": ""
     }
 ]
