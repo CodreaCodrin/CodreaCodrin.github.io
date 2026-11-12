@@ -36,6 +36,7 @@
     },
     "light": {
       "label": "Daylight Miel",
+      "note": "(don't do this)",
       "background": "",
       "colorScheme": "light",
       "colors": {

@@ -12,8 +12,8 @@
           "action": "account",
           "provider": "riot",
           "title": "Riot Games",
-          "accountId": "",
-          "description": "My corner of the Rift. Account details and statistics will appear here once configured.",
+          "accountId": "codrindătemaiașa #NICU",
+          "description": "Biggest mistake of my life. Account details and statistics will appear here once configured.",
           "profileUrl": "",
           "endpoint": "",
           "mockStats": [
@@ -37,8 +37,8 @@
           "action": "account",
           "provider": "chess",
           "title": "Chess",
-          "accountId": "",
-          "description": "One more game. Then one more. My chess account and ratings will live here.",
+          "accountId": "CodreaCodrinNicu",
+          "description": "One more game. My chess account and ratings will live here.",
           "profileUrl": "",
           "endpoint": "",
           "mockStats": [
@@ -61,9 +61,9 @@
           "name": "steam_account",
           "action": "profile",
           "title": "Steam",
-          "accountId": "",
-          "description": "Metroidvanias, soulslikes, roguelikes, and the occasional detour. My Steam profile will be linked here once configured.",
-          "profileUrl": ""
+          "accountId": "Codrin Mielul",
+          "description": "Enter at your own risk.",
+          "profileUrl": "https://steamcommunity.com/profiles/76561198337817450/"
         }
       ]
     },

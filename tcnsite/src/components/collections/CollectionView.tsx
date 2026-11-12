@@ -18,12 +18,12 @@ export default function CollectionView({ data, rated = false }: { data: Collecti
   return <div className="collection-page">
     <ReturnHome />
     <header className="collection-header"><p className="eyebrow">{data.eyebrow}</p><h1>{data.title}</h1><p>{data.description}</p></header>
-    {data.items.some(item => item.sample) && <p className="sample-notice">{data.sampleNotice}</p>}
+    {data.sampleNotice && data.items.some(item => item.sample) && <p className="sample-notice">{data.sampleNotice}</p>}
     <div className={`collection-grid ${rated ? 'rated-grid' : ''}`}>
       {data.items.map((item, index) => {
         const content = <>
           {rated && <h2>{item.title}</h2>}
-          <OptimizedImage item={item} directory={data.assetDirectory} priority={index === 0} />
+          <OptimizedImage key={`${data.assetDirectory}/${item.image}`} item={item} directory={data.assetDirectory} priority={index === 0} />
           <div className="card-caption">
             {!rated && <h2>{item.title}</h2>}
             {rated && <StarRating value={item.rating ?? 0} />}

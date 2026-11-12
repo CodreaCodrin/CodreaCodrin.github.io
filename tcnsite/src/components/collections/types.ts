@@ -6,5 +6,5 @@ export interface CollectionItem {
 }
 export interface CollectionData {
   discoveryId: string; eyebrow: string; title: string; description: string;
-  assetDirectory: string; emptyMessage: string; sampleNotice: string; items: CollectionItem[];
+  assetDirectory: string; emptyMessage: string; sampleNotice?: string; items: CollectionItem[];
 }

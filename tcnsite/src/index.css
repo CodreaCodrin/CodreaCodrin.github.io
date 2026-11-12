@@ -32,6 +32,10 @@ main:focus { outline: none; }
 .theme-options button:hover, .theme-options button[aria-pressed="true"] { background: var(--color-bg); color: var(--color-primary); }
 .theme-options button svg { margin-left: auto; }
 .theme-swatch { width: 9px; height: 9px; border-radius: 50%; }
+.theme-options { width: 280px; max-width: calc(100vw - 32px); }
+.theme-swatch { flex-shrink: 0; }
+.theme-option-label { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px; }
+.theme-option-label small { font-size: 9px; color: var(--color-text-muted); white-space: nowrap; }
 .skip-link { position: fixed; top: -100px; left: 16px; z-index: 100; padding: 12px; background: var(--color-bg-secondary); }
 .skip-link:focus { top: 12px; }
 .route-view { animation: page-enter 350ms ease both; }

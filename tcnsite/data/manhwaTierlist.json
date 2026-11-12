@@ -5,7 +5,6 @@
   "description": "Manhwa and manga worth staying up for. A personal shelf, one rating at a time.",
   "assetDirectory": "tierlists/manhwa",
   "emptyMessage": "A new shelf. The first stories are coming soon.",
-  "sampleNotice": "Preview collection · sample ratings, not personal recommendations.",
   "items": [
     {
       "id": "manhwa-01",

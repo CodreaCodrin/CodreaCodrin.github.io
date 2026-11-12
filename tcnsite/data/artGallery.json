@@ -5,10 +5,41 @@
   "description": "A space for sketches, experiments, and things made just for the joy of making.",
   "assetDirectory": "artGallery",
   "emptyMessage": "The walls are ready. The first pieces are on their way.",
-  "sampleNotice": "Preview collection · sample cards until original artwork is added.",
+  "sampleNotice": "Bă ăsta e fortnite?",
   "items": [
-    { "id": "art-01", "title": "Artwork 01", "image": "", "alt": "Placeholder for the first artwork", "width": 800, "height": 1000, "sample": true, "description": "This is a sample description. Add your artwork and its story in artGallery.json." },
-    { "id": "art-02", "title": "Artwork 02", "image": "", "alt": "Placeholder for the second artwork", "width": 800, "height": 1000, "sample": true },
-    { "id": "art-03", "title": "Artwork 03", "image": "", "alt": "Placeholder for the third artwork", "width": 800, "height": 1000, "sample": true, "description": "A place for the details behind the piece: the idea, the medium, or the happy accident." }
+    {
+      "id": "art-01",
+      "title": "Dragon",
+      "image": "TablouDragon.jpg",
+      "alt": "Placeholder for the first artwork",
+      "width": 800,
+      "height": 802,
+      "description": "First canvas painting inspired by a symbol from the internet"
+    },
+    {
+      "id": "art-02",
+      "title": "Bosolă",
+      "image": "TablouBusola.png",
+      "alt": "Placeholder for the second artwork",
+      "width": 1033,
+      "height": 1236
+    },
+    {
+      "id": "Photo-01",
+      "title": "Fault",
+      "image": "OpelFaultat.jpg",
+      "alt": "Placeholder for the third artwork",
+      "width": 1600,
+      "height": 1200
+    },
+    {
+      "id": "Photo-02",
+      "title": "Laborator",
+      "image": "Laborator.jpg",
+      "alt": "Placeholder for the fourth artwork",
+      "width": 750,
+      "height": 1000,
+      "description": "The apparatus for creating the nectar of the gods."
+    }
   ]
 }

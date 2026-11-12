@@ -23,7 +23,9 @@ export default function ThemeDropdown() {
       {(Object.keys(themes.themes) as ThemeName[]).map(key => <button key={key} aria-pressed={themeName === key}
         onClick={() => { setTheme(key); setOpen(false); trigger.current?.focus(); }}>
         <span className="theme-swatch" style={{ background: themes.themes[key].colors['--color-primary'] }} />
-        {themes.themes[key].label}{themeName === key && <Check size={14} />}
+        <span className="theme-option-label">{themes.themes[key].label}
+          {'note' in themes.themes[key] && <small>{String(themes.themes[key].note)}</small>}
+        </span>{themeName === key && <Check size={14} />}
       </button>)}
     </div>}
   </div>;
