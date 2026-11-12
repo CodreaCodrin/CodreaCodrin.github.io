@@ -190,7 +190,7 @@ Only requested theme backgrounds download. The previous decoded image remains vi
 
 The backquote/tilde key opens and closes the terminal (`~`, or the physical Backquote key on common keyboards). Escape closes it. Repeated keydown, IME composition, Ctrl/Alt/Meta combinations, other editable fields and open modal dialogs are ignored. Inside the terminal, that shortcut toggles the terminal rather than inserting a literal tilde. The pointer button works on phones.
 
-The lightweight, unboxed suggestion arrow appears until the terminal is first opened during the current app session. Its visible copy is `console.suggestion`; `console.shortcutHint` is the launcher tooltip. Its appearance is in Terminal.css. Reopening after a full refresh shows the hint again; the hint does not reset saved discoveries.
+The terminal hint is a thought bubble with an opaque neutral background, a faint border, small muted text, and two small circles leading toward the launcher. It appears until the terminal is first opened during the current app session. Its visible copy is `console.suggestion`; `console.shortcutHint` is the launcher tooltip. Its appearance is in Terminal.css. Reopening after a full refresh shows the hint again; the hint does not reset saved discoveries.
 
 Directory shape:
 

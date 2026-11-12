@@ -53,16 +53,16 @@
   .terminal-help > div { grid-template-columns: 90px 1fr; gap: 8px; }
   .command-echo > span:first-child { display: none; }
 }
-.terminal-nudge { position: fixed; right: max(28px, env(safe-area-inset-right)); bottom: max(88px, calc(env(safe-area-inset-bottom) + 70px)); z-index: 39; display: flex; align-items: flex-end; gap: 10px; max-width: min(240px, calc(100vw - 40px)); padding: 8px 0; border: 0; background: transparent; color: var(--color-text-muted); font-size: 12px; font-style: italic; text-align: right; }
-.terminal-nudge svg { color: var(--color-primary); flex-shrink: 0; }
-.terminal-nudge small { display: block; color: var(--color-text-muted); font-family: monospace; font-size: 10px; margin-top: 3px; }
-.terminal-nudge:hover { color: var(--color-primary); }
-.terminal-nudge > span { border-bottom: 1px dashed var(--color-border); padding-bottom: 7px; }
+.terminal-nudge { position: fixed; right: max(28px, env(safe-area-inset-right)); bottom: max(88px, calc(env(safe-area-inset-bottom) + 70px)); z-index: 39; display: block; width: 226px; max-width: calc(100% - 40px); padding: 12px 17px; border: 1px solid color-mix(in srgb, var(--color-border) 50%, var(--color-bg)); border-radius: 25px 29px 24px 30px; background: var(--color-bg); color: var(--color-text-muted); box-shadow: 0 2px 8px #0002; font-size: 11px; font-weight: 400; text-align: center; }
+.terminal-nudge::before, .terminal-nudge::after { content: ''; position: absolute; border: 1px solid color-mix(in srgb, var(--color-border) 50%, var(--color-bg)); border-radius: 50%; background: var(--color-bg); pointer-events: none; }
+.terminal-nudge::before { width: 9px; height: 9px; right: 23px; bottom: -8px; }
+.terminal-nudge::after { width: 5px; height: 5px; right: 14px; bottom: -16px; }
+.terminal-nudge:hover { color: var(--color-text); }
+.terminal-nudge > span { line-height: 1.6; }
 .terminal-viewport { flex: 1 1 auto; }
 .terminal { width: min(580px, calc(100% - 48px)); }
 .terminal-bar, .terminal-input, .terminal-footer { flex-shrink: 0; }
 @media (max-width: 600px) {
   .terminal { width: calc(100% - 24px); }
-  .terminal-nudge { right: 20px; bottom: max(78px, calc(env(safe-area-inset-bottom) + 64px)); font-size: 11px; max-width: 200px; }
-  .terminal-nudge small { display: block; font-size: 9px; max-width: 155px; margin-left: auto; }
+  .terminal-nudge { right: 20px; bottom: max(78px, calc(env(safe-area-inset-bottom) + 64px)); width: 206px; padding: 11px 15px; font-size: 11px; max-width: calc(100% - 40px); }
 }

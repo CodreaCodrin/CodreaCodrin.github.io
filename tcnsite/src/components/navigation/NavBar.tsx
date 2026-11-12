@@ -12,7 +12,7 @@ export default function NavBar() {
   const { unlocked } = useDiscovery();
   return <>
     <nav ref={ref} className="site-nav" aria-label={copy.navigationLabel}>
-      <div className="brand-group"><Link to="/" className="brand">{copy.brand}</Link><span>{copy.homeHint}</span></div>
+      <div className="brand-group"><Link to="/" className="brand">{copy.brand}</Link>{'homeHint' in copy && typeof copy.homeHint === 'string' && <span>{copy.homeHint}</span>}</div>
       <div className="toolbar"><ThemeDropdown /><button className="icon-button menu-trigger" onClick={() => setMenuOpen(true)}
         aria-label={copy.openMenu} aria-expanded={menuOpen}><Menu size={19} />{unlocked.length > 0 && <span className="menu-dot" aria-hidden="true" />}</button></div>
     </nav>

@@ -1,6 +1,6 @@
 import './Terminal.css';
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
-import { Terminal as TerminalIcon, X, CornerDownLeft, CornerDownRight } from 'lucide-react';
+import { Terminal as TerminalIcon, X, CornerDownLeft } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import rawFS from '../../../data/consoleFS.json';
 import copy from '../../../data/console.json';
@@ -130,7 +130,7 @@ export default function Terminal() {
       </motion.section>}
     </AnimatePresence>
     {!open && !hintSeen && <button className="terminal-nudge" onClick={() => { setHintSeen(true); setOpen(true); }}>
-      <span>{copy.suggestion}</span><CornerDownRight size={23} aria-hidden="true" />
+      <span>{copy.suggestion}</span>
     </button>}
     <button ref={launcher} className="terminal-launcher" aria-label={open ? copy.closeLabel : copy.openLabel}
       title={copy.shortcutHint} aria-keyshortcuts="~" aria-expanded={open} aria-controls={open ? 'portfolio-terminal' : undefined}
