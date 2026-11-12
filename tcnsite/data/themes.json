@@ -50,5 +50,27 @@
         "--color-panel": "#fffcf7eb"
       }
     }
+  },
+  "backgroundVariants": {
+    "BlackGoldBackground.jpg": [
+      {
+        "path": "BlackGoldBackground-960.jpg",
+        "width": 960
+      },
+      {
+        "path": "BlackGoldBackground-1920.jpg",
+        "width": 1920
+      }
+    ],
+    "BlackBlueBackground.jpg": [
+      {
+        "path": "BlackBlueBackground-960.jpg",
+        "width": 960
+      },
+      {
+        "path": "BlackBlueBackground-1920.jpg",
+        "width": 1920
+      }
+    ]
   }
 }

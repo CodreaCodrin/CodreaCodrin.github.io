@@ -16,15 +16,19 @@ import copy from '../data/site.json';
 import discovery from '../data/discovery.json';
 import ArtGallery from './pages/ArtGallery/ArtGallery';
 import ManhwaTierlist from './pages/ManhwaTierlist/ManhwaTierlist';
+import pages from '../data/pages.json';
+import ConfiguredPage, { pageData, type PageDefinition } from './pages/ConfiguredPage';
+const configuredPages = pages as PageDefinition[];
 
 function RootComponent() {
   const path = useLocation({ select: location => location.pathname });
   const { notification } = useDiscovery();
-  const matte = discovery.items.some(item => item.path === path);
+  const matte = configuredPages.find(item => item.path === path)?.matte ?? discovery.items.some(item => item.path === path);
   const main = useRef<HTMLElement>(null);
   const previousPath = useRef(path);
   useEffect(() => {
-    const title = discovery.items.find(item => item.path === path)?.text ?? copy.navigation.find(item => item.path === path)?.text;
+    const configured = configuredPages.find(item => item.path === path);
+    const title = (configured ? pageData(configured).title : undefined) ?? discovery.items.find(item => item.path === path)?.text ?? copy.navigation.find(item => item.path === path)?.text;
     document.title = title && path !== '/' ? `${title} · ${copy.brand}` : copy.documentTitle;
     if (previousPath.current !== path) {
       window.scrollTo({ top: 0, behavior: 'instant' });
@@ -54,7 +58,8 @@ const hobbiesRoute = createRoute({ getParentRoute: () => rootRoute, path: '/hobb
 const contactRoute = createRoute({ getParentRoute: () => rootRoute, path: '/contactme', component: Contact });
 const artRoute = createRoute({ getParentRoute: () => rootRoute, path: '/art-gallery', component: ArtGallery });
 const manhwaRoute = createRoute({ getParentRoute: () => rootRoute, path: '/manhwa-tierlist', component: ManhwaTierlist });
-const routeTree = rootRoute.addChildren([indexRoute, aboutRoute, projectsRoute, hobbiesRoute, contactRoute, artRoute, manhwaRoute]);
+const extraRoutes = configuredPages.map(page => createRoute({ getParentRoute: () => rootRoute, path: page.path, component: () => <ConfiguredPage page={page} /> }));
+const routeTree = rootRoute.addChildren([...extraRoutes,indexRoute, aboutRoute, projectsRoute, hobbiesRoute, contactRoute, artRoute, manhwaRoute]);
 const router = createRouter({ routeTree, history: createHashHistory(), defaultNotFoundComponent: NotFound });
 declare module '@tanstack/react-router' { interface Register { router: typeof router } }
 export default function App() {

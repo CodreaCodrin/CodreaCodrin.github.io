@@ -1,6 +1,6 @@
 import './Terminal.css';
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
-import { Terminal as TerminalIcon, X, CornerDownLeft } from 'lucide-react';
+import { Terminal as TerminalIcon, X, CornerDownLeft, CornerDownRight } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import rawFS from '../../../data/consoleFS.json';
 import copy from '../../../data/console.json';
@@ -13,6 +13,7 @@ import { format } from '../../lib/format';
 const fs = rawFS as Directory;
 export default function Terminal() {
   const [open, setOpen] = useState(false);
+  const [hintSeen, setHintSeen] = useState(false);
   const [cwd, setCwd] = useState('/');
   const [input, setInput] = useState('');
   const [entries, setEntries] = useState<TerminalEntry[]>([]);
@@ -38,6 +39,25 @@ export default function Terminal() {
     if (content.current) observer.observe(content.current);
     return () => observer.disconnect();
   }, [open]);
+
+  useEffect(() => {
+    function shortcut(event: globalThis.KeyboardEvent) {
+      if (event.repeat || event.isComposing || event.ctrlKey || event.altKey || event.metaKey) return;
+      if (event.code !== 'Backquote' && event.key !== '~' && event.key !== '\x60') return;
+      const target = event.target as HTMLElement | null;
+      const editing = target?.closest('input, textarea, select, [contenteditable="true"], [contenteditable=""]');
+      if (editing && target !== field.current) return;
+      if (document.querySelector('dialog[open]')) return;
+      event.preventDefault();
+      setHintSeen(true);
+      setOpen(previous => {
+        if (previous) launcher.current?.focus();
+        return !previous;
+      });
+    }
+    window.addEventListener('keydown', shortcut);
+    return () => window.removeEventListener('keydown', shortcut);
+  }, []);
 
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -104,9 +124,12 @@ export default function Terminal() {
         <footer className="terminal-footer">{copy.footer}</footer>
       </motion.section>}
     </AnimatePresence>
+    {!open && !hintSeen && <button className="terminal-nudge" onClick={() => { setHintSeen(true); setOpen(true); }}>
+      <span>{copy.suggestion}<small>{copy.shortcutHint}</small></span><CornerDownRight size={23} aria-hidden="true" />
+    </button>}
     <button ref={launcher} className="terminal-launcher" aria-label={open ? copy.closeLabel : copy.openLabel}
-      aria-expanded={open} aria-controls={open ? 'portfolio-terminal' : undefined}
-      onClick={() => open ? close() : setOpen(true)}>
+      title={copy.shortcutHint} aria-keyshortcuts="~" aria-expanded={open} aria-controls={open ? 'portfolio-terminal' : undefined}
+      onClick={() => { setHintSeen(true); if (open) close(); else setOpen(true); }}>
       <TerminalIcon size={19} /><span>{copy.launcher}</span><span className="status-dot" aria-hidden="true" />
     </button>
   </>;

@@ -115,3 +115,5 @@ Backgrounds load only when their theme is first needed, decode before display, a
 Native modal dialogs handle focus containment and Escape for menus/descriptions. The terminal is non-modal so visitors can see the discovery change on the website and interact with unlocked links. It focuses the input when opened and restores focus to its launcher when closed. Navigation uses real links, route changes focus main content, ratings have accessible text, and reduced-motion preferences disable decorative effects.
 
 Both original themes are preserved, with an additional daylight palette. CSS transitions animate actual color properties; background images crossfade instead of attempting to transition background-image.
+
+For complete editing and page creation instructions, see [PAGE_GUIDE.md](./PAGE_GUIDE.md).

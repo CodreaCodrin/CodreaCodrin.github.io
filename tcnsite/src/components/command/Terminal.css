@@ -53,3 +53,15 @@
   .terminal-help > div { grid-template-columns: 90px 1fr; gap: 8px; }
   .command-echo > span:first-child { display: none; }
 }
+.terminal-nudge { position: fixed; right: max(28px, env(safe-area-inset-right)); bottom: max(88px, calc(env(safe-area-inset-bottom) + 70px)); z-index: 39; display: flex; align-items: center; gap: 12px; max-width: min(240px, calc(100vw - 40px)); padding: 10px 12px; border-radius: 8px; border: 1px solid var(--color-border); color: var(--color-text); background: var(--color-bg-secondary); box-shadow: 0 4px 24px #0002; font-size: 12px; text-align: left; }
+.terminal-nudge svg { color: var(--color-primary); flex-shrink: 0; }
+.terminal-nudge small { display: block; color: var(--color-text-muted); font-family: monospace; font-size: 10px; margin-top: 3px; }
+.terminal-nudge:hover { border-color: var(--color-primary); }
+.terminal-viewport { flex: 1 1 auto; }
+.terminal { width: min(580px, calc(100% - 48px)); }
+.terminal-bar, .terminal-input, .terminal-footer { flex-shrink: 0; }
+@media (max-width: 600px) {
+  .terminal { width: calc(100% - 24px); }
+  .terminal-nudge { right: 20px; bottom: max(78px, calc(env(safe-area-inset-bottom) + 64px)); font-size: 11px; max-width: 200px; }
+  .terminal-nudge small { display: none; }
+}

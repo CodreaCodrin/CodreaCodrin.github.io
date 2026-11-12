@@ -12,7 +12,7 @@ import discovery from '../../../data/discovery.json';
 export default function CollectionView({ data, rated = false }: { data: CollectionData; rated?: boolean }) {
   const { unlocked } = useDiscovery();
   const [selected, setSelected] = useState<CollectionItem | null>(null);
-  if (!unlocked.includes(data.discoveryId)) return <div className="collection-page"><ReturnHome /><div className="locked-view">
+  if (data.discoveryId && !unlocked.includes(data.discoveryId)) return <div className="collection-page"><ReturnHome /><div className="locked-view">
     <LockKeyhole size={32} /><h1>{discovery.lockedTitle}</h1><p>{discovery.lockedDescription}</p>
   </div></div>;
   return <div className="collection-page">

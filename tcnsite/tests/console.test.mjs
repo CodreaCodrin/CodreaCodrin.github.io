@@ -8,6 +8,38 @@ const read = name => JSON.parse(readFileSync(new URL('../data/' + name + '.json'
 const root = read('consoleFS');
 const command = (input, cwd = '/') => runCommand(input, cwd, root);
 
+test('configured pages have unique routes, real data files and consistent discovery IDs', () => {
+  const reserved = ['/', '/aboutme', '/projects', '/hobbies', '/contactme', '/art-gallery', '/manhwa-tierlist'];
+  const pages = read('pages');
+  const paths = [...reserved, ...pages.map(page => page.path)];
+  assert.equal(new Set(paths).size, paths.length, 'Duplicate route path');
+  for (const page of pages) {
+    assert.ok(page.path.startsWith('/') && !page.path.includes('#'));
+    assert.ok(['content', 'gallery', 'tierlist'].includes(page.type));
+    assert.ok(!page.dataFile.includes('..') && page.dataFile.endsWith('.json'));
+    const data = read(page.dataFile.replace(/\.json$/, ''));
+    assert.ok(data.title);
+    if (page.type === 'content') assert.ok(Array.isArray(data.paragraphs));
+    else {
+      assert.ok(Array.isArray(data.items));
+      assert.equal(data.discoveryId || undefined, page.discoveryId);
+    }
+    if (page.discoveryId) assert.ok(read('discovery').items.some(item => item.id === page.discoveryId && item.path === page.path));
+  }
+});
+
+test('responsive background candidates exist and are smaller than the originals', () => {
+  const themes = read('themes');
+  for (const [original, candidates] of Object.entries(themes.backgroundVariants)) {
+    const originalBytes = readFileSync(new URL('../public/' + original, import.meta.url)).length;
+    for (const candidate of candidates) {
+      assert.ok(candidate.width > 0);
+      const bytes = readFileSync(new URL('../public/' + candidate.path, import.meta.url)).length;
+      assert.ok(bytes < originalBytes);
+    }
+  }
+});
+
 test('root and nested directories expose precisely the requested files', () => {
   assert.deepEqual(command('ls').nodes.map(node => node.name), ['games_folder', 'tierlists', 'art_gallery']);
   assert.deepEqual(command('ls games_folder').nodes.map(node => node.name), ['riot_account', 'chess_account', 'steam_account']);

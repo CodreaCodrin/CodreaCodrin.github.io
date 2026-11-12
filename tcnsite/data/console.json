@@ -9,7 +9,7 @@
   "promptSymbol": "$",
   "welcome": "A different way to explore.",
   "intro": "Start with ls. Follow your curiosity. Type help if you get lost.",
-  "footer": "↑ ↓ history · Tab complete · Esc close",
+  "footer": "↑ ↓ history · Tab complete · ~ toggle · Esc close",
   "placeholder": "Type a command…",
   "outputLabel": "Terminal output",
   "maxHistory": 80,
@@ -33,13 +33,48 @@
   "unclosedQuote": "Unclosed quote. Close the quote and try again.",
   "unsupportedFile": "This file has no supported action.",
   "commands": [
-    { "name": "ls", "usage": "ls [path]", "description": "List a directory or file." },
-    { "name": "cd", "usage": "cd [folder]", "description": "Change directory. Supports .., /, ~ and nested paths." },
-    { "name": "help", "usage": "help", "description": "Show this guide." },
-    { "name": "cat", "usage": "cat <file>", "description": "Execute a file or reveal a discovery." },
-    { "name": "open", "usage": "open <file>", "description": "An alias for cat." },
-    { "name": "./", "usage": "./<file>", "description": "Execute a file from the current directory." },
-    { "name": "pwd", "usage": "pwd", "description": "Print the current directory." },
-    { "name": "clear", "usage": "clear", "description": "Clear terminal output." }
-  ]
+    {
+      "name": "ls",
+      "usage": "ls [path]",
+      "description": "List a directory or file."
+    },
+    {
+      "name": "cd",
+      "usage": "cd [folder]",
+      "description": "Change directory. Supports .., /, ~ and nested paths."
+    },
+    {
+      "name": "help",
+      "usage": "help",
+      "description": "Show this guide."
+    },
+    {
+      "name": "cat",
+      "usage": "cat <file>",
+      "description": "Execute a file or reveal a discovery."
+    },
+    {
+      "name": "open",
+      "usage": "open <file>",
+      "description": "An alias for cat."
+    },
+    {
+      "name": "./",
+      "usage": "./<file>",
+      "description": "Execute a file from the current directory."
+    },
+    {
+      "name": "pwd",
+      "usage": "pwd",
+      "description": "Print the current directory."
+    },
+    {
+      "name": "clear",
+      "usage": "clear",
+      "description": "Clear terminal output."
+    }
+  ],
+  "shortcutLabel": "~",
+  "suggestion": "Curious? Try the terminal",
+  "shortcutHint": "Press ~ to explore"
 }
