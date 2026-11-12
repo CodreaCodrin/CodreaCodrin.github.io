@@ -5,7 +5,7 @@
   "closeLabel": "Close terminal",
   "inputLabel": "Terminal command",
   "submitLabel": "Run command",
-  "prompt": "visitor@miel",
+  "prompt": "guest@miel",
   "promptSymbol": "$",
   "welcome": "A different way to explore.",
   "intro": "Start with ls. Follow your curiosity. Type help if you get lost.",
