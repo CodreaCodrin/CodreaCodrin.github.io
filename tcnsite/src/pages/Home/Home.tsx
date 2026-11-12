@@ -110,16 +110,15 @@ export default function Home() {
           >
             things
           </span>
-          . I'm especially drawn to game development and the{" "}
+          . I love solving my own everyday annoyances by building custom apps and{" "}
           <span
             onClick={() => handleNavigate("/hobbies")}
             className="font-semibold cursor-pointer"
             style={{ color: "var(--color-primary)" }}
           >
-            gaming world
+           small tools 
           </span>
-          , where
-          I feel most at home as a creator. Outside of my projects, I'm always
+          {" "}from scratch. Outside of my projects, I'm always
           involved in a lot of different{" "}
           <span
             onClick={() => handleNavigate("/hobbies")}

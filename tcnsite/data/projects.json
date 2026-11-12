@@ -61,5 +61,14 @@
         ],
         "githubLink": "https://github.com/CodreaCodrin/CodreaCodrin.github.io",
         "demoLink": ""
+    },
+    {
+        "projectName": "CockerPay",
+        "description": "To avoid the usual confusion of figuring out who owes what at the end of our chipless poker nights, I made a quick app to handle the payouts for me and my friends.",
+        "tags": [
+            "Android", "React shadcnui", "TypeScript", "Capacitor"
+        ],
+        "githubLink": "https://github.com/CodreaCodrin/poker-payout-partner",
+        "demoLink": "https://github.com/CodreaCodrin/poker-payout-partner/releases/tag/Poker"
     }
 ]

@@ -21,7 +21,7 @@ export default function About() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.35 }}
       >
-        I am currently an intern at NTT DATA, doing unit testing on projects.
+        I am currently pursuing a Master's degree in Cybersecurity.
       </motion.p>
 
       <hr className="w-full mb-8" style={{ borderColor: 'var(--color-border)' }} />
@@ -33,7 +33,7 @@ export default function About() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.5 }}
       >
-        I have a strong passion for networking, specifically the design and implementation of physical network infrastructure. I find great satisfaction in building and organizing hardware-level systems.
+        Whenever I run into a small everyday problem, my first instinct is to code a tool or an app to fix it myself. Alongside that, I have a strong passion for networking, specifically the design and implementation of physical network infrastructure. I find great satisfaction in building and organizing hardware-level systems, and I also love game development — a space where I truly feel at home creating things from scratch.
       </motion.p>
 
       <hr className="w-full mb-8" style={{ borderColor: 'var(--color-border)' }} />
@@ -45,7 +45,7 @@ export default function About() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.65 }}
       >
-        Opel love  &#60;3.
+        My ultimate dream is to earn passive income from a rabbit breeding business. Opel love &#60;3.
       </motion.p>
     </PageWrapper>
   );

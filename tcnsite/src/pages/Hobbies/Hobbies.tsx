@@ -19,7 +19,7 @@ const sections = [
     icon: Gamepad2,
     title: 'Gaming',
     content:
-      'I\'ve played a huge variety of games across every genre — especially metroidvanias, soulslikes, roguelikes and competitive games. I\'m really into fast-paced games that push my reaction time to the limit. For me, the overall experience is key, so I pay close attention to the soundtrack, atmosphere, and visual style (except competitive games of course, where there are other criteria).',
+      'I\'ve played a huge variety of games across every genre — especially metroidvanias, soulslikes and roguelikes. I\'m really into fast-paced games that push my reaction time to the limit. For me, the overall experience is key, so I pay close attention to the soundtrack, atmosphere, and visual style (except competitive games of course, where there are other criteria).',
   },
 ];
 

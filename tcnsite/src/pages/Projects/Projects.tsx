@@ -24,6 +24,9 @@ const tagColors: Record<string, string> = {
   RAG: '#e91e63',
   Go: '#00add8',
   Firebase: '#ffca28',
+  Android: '#a3e635',
+  Capacitor: '#ff6b4a',
+  'Tailwind CSS': '#38bdf8',
 };
 
 export default function Projects() {
