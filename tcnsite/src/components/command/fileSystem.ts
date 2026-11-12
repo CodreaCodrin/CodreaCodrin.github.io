@@ -1,6 +1,6 @@
 export interface Stat { label: string; value: string | number }
 export interface ConsoleFile {
-  type: 'file'; name: string; action: 'unlock' | 'account' | 'profile';
+  type: 'file'; name: string; aliases?: string[]; action: 'unlock' | 'account' | 'profile';
   discoveryId?: string; provider?: string; title?: string; description?: string;
   accountId?: string; profileUrl?: string; endpoint?: string; mockStats?: Stat[];
 }
@@ -45,7 +45,7 @@ export function resolvePath(root: Directory, cwd: string, input: string):
     if (current.type !== 'directory') return { error: 'notDirectory' };
     if (part === '.') continue;
     if (part === '..') { if (stack.length > 1) { stack.pop(); names.pop(); } continue; }
-    const next = current.children.find(node => node.name === part);
+    const next = current.children.find(node => node.name === part || (node.type === 'file' && node.aliases?.includes(part)));
     if (!next) return { error: 'notFound' };
     stack.push(next); names.push(part);
   }

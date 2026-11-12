@@ -14,7 +14,7 @@ All paths below are relative to `tcnsite/`. Run commands from that directory. Pr
 | Terminal files, folders, accounts and unlock actions | `data/consoleFS.json` |
 | Terminal messages, hint, command guide and timing | `data/console.json` |
 | Artwork entries | `data/artGallery.json` |
-| Manhwa entries and ratings | `data/manhwaTierlist.json` |
+| Manhwa and manga entries and ratings | `data/manhwaTierlist.json` |
 | Shared collection labels and responsive image sizes | `data/collections.json` |
 | Theme colors, background filenames and responsive variants | `data/themes.json` |
 | Shared layout, home tiles and theme transitions | `src/index.css` |
@@ -150,7 +150,7 @@ For a public collection, use `"discoveryId": ""` in its data, omit the registry'
 
 Use `type: "tierlist"` to place titles above images and ratings below. Add `rating` to each item: 0 through 5 in increments of 0.5. `type: "gallery"` places titles below images. An omitted/empty description makes a card non-interactive; a supplied description opens a modal. Use unique item IDs. Set `items: []` for an intentional empty state.
 
-To edit the original Art Gallery or Manhwa Tierlist, change their existing JSON files directly. Their routes are already registered; do not duplicate them in pages.json.
+To edit the original Art Gallery or Manhwa & Manga Tierlist, change their existing JSON files directly. Their routes are already registered; do not duplicate them in pages.json.
 
 ## 6. Images and performance
 

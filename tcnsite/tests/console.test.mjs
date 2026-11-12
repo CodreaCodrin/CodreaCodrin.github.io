@@ -9,7 +9,7 @@ const root = read('consoleFS');
 const command = (input, cwd = '/') => runCommand(input, cwd, root);
 
 test('configured pages have unique routes, real data files and consistent discovery IDs', () => {
-  const reserved = ['/', '/aboutme', '/projects', '/hobbies', '/contactme', '/art-gallery', '/manhwa-tierlist'];
+  const reserved = ['/', '/aboutme', '/projects', '/hobbies', '/contactme', '/art-gallery', '/manwa-manga-tierlist', '/manhwa-tierlist'];
   const pages = read('pages');
   const paths = [...reserved, ...pages.map(page => page.path)];
   assert.equal(new Set(paths).size, paths.length, 'Duplicate route path');
@@ -43,7 +43,7 @@ test('responsive background candidates exist and are smaller than the originals'
 test('root and nested directories expose precisely the requested files', () => {
   assert.deepEqual(command('ls').nodes.map(node => node.name), ['games_folder', 'tierlists', 'art_gallery']);
   assert.deepEqual(command('ls games_folder').nodes.map(node => node.name), ['riot_account', 'chess_account', 'steam_account']);
-  assert.deepEqual(command('ls /tierlists').nodes.map(node => node.name), ['manhwa_tierlist']);
+  assert.deepEqual(command('ls /tierlists').nodes.map(node => node.name), ['manwa-manga-tierlist']);
 });
 test('cd handles relative, absolute, parent, home, repeated slashes and root boundaries', () => {
   for (const [input, cwd, path] of [
@@ -59,6 +59,8 @@ test('all execution aliases resolve to the same file', () => {
   for (const input of ['cat art_gallery', 'open art_gallery', './art_gallery', 'cat "./art_gallery"'])
     assert.deepEqual(command(input).file, expected);
   assert.equal(command('./manhwa_tierlist', '/tierlists').file.discoveryId, 'manhwa-tierlist');
+  assert.deepEqual(command('./manwa-manga-tierlist', '/tierlists').file, command('./manhwa_tierlist', '/tierlists').file);
+  assert.equal(read('discovery').items.find(item => item.id === 'manhwa-tierlist').path, '/manwa-manga-tierlist');
   assert.equal(command('open ../art_gallery', '/games_folder').file.discoveryId, 'art-gallery');
 });
 test('file paths are walked without skipping invalid intermediate components', () => {

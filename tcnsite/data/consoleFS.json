@@ -3,15 +3,90 @@
   "name": "/",
   "children": [
     {
-      "type": "directory", "name": "games_folder", "children": [
-        { "type": "file", "name": "riot_account", "action": "account", "provider": "riot", "title": "Riot Games", "accountId": "", "description": "My corner of the Rift. Account details and statistics will appear here once configured.", "profileUrl": "", "endpoint": "", "mockStats": [{ "label": "Rank", "value": "—" }, { "label": "Win rate", "value": "—" }, { "label": "Games", "value": "—" }] },
-        { "type": "file", "name": "chess_account", "action": "account", "provider": "chess", "title": "Chess", "accountId": "", "description": "One more game. Then one more. My chess account and ratings will live here.", "profileUrl": "", "endpoint": "", "mockStats": [{ "label": "Rapid", "value": "—" }, { "label": "Blitz", "value": "—" }, { "label": "Bullet", "value": "—" }] },
-        { "type": "file", "name": "steam_account", "action": "profile", "title": "Steam", "accountId": "", "description": "Metroidvanias, soulslikes, roguelikes, and the occasional detour. My Steam profile will be linked here once configured.", "profileUrl": "" }
+      "type": "directory",
+      "name": "games_folder",
+      "children": [
+        {
+          "type": "file",
+          "name": "riot_account",
+          "action": "account",
+          "provider": "riot",
+          "title": "Riot Games",
+          "accountId": "",
+          "description": "My corner of the Rift. Account details and statistics will appear here once configured.",
+          "profileUrl": "",
+          "endpoint": "",
+          "mockStats": [
+            {
+              "label": "Rank",
+              "value": "—"
+            },
+            {
+              "label": "Win rate",
+              "value": "—"
+            },
+            {
+              "label": "Games",
+              "value": "—"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "name": "chess_account",
+          "action": "account",
+          "provider": "chess",
+          "title": "Chess",
+          "accountId": "",
+          "description": "One more game. Then one more. My chess account and ratings will live here.",
+          "profileUrl": "",
+          "endpoint": "",
+          "mockStats": [
+            {
+              "label": "Rapid",
+              "value": "—"
+            },
+            {
+              "label": "Blitz",
+              "value": "—"
+            },
+            {
+              "label": "Bullet",
+              "value": "—"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "name": "steam_account",
+          "action": "profile",
+          "title": "Steam",
+          "accountId": "",
+          "description": "Metroidvanias, soulslikes, roguelikes, and the occasional detour. My Steam profile will be linked here once configured.",
+          "profileUrl": ""
+        }
       ]
     },
-    { "type": "directory", "name": "tierlists", "children": [
-      { "type": "file", "name": "manhwa_tierlist", "action": "unlock", "discoveryId": "manhwa-tierlist" }
-    ] },
-    { "type": "file", "name": "art_gallery", "action": "unlock", "discoveryId": "art-gallery" }
+    {
+      "type": "directory",
+      "name": "tierlists",
+      "children": [
+        {
+          "type": "file",
+          "name": "manwa-manga-tierlist",
+          "action": "unlock",
+          "discoveryId": "manhwa-tierlist",
+          "aliases": [
+            "manhwa_tierlist"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "name": "art_gallery",
+      "action": "unlock",
+      "discoveryId": "art-gallery"
+    }
   ]
 }

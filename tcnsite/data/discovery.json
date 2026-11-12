@@ -10,7 +10,17 @@
   "lockedDescription": "Explore the terminal to reveal this corner of the portfolio.",
   "newLabel": "discovered",
   "items": [
-    { "id": "art-gallery", "title": "Ag", "text": "Art Gallery", "path": "/art-gallery" },
-    { "id": "manhwa-tierlist", "title": "Mt", "text": "Manhwa Tierlist", "path": "/manhwa-tierlist" }
+    {
+      "id": "art-gallery",
+      "title": "Ag",
+      "text": "Art Gallery",
+      "path": "/art-gallery"
+    },
+    {
+      "id": "manhwa-tierlist",
+      "title": "Mt",
+      "text": "Manhwa & Manga Tierlist",
+      "path": "/manwa-manga-tierlist"
+    }
   ]
 }

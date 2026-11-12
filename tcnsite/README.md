@@ -15,7 +15,70 @@ Run from this directory:
 
 Routes use hash history, for example `/#/art-gallery`. This makes direct links and refreshes work on GitHub Pages without server rewrites. Existing navigation paths are retained after the hash. Old external links such as `/aboutme` still need to be updated to `/#/aboutme`.
 
+## Uploading and updating the site on GitHub Pages
+
+Repository: [CodreaCodrin/CodreaCodrin.github.io](https://github.com/CodreaCodrin/CodreaCodrin.github.io).
+Live site: [https://CodreaCodrin.github.io/](https://CodreaCodrin.github.io/).
+
+This project already uses the `gh-pages` npm package. The source code stays on your normal development branch; the generated website is uploaded to the separate `gh-pages` branch. Use the following method with the existing scripts.
+
+### First deployment or restoring the hosting configuration
+
+1. Install Node.js and Git if needed. Use a supported Node release; Node 22.18+ is required by the current test command. Make sure Git can authenticate with your GitHub account.
+2. Open PowerShell in `tcnsite`, or change directory explicitly:
+
+   ```powershell
+   Set-Location 'C:\Alpine Studio\Projects\PersonalSite\CodreaCodrin.github.io\tcnsite'
+   npm ci
+   npm test
+   npm run deploy
+   ```
+
+   `npm ci` installs the dependencies from package-lock.json. `npm run deploy` automatically runs `predeploy`, which runs `npm run build` (TypeScript + Vite). It then uploads the **contents of dist** to the remote `gh-pages` branch. It creates that branch if necessary. If tests fail, fix them before running deploy. If the build fails, deployment stops.
+
+3. Open the repository on GitHub, then **Settings > Pages > Build and deployment**. Set:
+
+   - **Source:** Deploy from a branch
+   - **Branch:** gh-pages
+   - **Folder:** / (root)
+
+   Click **Save**. If the branch is not listed, finish `npm run deploy` successfully and refresh the settings page. You normally configure this once. These are the settings for this repository's existing npm deployment method; a separate custom GitHub Actions deployment workflow is not required.
+
+4. Check the repository's **Actions** tab for the Pages build/deployment result. Once it succeeds, visit https://CodreaCodrin.github.io/. Publication can take several minutes.
+
+The repository is a user site at the domain root, so Vite's default `base: '/'` is correct. Do not change it to `/tcnsite/` or `/CodreaCodrin.github.io/`. The local folder name does not become part of the live URL. Routes retain the hash, for example `https://CodreaCodrin.github.io/#/manwa-manga-tierlist`.
+
+### Every later update
+
+1. Edit your source files, JSON content or images.
+2. In GitHub Desktop, review your changes, write a commit message, click **Commit**, and **Push origin** on your normal source branch. This saves your editable project on GitHub.
+3. In PowerShell, from `tcnsite`, run:
+
+   ```powershell
+   npm test
+   npm run deploy
+   ```
+
+   If dependencies changed or node_modules is missing, run `npm ci` first. There is no need to run `npm run build` separately before deploy: predeploy already does that.
+
+4. Wait for the Pages deployment to finish in GitHub's Actions tab, then refresh the live site. If it appears stale, use **Ctrl+F5** or a private browser window.
+
+Pushing source commits alone does not update the live website with this manual deployment setup. `npm run deploy` uploads the production build; it does not commit or push your editable source changes. Keep both steps in your workflow. `npm run dev` and `npm run preview` only start local servers.
+
+### Troubleshooting
+
+- **Git authentication or push fails:** confirm you can push this repository with Git/GitHub Desktop and that origin points to `https://github.com/CodreaCodrin/CodreaCodrin.github.io.git`. Complete GitHub's sign-in flow if requested; never put credentials in project files.
+- **Live site is blank or shows source files:** check Pages uses `gh-pages` and `/ (root)`, not the source branch. The branch should contain built index.html and assets directly at its root.
+- **A page returns 404:** use the `/#/page-path` URL. The static host cannot serve React routes as real server directories.
+- **Images fail only online:** check exact filename casing and ensure images are under public and included in the latest build/deploy.
+- **Old design remains visible:** check the deployment result, refresh after it completes, and confirm you are viewing the live domain rather than localhost.
+- **Build errors:** fix the displayed TypeScript/Vite errors before deploying. Keep package-lock.json with the source so installs remain reproducible.
+
+Official references: [GitHub Pages publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site), [Vite static deployment](https://vite.dev/guide/static-deploy).
+
 ## Content belongs in data/
+
+The reading shelf is **Manhwa & Manga Tierlist**, at `/#/manwa-manga-tierlist`. Unlock it with `cd tierlists` followed by `./manwa-manga-tierlist`. The old `/#/manhwa-tierlist` URL redirects to the new URL, and the old terminal filename `manhwa_tierlist` remains an alias. The internal discovery ID stays `manhwa-tierlist` so existing visitors keep their unlocks. Both kinds of titles share `data/manhwaTierlist.json` and `public/tierlists/manhwa/`; those storage names do not limit the content.
 
 | File | Content |
 | --- | --- |
@@ -44,7 +107,7 @@ open chess_account
 cd ..
 ./art_gallery
 cd tierlists
-./manhwa_tierlist
+./manwa-manga-tierlist
 ```
 
 `cat`, `open`, and `./` all execute files. `ls` accepts optional paths; `cd` supports absolute/relative paths, `..`, `.`, `~`, and no argument (root). Commands support quoted paths, up/down history, Tab completion, `pwd`, `help`, and `clear`. This is a virtual shell: input is never passed to eval, the OS, or a real shell.
@@ -88,7 +151,7 @@ An entry can look like:
 }
 ```
 
-Manhwa entries also include `rating` from 0 to 5 in steps of 0.5. Omit a description to make a card non-interactive. Set `sample: false` or omit it on real entries.
+Manhwa and manga entries also include `rating` from 0 to 5 in steps of 0.5. Omit a description to make a card non-interactive. Set `sample: false` or omit it on real entries.
 
 Image strategy:
 - Native `loading="lazy"` for below-the-fold images, with eager/high-priority loading for the first potential LCP image.

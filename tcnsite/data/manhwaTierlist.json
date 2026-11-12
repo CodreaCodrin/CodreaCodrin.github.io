@@ -1,14 +1,43 @@
 {
   "discoveryId": "manhwa-tierlist",
   "eyebrow": "ONE MORE CHAPTER",
-  "title": "Manhwa Tierlist",
-  "description": "Stories worth staying up for. A personal shelf, one rating at a time.",
+  "title": "Manhwa & Manga Tierlist",
+  "description": "Manhwa and manga worth staying up for. A personal shelf, one rating at a time.",
   "assetDirectory": "tierlists/manhwa",
   "emptyMessage": "A new shelf. The first stories are coming soon.",
   "sampleNotice": "Preview collection · sample ratings, not personal recommendations.",
   "items": [
-    { "id": "manhwa-01", "title": "Manhwa 01", "image": "", "alt": "Placeholder for the first cover", "width": 600, "height": 800, "rating": 4.5, "sample": true, "description": "A sample entry with a half-star rating. Replace it with a title, cover, rating, and your own thoughts in manhwaTierlist.json." },
-    { "id": "manhwa-02", "title": "Manhwa 02", "image": "", "alt": "Placeholder for the second cover", "width": 600, "height": 800, "rating": 3, "sample": true },
-    { "id": "manhwa-03", "title": "Manhwa 03", "image": "", "alt": "Placeholder for the third cover", "width": 600, "height": 800, "rating": 0, "sample": true, "description": "Zero is a valid rating too. Cards without descriptions stay non-interactive." }
+    {
+      "id": "manhwa-01",
+      "title": "Manhwa 01",
+      "image": "",
+      "alt": "Placeholder for the first cover",
+      "width": 600,
+      "height": 800,
+      "rating": 4.5,
+      "sample": true,
+      "description": "A sample entry with a half-star rating. Replace it with a title, cover, rating, and your own thoughts in manhwaTierlist.json."
+    },
+    {
+      "id": "manhwa-02",
+      "title": "Manga 02",
+      "image": "",
+      "alt": "Placeholder for the second cover",
+      "width": 600,
+      "height": 800,
+      "rating": 3,
+      "sample": true
+    },
+    {
+      "id": "manhwa-03",
+      "title": "Manhwa 03",
+      "image": "",
+      "alt": "Placeholder for the third cover",
+      "width": 600,
+      "height": 800,
+      "rating": 0,
+      "sample": true,
+      "description": "Zero is a valid rating too. Cards without descriptions stay non-interactive."
+    }
   ]
 }
