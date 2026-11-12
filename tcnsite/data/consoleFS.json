@@ -87,6 +87,13 @@
       "name": "art_gallery",
       "action": "unlock",
       "discoveryId": "art-gallery"
+    },
+    {
+      "type": "file",
+      "name": "coffin",
+      "hidden": true,
+      "action": "message",
+      "message": "nu trebuia sa gasesti asta, esti bun"
     }
   ]
 }

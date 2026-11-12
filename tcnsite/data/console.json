@@ -59,6 +59,16 @@
       "description": "An alias for cat."
     },
     {
+      "name": "nano",
+      "usage": "nano <file>",
+      "description": "Open or execute a file, just like cat."
+    },
+    {
+      "name": "vim",
+      "usage": "vim <file>",
+      "description": "Open or execute a file, just like cat."
+    },
+    {
       "name": "./",
       "usage": "./<file>",
       "description": "Execute a file from the current directory."

@@ -190,7 +190,7 @@ Only requested theme backgrounds download. The previous decoded image remains vi
 
 The backquote/tilde key opens and closes the terminal (`~`, or the physical Backquote key on common keyboards). Escape closes it. Repeated keydown, IME composition, Ctrl/Alt/Meta combinations, other editable fields and open modal dialogs are ignored. Inside the terminal, that shortcut toggles the terminal rather than inserting a literal tilde. The pointer button works on phones.
 
-The small suggestion arrow appears until the terminal is first opened during the current app session. Its copy is `console.suggestion` and `console.shortcutHint`. Its appearance is in Terminal.css. Reopening after a full refresh shows the hint again; the hint does not reset saved discoveries.
+The lightweight, unboxed suggestion arrow appears until the terminal is first opened during the current app session. Its visible copy is `console.suggestion`; `console.shortcutHint` is the launcher tooltip. Its appearance is in Terminal.css. Reopening after a full refresh shows the hint again; the hint does not reset saved discoveries.
 
 Directory shape:
 
@@ -204,7 +204,7 @@ Directory shape:
 }
 ```
 
-Add directory objects inside other directories' children to nest them. Use unique sibling names and avoid slashes in names. The virtual shell supports ls, cd, pwd, help, clear, cat, open and ./, including relative/absolute paths and parent traversal. No real OS commands execute.
+Add directory objects inside other directories' children to nest them. Use unique sibling names and avoid slashes in names. The virtual shell supports ls, cd, pwd, help, clear, cat, open, nano, vim and ./, including relative/absolute paths and parent traversal. No real OS commands execute.
 
 Account files use `action: "account"` for delayed stats or `action: "profile"` for an immediate description/link. Edit accountId, description, profileUrl, endpoint and mockStats in consoleFS.json. An endpoint can contain `{accountId}` and must return `{ "stats": [{ "label": "Rapid", "value": 1500 }] }`. The ID is encoded for the URL. Use an HTTPS endpoint allowing browser CORS access. Keep API secrets out of the static site; use public feeds or an external proxy when necessary. Until connected, stats are labeled as previews.
 
@@ -251,3 +251,13 @@ The tests check command/path behavior, storage failure handling and JSON referen
 When ready to publish, `npm run deploy` runs the existing gh-pages workflow. GitHub Pages should serve its configured deployment branch. Commit source/data/images separately through your normal Git workflow. A running dev server is not the deployed site; JSON updates appear on GitHub Pages only after rebuilding and deploying.
 
 If a page fails: confirm exact filenames/case, valid JSON, unique route paths, matching discovery IDs, existing image variants, and the URL hash. Check browser console/network errors. A blank or stale view after editing may need a full reload or dev-server restart. Preserve discovery storage while reloading. Private browser sessions or different origins intentionally have separate discovery progress.
+
+## Reading shelf ordering and cover crops
+
+`manhwaTierlist.json` uses `"sort": "rating"`: highest rating first, then alphabetical title for equal ratings. Editing ratings automatically changes the displayed order after reload/rebuild. Use `"sort": "title"` for alphabetical order alone, or remove sort to preserve array order. Other collections can use the same settings.
+
+`"coverAspectRatio": { "width": 7, "height": 10 }` gives every cover the proportions of Houseki no Kuni (840 x 1200). The browser scales each image to fill that frame, then crops excess from the center with object-fit: cover. This automatically zooms/crops unusually wide or tall images without stretching them or editing originals. Keep original width/height metadata in each item. Remove coverAspectRatio to use each original aspect ratio, as the art gallery does.
+
+The Home discovery hint is only shown while at least one configured discovery is still locked. The hidden coffin file uses the generic message action; its response is stored in consoleFS.json.
+
+Terminal Tab always attempts completion and keeps input focus even if there is no match. Shift+Tab still moves focus for keyboard navigation. Hidden entries become completion candidates only after an `ls -a` listing actually reveals them; knowledge is tracked by absolute path for the current app session, survives clear/closing the terminal, and resets on a full page reload.

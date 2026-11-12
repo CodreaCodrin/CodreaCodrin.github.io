@@ -22,6 +22,7 @@ export default function TerminalOutput({ entry }: { entry: TerminalEntry }) {
     case 'pwd': return <p>{result.path}</p>;
     case 'execute': return result.file.action === 'unlock'
       ? <div className="unlock-output"><Unlock size={18} /><p>{entry.message}</p></div>
+      : result.file.action === 'message' ? <p>{result.file.message}</p>
       : ['account', 'profile'].includes(result.file.action) ? <AccountOutput file={result.file} /> : <p>{copy.unsupportedFile}</p>;
     default: return null;
   }

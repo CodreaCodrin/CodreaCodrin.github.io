@@ -110,7 +110,7 @@ cd tierlists
 ./manwa-manga-tierlist
 ```
 
-`cat`, `open`, and `./` all execute files. `ls` accepts optional paths; `cd` supports absolute/relative paths, `..`, `.`, `~`, and no argument (root). Commands support quoted paths, up/down history, Tab completion, `pwd`, `help`, and `clear`. This is a virtual shell: input is never passed to eval, the OS, or a real shell.
+`cat`, `open`, `nano`, `vim`, and `./` all execute files. `ls` accepts optional paths; `cd` supports absolute/relative paths, `..`, `.`, `~`, and no argument (root). Commands support quoted paths, up/down history, Tab completion, `pwd`, `help`, and `clear`. This is a virtual shell: input is never passed to eval, the OS, or a real shell.
 
 Discoveries add tiles to Home and the top-right menu with a short glitch. Executing a discovery never navigates. Unlocks are saved under the key configured in discovery.json, synchronized between tabs, and validated when loaded. Blocked storage falls back to in-memory state and reports that it cannot persist. Hidden routes show a discovery prompt until unlocked. This is a playful UI mechanic, not access control.
 

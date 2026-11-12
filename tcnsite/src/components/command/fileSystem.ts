@@ -1,15 +1,16 @@
 export interface Stat { label: string; value: string | number }
 export interface ConsoleFile {
-  type: 'file'; name: string; aliases?: string[]; action: 'unlock' | 'account' | 'profile';
+  type: 'file'; name: string; hidden?: boolean; aliases?: string[]; action: 'unlock' | 'account' | 'profile' | 'noop' | 'message';
+  message?: string;
   discoveryId?: string; provider?: string; title?: string; description?: string;
   accountId?: string; profileUrl?: string; endpoint?: string; mockStats?: Stat[];
 }
-export interface Directory { type: 'directory'; name: string; children: FSNode[] }
+export interface Directory { type: 'directory'; name: string; hidden?: boolean; children: FSNode[] }
 export type FSNode = Directory | ConsoleFile;
 export type ShellError = 'notFound' | 'notDirectory' | 'isDirectory' | 'unknownCommand' | 'invalidArguments' | 'unclosedQuote';
 export type CommandResult =
   | { kind: 'error'; error: ShellError; value: string }
-  | { kind: 'list'; nodes: FSNode[] }
+  | { kind: 'list'; nodes: FSNode[]; revealedPaths?: string[] }
   | { kind: 'cd'; path: string }
   | { kind: 'execute'; file: ConsoleFile }
   | { kind: 'pwd'; path: string }
@@ -58,14 +59,17 @@ export function runCommand(input: string, cwd: string, root: Directory): Command
   const tokens = tokenize(input);
   if (!tokens) return { kind: 'error', error: 'unclosedQuote', value: '' };
   if (!tokens.length) return { kind: 'empty' };
-  const [command, ...args] = tokens;
+  const [command, ...rawArgs] = tokens;
   const direct = command.startsWith('./');
   const name = direct ? './' : command;
+  const showHidden = name === 'ls' && rawArgs.includes('-a');
+  const args = name === 'ls' ? rawArgs.filter(argument => argument !== '-a') : rawArgs;
   const noArgs = ['help', 'pwd', 'clear'].includes(name);
-  if (!['ls', 'cd', 'cat', 'open', './', 'help', 'pwd', 'clear'].includes(name))
+  if (!['ls', 'cd', 'cat', 'open', 'nano', 'vim', './', 'help', 'pwd', 'clear'].includes(name))
     return { kind: 'error', error: 'unknownCommand', value: command };
   if ((noArgs && args.length) || (direct && args.length) || args.length > 1 ||
-      (['cat', 'open'].includes(name) && (!args.length || !args[0])))
+      (name === 'ls' && args.some(argument => argument.startsWith('-'))) ||
+      (['cat', 'open', 'nano', 'vim'].includes(name) && (!args.length || !args[0])))
     return { kind: 'error', error: 'invalidArguments', value: name };
   if (name === 'help' || name === 'clear') return { kind: name };
   if (name === 'pwd') return { kind: 'pwd', path: cwd };
@@ -75,13 +79,22 @@ export function runCommand(input: string, cwd: string, root: Directory): Command
   if (name === 'cd') return result.node.type === 'directory'
     ? { kind: 'cd', path: result.path }
     : { kind: 'error', error: 'notDirectory', value: path };
-  if (name === 'ls') return { kind: 'list', nodes: result.node.type === 'directory' ? result.node.children : [result.node] };
+  if (name === 'ls') {
+    const nodes = result.node.type === 'directory'
+      ? result.node.children.filter(node => showHidden || (!node.hidden && !node.name.startsWith('.')))
+      : [result.node];
+    return { kind: 'list', nodes, ...(showHidden ? { revealedPaths: nodes
+      .filter(node => node.hidden || node.name.startsWith('.'))
+      .map(node => result.node.type === 'directory'
+        ? `${result.path === '/' ? '' : result.path}/${node.name}` : result.path) } : {}) };
+  }
+  if (result.node.type === 'file' && result.node.action === 'noop') return { kind: 'empty' };
   return result.node.type === 'file'
     ? { kind: 'execute', file: result.node }
     : { kind: 'error', error: 'isDirectory', value: path };
 }
 
-export function completePath(input: string, cwd: string, root: Directory, commands: string[]) {
+export function completePath(input: string, cwd: string, root: Directory, commands: string[], knownHidden: ReadonlySet<string> = new Set()) {
   const parts = input.split(/\s+/);
   const fragment = parts[parts.length - 1];
   if (parts.length === 1 && !fragment.includes('/')) {
@@ -94,7 +107,9 @@ export function completePath(input: string, cwd: string, root: Directory, comman
   const partial = fragment.slice(slash + 1);
   const resolved = resolvePath(root, cwd, directory);
   if ('error' in resolved || resolved.node.type !== 'directory') return input;
-  const matches = resolved.node.children.filter(node => node.name.startsWith(partial) && (parts[0] !== 'cd' || node.type === 'directory'));
+  const matches = resolved.node.children.filter(node =>
+    ((!node.hidden && !node.name.startsWith('.')) || knownHidden.has(`${resolved.path === '/' ? '' : resolved.path}/${node.name}`))
+    && node.name.startsWith(partial) && (parts[0] !== 'cd' || node.type === 'directory'));
   if (matches.length !== 1) return input;
   return input.slice(0, input.length - fragment.length) + prefix + matches[0].name + (matches[0].type === 'directory' ? '/' : '');
 }

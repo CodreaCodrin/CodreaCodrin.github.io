@@ -1,4 +1,5 @@
 import { test } from 'node:test';
+import { sortByTitle, sortByRating } from '../src/components/collections/sortByTitle.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { runCommand, resolvePath, completePath, tokenize } from '../src/components/command/fileSystem.ts';
@@ -7,6 +8,50 @@ import { validDiscoveries, readStored, writeStored } from '../src/lib/storage.ts
 const read = name => JSON.parse(readFileSync(new URL('../data/' + name + '.json', import.meta.url), 'utf8').replace(/^\uFEFF/, ''));
 const root = read('consoleFS');
 const command = (input, cwd = '/') => runCommand(input, cwd, root);
+
+test('ratings sort descending with alphabetical ties and react to changed scores', () => {
+  const items = [{ title: 'Zebra', rating: 4.5 }, { title: 'Apple', rating: 4.5 }, { title: 'Cherry', rating: 0 }, { title: 'Banana', rating: 5 }];
+  const original = JSON.stringify(items);
+  assert.deepEqual(sortByRating(items).map(item => item.title), ['Banana', 'Apple', 'Zebra', 'Cherry']);
+  assert.equal(JSON.stringify(items), original);
+  const changed = items.map(item => item.title === 'Cherry' ? { ...item, rating: 5 } : item);
+  assert.deepEqual(sortByRating(changed).map(item => item.title), ['Banana', 'Cherry', 'Apple', 'Zebra']);
+});
+
+test('hidden entries autocomplete only after their actual paths have been revealed', () => {
+  const known = new Set();
+  assert.equal(completePath('cat cof', '/', root, ['cat'], known), 'cat cof');
+  assert.equal(command('ls').revealedPaths, undefined);
+  const listing = command('ls -a ../', '/tierlists');
+  for (const path of listing.revealedPaths) known.add(path);
+  assert.deepEqual([...known], ['/coffin']);
+  assert.equal(completePath('cat cof', '/', root, ['cat'], known), 'cat coffin');
+  assert.equal(completePath('./cof', '/', root, [], known), './coffin');
+  assert.equal(completePath('vim ../cof', '/tierlists', root, ['vim'], known), 'vim ../coffin');
+  assert.equal(completePath('cat cof', '/tierlists', root, ['cat'], known), 'cat cof');
+  const fixture = { type: 'directory', name: '/', children: [
+    { type: 'directory', name: 'secret', hidden: true, children: [] },
+    { type: 'directory', name: '.dotfolder', children: [] },
+  ] };
+  const hidden = new Set(runCommand('ls -a', '/', fixture).revealedPaths);
+  assert.equal(completePath('cd sec', '/', fixture, ['cd'], hidden), 'cd secret/');
+  assert.equal(completePath('cd .do', '/', fixture, ['cd'], hidden), 'cd .dotfolder/');
+});
+
+test('alphabetical ordering is independent of rating and preserves source data', () => {
+  const items = [{ title: 'Zebra', rating: 5 }, { title: 'apple', rating: 0 }, { title: 'Book 10', rating: 4 }, { title: 'Book 2', rating: 1 }];
+  const snapshot = JSON.stringify(items);
+  assert.deepEqual(sortByTitle(items).map(item => item.title), ['apple', 'Book 2', 'Book 10', 'Zebra']);
+  assert.equal(JSON.stringify(items), snapshot);
+  assert.deepEqual(sortByTitle(items.map(item => ({ ...item, rating: 5 - item.rating }))).map(item => item.title), ['apple', 'Book 2', 'Book 10', 'Zebra']);
+});
+
+test('tierlist cover proportions match Houseki no Kuni while retaining image dimensions', () => {
+  const data = read('manhwaTierlist');
+  const reference = data.items.find(item => item.title === 'Houseki no Kuni');
+  assert.equal(data.coverAspectRatio.width / data.coverAspectRatio.height, reference.width / reference.height);
+  assert.equal(data.sort, 'rating');
+});
 
 test('configured pages have unique routes, real data files and consistent discovery IDs', () => {
   const reserved = ['/', '/aboutme', '/projects', '/hobbies', '/contactme', '/art-gallery', '/manwa-manga-tierlist', '/manhwa-tierlist'];
@@ -53,6 +98,42 @@ test('cd handles relative, absolute, parent, home, repeated slashes and root bou
     ['cd ~', '/games_folder', '/'], ['cd ~/tierlists/', '/games_folder', '/tierlists'],
     ['cd //games_folder/./', '/', '/games_folder'],
   ]) assert.deepEqual(command(input, cwd), { kind: 'cd', path }, input);
+});
+
+test('ls resolves current and parent directories with trailing slashes', () => {
+  assert.deepEqual(command('ls ./'), command('ls'));
+  assert.deepEqual(command('ls ../', '/games_folder'), command('ls /'));
+  assert.deepEqual(command('ls ../', '/'), command('ls /'));
+  assert.deepEqual(command('ls ./', '/games_folder'), command('ls /games_folder'));
+});
+
+test('ls -a reveals hidden files and directories without advertising the flag', () => {
+  assert.ok(!command('ls').nodes.some(node => node.name === 'coffin'));
+  for (const input of ['ls -a', 'ls -a ./', 'ls ./ -a'])
+    assert.ok(command(input).nodes.some(node => node.name === 'coffin'), input);
+  assert.ok(command('ls -a ../', '/games_folder').nodes.some(node => node.name === 'coffin'));
+  const fixture = { type: 'directory', name: '/', children: [
+    { type: 'directory', name: 'secret', hidden: true, children: [] },
+    { type: 'directory', name: '.dotfolder', children: [] },
+  ] };
+  assert.equal(runCommand('ls', '/', fixture).nodes.length, 0);
+  assert.equal(runCommand('ls -a', '/', fixture).nodes.length, 2);
+  assert.ok(!JSON.stringify(read('console').commands).includes('-a'));
+  assert.equal(completePath('cat cof', '/', root, ['cat']), 'cat cof');
+  for (const method of ['cat', 'open', 'nano', 'vim'])
+    assert.equal(command(method + ' /coffin').file.message, 'nu trebuia sa gasesti asta, esti bun');
+  assert.equal(command('./coffin').file.action, 'message');
+});
+
+test('nano and vim execute files with paths and validate their arguments', () => {
+  for (const method of ['nano', 'vim']) {
+    assert.deepEqual(command(method + ' art_gallery'), command('cat art_gallery'));
+    assert.deepEqual(command(method + ' ../art_gallery', '/tierlists'), command('cat art_gallery'));
+    assert.equal(command(method).error, 'invalidArguments');
+    assert.equal(command(method + ' a b').error, 'invalidArguments');
+    assert.equal(command(method + ' games_folder').error, 'isDirectory');
+    assert.equal(command(method + ' missing').error, 'notFound');
+  }
 });
 test('all execution aliases resolve to the same file', () => {
   const expected = command('cat /art_gallery').file;

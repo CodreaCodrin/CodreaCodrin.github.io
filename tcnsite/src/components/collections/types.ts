@@ -5,6 +5,8 @@ export interface CollectionItem {
   srcSet?: string;
 }
 export interface CollectionData {
+  sort?: string;
+  coverAspectRatio?: { width: number; height: number };
   discoveryId: string; eyebrow: string; title: string; description: string;
   assetDirectory: string; emptyMessage: string; sampleNotice?: string; items: CollectionItem[];
 }

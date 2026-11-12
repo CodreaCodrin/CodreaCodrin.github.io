@@ -8,7 +8,9 @@
 .collection-card h2 { font-size: 17px; font-weight: 600; letter-spacing: -.3px; }
 .rated-grid .collection-card > h2 { margin-bottom: 14px; }
 .collection-image { width: 100%; position: relative; overflow: hidden; background: var(--color-bg-secondary); border: 1px solid var(--color-border); }
-.collection-image picture { display: block; width: 100%; height: 100%; }
+.collection-image picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.collection-image.normalized-cover { max-height: none; }
+.normalized-cover img { object-position: center center; }
 .collection-image img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 300ms, transform 450ms ease; }
 .collection-image.is-loaded img { opacity: 1; }
 .clickable-card:hover img { transform: scale(1.035); }

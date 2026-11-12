@@ -19,6 +19,7 @@ export default function Terminal() {
   const [entries, setEntries] = useState<TerminalEntry[]>([]);
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const [knownHidden, setKnownHidden] = useState<Set<string>>(() => new Set());
   const draft = useRef('');
   const nextId = useRef(0);
   const field = useRef<HTMLInputElement>(null);
@@ -64,6 +65,9 @@ export default function Terminal() {
     if (!input.trim()) return;
     const command = input.trim();
     const result = runCommand(command, cwd, fs);
+    if (result.kind === 'list' && result.revealedPaths?.length) {
+      setKnownHidden(previous => new Set([...previous, ...result.revealedPaths!]));
+    }
     let message: string | undefined;
     if (result.kind === 'execute' && result.file.action === 'unlock') {
       const id = result.file.discoveryId ?? '';
@@ -86,8 +90,9 @@ export default function Terminal() {
       const next = event.key === 'ArrowUp' ? Math.min(historyIndex + 1, history.length - 1) : Math.max(historyIndex - 1, -1);
       setHistoryIndex(next); setInput(next === -1 ? draft.current : history[history.length - 1 - next]);
     } else if (event.key === 'Tab' && !event.shiftKey) {
-      const completed = completePath(input, cwd, fs, copy.commands.map(command => command.name));
-      if (completed !== input) { event.preventDefault(); setInput(completed); }
+      event.preventDefault();
+      const completed = completePath(input, cwd, fs, copy.commands.map(command => command.name), knownHidden);
+      if (completed !== input) { setInput(completed); setHistoryIndex(-1); }
     }
   }
   return <>
@@ -125,7 +130,7 @@ export default function Terminal() {
       </motion.section>}
     </AnimatePresence>
     {!open && !hintSeen && <button className="terminal-nudge" onClick={() => { setHintSeen(true); setOpen(true); }}>
-      <span>{copy.suggestion}<small>{copy.shortcutHint}</small></span><CornerDownRight size={23} aria-hidden="true" />
+      <span>{copy.suggestion}</span><CornerDownRight size={23} aria-hidden="true" />
     </button>}
     <button ref={launcher} className="terminal-launcher" aria-label={open ? copy.closeLabel : copy.openLabel}
       title={copy.shortcutHint} aria-keyshortcuts="~" aria-expanded={open} aria-controls={open ? 'portfolio-terminal' : undefined}

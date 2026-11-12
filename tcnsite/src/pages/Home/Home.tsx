@@ -29,6 +29,6 @@ export default function Home() {
         <OnPageNavButton {...item} discovered />
       </motion.div>)}</div>
     </section>}
-    <p className="discovery-hint">{copy.home.discoveryHint}</p>
+    {found.length < discovery.items.length && <p className="discovery-hint">{copy.home.discoveryHint}</p>}
   </PageWrapper></div>;
 }

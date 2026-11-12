@@ -7,11 +7,14 @@ import Modal from '../common/Modal';
 import OptimizedImage from './OptimizedImage';
 import StarRating from './StarRating';
 import type { CollectionData, CollectionItem } from './types';
+import { sortByTitle, sortByRating } from './sortByTitle';
 import copy from '../../../data/collections.json';
 import discovery from '../../../data/discovery.json';
 export default function CollectionView({ data, rated = false }: { data: CollectionData; rated?: boolean }) {
   const { unlocked } = useDiscovery();
   const [selected, setSelected] = useState<CollectionItem | null>(null);
+  const items = data.sort === 'rating' ? sortByRating(data.items)
+    : data.sort === 'title' ? sortByTitle(data.items) : data.items;
   if (data.discoveryId && !unlocked.includes(data.discoveryId)) return <div className="collection-page"><ReturnHome /><div className="locked-view">
     <LockKeyhole size={32} /><h1>{discovery.lockedTitle}</h1><p>{discovery.lockedDescription}</p>
   </div></div>;
@@ -20,10 +23,10 @@ export default function CollectionView({ data, rated = false }: { data: Collecti
     <header className="collection-header"><p className="eyebrow">{data.eyebrow}</p><h1>{data.title}</h1><p>{data.description}</p></header>
     {data.sampleNotice && data.items.some(item => item.sample) && <p className="sample-notice">{data.sampleNotice}</p>}
     <div className={`collection-grid ${rated ? 'rated-grid' : ''}`}>
-      {data.items.map((item, index) => {
+      {items.map((item, index) => {
         const content = <>
           {rated && <h2>{item.title}</h2>}
-          <OptimizedImage key={`${data.assetDirectory}/${item.image}`} item={item} directory={data.assetDirectory} priority={index === 0} />
+          <OptimizedImage key={`${data.assetDirectory}/${item.image}`} item={item} directory={data.assetDirectory} priority={index === 0} aspectRatio={data.coverAspectRatio} />
           <div className="card-caption">
             {!rated && <h2>{item.title}</h2>}
             {rated && <StarRating value={item.rating ?? 0} />}
