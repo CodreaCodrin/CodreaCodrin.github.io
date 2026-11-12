@@ -1,4 +1,5 @@
-import { Link } from '@tanstack/react-router';
+import ReturnHome from '../../components/navigation/ReturnHome';
+import copy from '../../../data/site.json';
 import './NotFound.css';
 
 export default function NotFound() {
@@ -18,9 +19,9 @@ export default function NotFound() {
                    <div className="relative z-30">
                        <h1 
                             className="text-8xl md:text-9xl font-black tracking-tighter glitch-text text-white"
-                            data-text="404"
+                            data-text={copy.notFound.code}
                         >
-                            404
+                            {copy.notFound.code}
                        </h1>
                    </div>
                 </div>
@@ -28,23 +29,17 @@ export default function NotFound() {
                 {/* Subtext */}
                 <div className="mt-8 text-center space-y-2">
                     <p className="text-xl md:text-2xl font-bold uppercase tracking-[0.2em] relative inline-block">
-                        Page Not Found
+                        {copy.notFound.title}
                         <span className="absolute -inset-1 bg-white/10 -skew-y-3 -z-10 block"></span>
                     </p>
                     <p className="text-sm text-gray-400 max-w-xs mx-auto mt-4 px-4">
-                        We're sorry, the page you requested could not be found. Please go back to the homepage.
+                        {copy.notFound.description}
                     </p>
                 </div>
 
                 {/* Action Buttons */}
                 <div className="mt-12 flex flex-col gap-4">
-                     <Link 
-                        to="/" 
-                        className="group relative px-8 py-3 bg-white text-black font-bold uppercase tracking-wider transition-all hover:bg-gray-200"
-                    >
-                        <span className="relative z-10 group-hover:text-purple-600 transition-colors">Go Home</span>
-                        <div className="absolute inset-0 h-full w-full bg-white transform translate-x-2 translate-y-2 -z-10 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform border border-white opacity-30"></div>
-                    </Link>
+                     <ReturnHome />
                 </div>
             </div>
 

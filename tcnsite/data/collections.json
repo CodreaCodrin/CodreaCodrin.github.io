@@ -1,0 +1,9 @@
+{
+  "viewDescription": "Read the story",
+  "imagePlaceholder": "IMAGE TO COME",
+  "imageUnavailable": "Image unavailable",
+  "sample": "SAMPLE",
+  "ratingLabel": "{rating} out of 5 stars",
+  "ratingSuffix": "/ 5",
+  "imageSizes": "(max-width: 600px) 92vw, (max-width: 900px) 44vw, 360px"
+}

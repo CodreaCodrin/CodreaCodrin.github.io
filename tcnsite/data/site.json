@@ -1,0 +1,153 @@
+{
+  "brand": "Miel",
+  "documentTitle": "Teodosie Codrin · Miel",
+  "homeHint": "shortcut to home",
+  "returnHome": "Return to Home",
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu",
+  "menuTitle": "Find your way.",
+  "menuEyebrow": "THE DIRECTORY",
+  "navigationLabel": "Explore the portfolio",
+  "changeTheme": "Change theme",
+  "close": "Close",
+  "skipContent": "Skip to content",
+  "loading": "Loading…",
+  "navigation": [
+    {
+      "title": "Hm",
+      "text": "home",
+      "path": "/",
+      "home": false
+    },
+    {
+      "title": "Ab",
+      "text": "about",
+      "path": "/aboutme",
+      "home": true
+    },
+    {
+      "title": "Pr",
+      "text": "projects",
+      "path": "/projects",
+      "home": true
+    },
+    {
+      "title": "Ho",
+      "text": "hobbies",
+      "path": "/hobbies",
+      "home": true
+    },
+    {
+      "title": "Ct",
+      "text": "contact",
+      "path": "/contactme",
+      "home": true
+    }
+  ],
+  "socialLinks": [
+    {
+      "icon": "Github",
+      "href": "https://github.com/CodreaCodrin",
+      "label": "GitHub"
+    },
+    {
+      "icon": "Linkedin",
+      "href": "https://www.linkedin.com/in/teodosiecodrin/",
+      "label": "LinkedIn"
+    },
+    {
+      "icon": "Mail",
+      "href": "mailto:codrinteodosie@gmail.com",
+      "label": "Email"
+    }
+  ],
+  "home": {
+    "greetings": [
+      "Hai să trăiești!",
+      "Salut salut!",
+      "Hi!",
+      "Hello!"
+    ],
+    "intro": [
+      {
+        "text": "I'm "
+      },
+      {
+        "text": "Teodosie Codrin",
+        "path": "/aboutme"
+      },
+      {
+        "text": ", a Computer Science student that enjoys building "
+      },
+      {
+        "text": "things",
+        "path": "/projects"
+      },
+      {
+        "text": ". I love solving my own everyday annoyances by building custom apps and "
+      },
+      {
+        "text": "small tools",
+        "path": "/hobbies"
+      },
+      {
+        "text": " from scratch. Outside of my projects, I'm always involved in a lot of different "
+      },
+      {
+        "text": "sports",
+        "path": "/hobbies"
+      },
+      {
+        "text": ". Beyond those, maintaining an athletic routine is my way of staying competitive and active."
+      }
+    ],
+    "discoveryHint": "A little curiosity goes a long way.",
+    "discoveredLabel": "OFF THE BEATEN PATH"
+  },
+  "about": {
+    "title": "About me",
+    "paragraphs": [
+      "I am currently pursuing a Master's degree in Cybersecurity.",
+      "Whenever I run into a small everyday problem, my first instinct is to code a tool or an app to fix it myself. Alongside that, I have a strong passion for networking, specifically the design and implementation of physical network infrastructure. I find great satisfaction in building and organizing hardware-level systems, and I also love game development - a space where I truly feel at home creating things from scratch.",
+      "My ultimate dream is to earn passive income from a rabbit breeding business. Opel love <3."
+    ]
+  },
+  "hobbies": {
+    "title": "My hobbies",
+    "sections": [
+      {
+        "icon": "Dumbbell",
+        "title": "Sport",
+        "content": "Currently I practice kickboxing and bouldering on a regular basis. Over the years I've also been involved in swimming, football, padel, tennis, billiards, basketball and strength training."
+      },
+      {
+        "icon": "Crown",
+        "title": "Chess",
+        "content": "I started playing chess six years ago and have kept playing daily but i made very little progress since I've never got to study openings or strategies. Playing is still fun even after thousands of games and competing with my father and my friends will never let me abandon this game."
+      },
+      {
+        "icon": "Gamepad2",
+        "title": "Gaming",
+        "content": "I've played a huge variety of games across every genre - especially metroidvanias, soulslikes and roguelikes. I'm really into fast-paced games that push my reaction time to the limit. For me, the overall experience is key, so I pay close attention to the soundtrack, atmosphere, and visual style (except competitive games of course, where there are other criteria)."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact me"
+  },
+  "projects": {
+    "title": "My projects",
+    "sourceLabel": "GitHub",
+    "demoLabel": "Demo"
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Page Not Found",
+    "description": "The page you requested could not be found. Let's get you back home."
+  },
+  "routeError": {
+    "title": "This view could not load.",
+    "description": "Reload the page to load the latest version. Your saved discoveries will remain available.",
+    "retry": "Reload page"
+  }
+}

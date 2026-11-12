@@ -3,31 +3,9 @@ import { Github, Play } from 'lucide-react';
 import PageWrapper from '../../components/layout/PageWrapper';
 import projects from '../../../data/projects.json';
 
-const tagColors: Record<string, string> = {
-  Rust: '#dea584',
-  JavaScript: '#f1e05a',
-  TypeScript: '#3178c6',
-  Python: '#3572A5',
-  Lua: '#000080',
-  Svelte: '#ff3e00',
-  Unity: '#888888',
-  'C#': '#68217a',
-  Aseprite: '#7d929e',
-  playwright: '#2EAD33',
-  SQLite: '#003B57',
-  Markdown: '#083fa1',
-  React: '#61dafb',
-  'React shadcnui': '#2563eb',
-  PostgreSQL: '#336791',
-  'RoBERT AI': '#ff9d00',
-  'framer-motion': '#00d5ff',
-  RAG: '#e91e63',
-  Go: '#00add8',
-  Firebase: '#ffca28',
-  Android: '#a3e635',
-  Capacitor: '#ff6b4a',
-  'Tailwind CSS': '#38bdf8',
-};
+import colors from '../../../data/tagColors.json';
+import copy from '../../../data/site.json';
+const tagColors: Record<string, string> = colors;
 
 export default function Projects() {
   return (
@@ -39,7 +17,7 @@ export default function Projects() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        My projects
+        {copy.projects.title}
       </motion.h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
@@ -75,7 +53,7 @@ export default function Projects() {
                       href={project.githubLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${project.projectName} GitHub`}
+                      aria-label={`${project.projectName} ${copy.projects.sourceLabel}`}
                       className="p-1.5 rounded-md transition-colors duration-200"
                       style={{ color: "var(--color-text-muted)" }}
                       onMouseEnter={e => { e.currentTarget.style.color = "var(--color-primary)"; }}
@@ -89,7 +67,7 @@ export default function Projects() {
                       href={project.demoLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${project.projectName} Demo`}
+                      aria-label={`${project.projectName} ${copy.projects.demoLabel}`}
                       className="p-1.5 rounded-md transition-colors duration-200"
                       style={{ color: "var(--color-text-muted)" }}
                       onMouseEnter={e => { e.currentTarget.style.color = "var(--color-primary)"; }}

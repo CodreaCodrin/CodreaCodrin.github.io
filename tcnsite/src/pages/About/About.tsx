@@ -1,52 +1,8 @@
-import { motion } from 'framer-motion';
 import PageWrapper from '../../components/layout/PageWrapper';
-
+import copy from '../../../data/site.json';
 export default function About() {
-  return (
-    <PageWrapper className="max-w-5xl">
-      <motion.h1
-        className="text-5xl md:text-6xl font-extrabold text-center mb-12"
-        style={{ color: 'var(--color-primary)' }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        About me
-      </motion.h1>
-
-      <motion.p
-        className="text-lg leading-relaxed mb-8"
-        style={{ color: 'var(--color-text-muted)' }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.35 }}
-      >
-        I am currently pursuing a Master's degree in Cybersecurity.
-      </motion.p>
-
-      <hr className="w-full mb-8" style={{ borderColor: 'var(--color-border)' }} />
-
-      <motion.p
-        className="text-lg leading-relaxed mb-8"
-        style={{ color: 'var(--color-text-muted)' }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.5 }}
-      >
-        Whenever I run into a small everyday problem, my first instinct is to code a tool or an app to fix it myself. Alongside that, I have a strong passion for networking, specifically the design and implementation of physical network infrastructure. I find great satisfaction in building and organizing hardware-level systems, and I also love game development — a space where I truly feel at home creating things from scratch.
-      </motion.p>
-
-      <hr className="w-full mb-8" style={{ borderColor: 'var(--color-border)' }} />
-
-      <motion.p
-        className="text-lg leading-relaxed"
-        style={{ color: 'var(--color-text-muted)' }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.65 }}
-      >
-        My ultimate dream is to earn passive income from a rabbit breeding business. Opel love &#60;3.
-      </motion.p>
-    </PageWrapper>
-  );
+  return <PageWrapper className="max-w-5xl">
+    <h1 className="page-title">{copy.about.title}</h1>
+    <div className="prose-sections">{copy.about.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
+  </PageWrapper>;
 }

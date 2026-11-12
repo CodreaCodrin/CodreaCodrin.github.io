@@ -1,0 +1,54 @@
+{
+  "storageKey": "theme",
+  "defaultTheme": "dark",
+  "themes": {
+    "dark": {
+      "label": "Amber Miel",
+      "background": "BlackGoldBackground.jpg",
+      "colorScheme": "dark",
+      "colors": {
+        "--color-primary": "#e87a1e",
+        "--color-secondary": "#1a1a1a",
+        "--color-accent": "#f5a623",
+        "--color-bg": "#111111",
+        "--color-bg-secondary": "#1e1e1e",
+        "--color-text": "#e0e0e0",
+        "--color-text-muted": "#a3a3a3",
+        "--color-border": "#3a3a3a",
+        "--color-panel": "#111111de"
+      }
+    },
+    "blue": {
+      "label": "Midnight Miel",
+      "background": "BlackBlueBackground.jpg",
+      "colorScheme": "dark",
+      "colors": {
+        "--color-primary": "#60a5fa",
+        "--color-secondary": "#0a0a0f",
+        "--color-accent": "#93c5fd",
+        "--color-bg": "#0d0d14",
+        "--color-bg-secondary": "#151520",
+        "--color-text": "#dde4f0",
+        "--color-text-muted": "#94a3bd",
+        "--color-border": "#2a3550",
+        "--color-panel": "#0d0d14de"
+      }
+    },
+    "light": {
+      "label": "Daylight Miel",
+      "background": "",
+      "colorScheme": "light",
+      "colors": {
+        "--color-primary": "#a34808",
+        "--color-secondary": "#f7f4ef",
+        "--color-accent": "#b75a0d",
+        "--color-bg": "#f2eee8",
+        "--color-bg-secondary": "#fffcf7",
+        "--color-text": "#29251f",
+        "--color-text-muted": "#716557",
+        "--color-border": "#d6cbbd",
+        "--color-panel": "#fffcf7eb"
+      }
+    }
+  }
+}

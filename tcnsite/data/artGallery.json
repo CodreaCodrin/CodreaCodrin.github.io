@@ -1,0 +1,14 @@
+{
+  "discoveryId": "art-gallery",
+  "eyebrow": "THE VISUAL SIDE",
+  "title": "Art Gallery",
+  "description": "A space for sketches, experiments, and things made just for the joy of making.",
+  "assetDirectory": "artGallery",
+  "emptyMessage": "The walls are ready. The first pieces are on their way.",
+  "sampleNotice": "Preview collection · sample cards until original artwork is added.",
+  "items": [
+    { "id": "art-01", "title": "Artwork 01", "image": "", "alt": "Placeholder for the first artwork", "width": 800, "height": 1000, "sample": true, "description": "This is a sample description. Add your artwork and its story in artGallery.json." },
+    { "id": "art-02", "title": "Artwork 02", "image": "", "alt": "Placeholder for the second artwork", "width": 800, "height": 1000, "sample": true },
+    { "id": "art-03", "title": "Artwork 03", "image": "", "alt": "Placeholder for the third artwork", "width": 800, "height": 1000, "sample": true, "description": "A place for the details behind the piece: the idea, the medium, or the happy accident." }
+  ]
+}
