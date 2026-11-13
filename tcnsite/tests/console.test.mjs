@@ -76,7 +76,7 @@ test('configured pages have unique routes, real data files and consistent discov
 test('root and nested directories expose precisely the requested files', () => {
   assert.deepEqual(command('ls').nodes.map(node => node.name), ['games_folder', 'tierlists', 'art_gallery']);
   assert.deepEqual(command('ls games_folder').nodes.map(node => node.name), ['riot_account', 'chess_account', 'steam_account']);
-  assert.deepEqual(command('ls /tierlists').nodes.map(node => node.name), ['manwa-manga-tierlist']);
+  assert.deepEqual(command('ls /tierlists').nodes.map(node => node.name), ['games_tierlist', 'manwa-manga-tierlist']);
 });
 test('cd handles relative, absolute, parent, home, repeated slashes and root boundaries', () => {
   for (const [input, cwd, path] of [

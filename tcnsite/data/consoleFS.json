@@ -45,6 +45,15 @@
       "children": [
         {
           "type": "file",
+          "name": "games_tierlist",
+          "action": "profile",
+          "description": "This is my Backloggd profile, where I rate and log the games I've played.",
+          "title": "Backloggd",
+          "accountId": "codrinnicu",
+          "profileUrl": "https://backloggd.com/u/codrinnicu/games/played/by/user-rating/type:played;/"
+        },
+        {
+          "type": "file",
           "name": "manwa-manga-tierlist",
           "action": "unlock",
           "discoveryId": "manhwa-tierlist",
