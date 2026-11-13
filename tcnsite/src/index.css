@@ -1,6 +1,6 @@
 @import "tailwindcss";
-/* Keep viewport geometry stable from the first paint, including short routes. */
-html { overflow-y: scroll; scrollbar-gutter: stable; overflow-x: clip; }
+/* Symmetric gutters keep panels centered even while native scrollbar metrics change. */
+html { overflow-y: scroll; scrollbar-gutter: stable both-edges; overflow-x: clip; }
 :root { font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; line-height: 1.5; font-weight: 400; color: var(--color-text); background: var(--color-bg); font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body { margin: 0; min-width: 0; min-height: 100svh; overflow-x: clip; }
 button, a, input { -webkit-tap-highlight-color: transparent; }

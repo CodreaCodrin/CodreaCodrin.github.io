@@ -7,12 +7,10 @@ export function useDiscoveryEffect<T extends HTMLElement>() {
   useEffect(() => {
     if (!glitchKey || !ref.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const animation = ref.current.animate([
-      { transform: 'translateX(0)' },
-      { transform: 'translateX(-3px) skewX(-0.5deg)' },
-      { transform: 'translateX(3px)' },
-      { transform: 'translateX(-2px)' },
-      { transform: 'translateX(0)' },
-    ], { duration: data.glitchDurationMs, easing: 'steps(2, end)' });
+      { opacity: 1 },
+      { opacity: 0.75 },
+      { opacity: 1 },
+    ], { duration: data.glitchDurationMs, easing: 'ease-out' });
     return () => animation.cancel();
   }, [glitchKey]);
   return ref;
