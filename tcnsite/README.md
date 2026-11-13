@@ -118,15 +118,11 @@ React components render account cards, links, directory listings, help and disco
 
 ## Account setup
 
-Set each account's `accountId` and, for Steam, `profileUrl` in consoleFS.json. The profile action renders the description/link immediately. Riot and chess render their descriptions immediately and wait 1 second before returning explicitly labeled preview stats.
+Chess.com is connected directly to the public API using the username and endpoint in `data/consoleFS.json`. Executing `cat games_folder/chess_account` displays only Rapid and Blitz ratings plus the total games played across every chess mode returned by the API (wins, losses and draws included). Missing ratings display `Not played`. Chess.com may refresh its published data only once every 24 hours; these are the latest API values, not an instant match feed. The browser caches successful results for five minutes.
 
-To connect real statistics, set `endpoint` to an HTTPS, CORS-enabled public endpoint containing `{accountId}`. The account ID is URL-encoded and substituted by `src/services/accountStats.ts`. The expected response is:
+Riot displays only Solo/Duo rank, Flex rank and their combined current ranked game count (wins + losses from LEAGUE-V4). Its endpoint is intentionally empty until a separate secure Cloudflare Worker is configured. No preview ratings are presented as live data. **EUNE is a provisional default and must be checked.** Follow [the complete Riot activation guide](integrations/riot/README.md) to add a secret, deploy the Worker and connect its public URL. Never add a Riot key to frontend JSON or a Vite environment variable.
 
-```json
-{ "stats": [{ "label": "Rapid", "value": 1500 }] }
-```
-
-The adapter validates responses and handles HTTP errors, request timeout and cancellation. Map provider-specific responses in this service when adding the actual API. Never put private API keys in JSON or client code: use a public feed, build-time data, or a separately hosted proxy for APIs requiring secrets. No live API is configured by default.
+All account IDs/descriptions/endpoints remain in `data/consoleFS.json`; labels, provider settings, API paths, caching and notices are in `data/accountStats.json`. Steam remains an immediate profile link. Custom public HTTPS endpoints can return `{ "stats": [{ "label": "Rank", "value": "Gold" }] }` for non-Chess providers. HTTP errors, malformed responses, timeouts and cancellation are handled by the adapter.
 
 ## Images
 
@@ -170,7 +166,7 @@ Backgrounds load only when their theme is first needed, decode before display, a
 
 - `src/components/command`: pure filesystem/command engine, terminal UI, rich output
 - `src/context`: shared discovery state
-- `src/services`: future public statistics API integration
+- `src/services`: public statistics API integration
 - `src/components/collections`: reusable cards, images, ratings and description view
 - `src/components/navigation`: shared navigation, return links and social links
 - `src/components/layout`: panels and background layers

@@ -15,21 +15,7 @@
           "accountId": "codrindătemaiașa #NICU",
           "description": "Biggest mistake of my life. Account details and statistics will appear here once configured.",
           "profileUrl": "",
-          "endpoint": "",
-          "mockStats": [
-            {
-              "label": "Rank",
-              "value": "—"
-            },
-            {
-              "label": "Win rate",
-              "value": "—"
-            },
-            {
-              "label": "Games",
-              "value": "—"
-            }
-          ]
+          "endpoint": "https://miel-riot-stats.codrin-miel.workers.dev/stats/riot"
         },
         {
           "type": "file",
@@ -39,22 +25,8 @@
           "title": "Chess",
           "accountId": "CodreaCodrinNicu",
           "description": "One more game. My chess account and ratings will live here.",
-          "profileUrl": "",
-          "endpoint": "",
-          "mockStats": [
-            {
-              "label": "Rapid",
-              "value": "—"
-            },
-            {
-              "label": "Blitz",
-              "value": "—"
-            },
-            {
-              "label": "Bullet",
-              "value": "—"
-            }
-          ]
+          "profileUrl": "https://www.chess.com/member/codreacodrinnicu",
+          "endpoint": "https://api.chess.com/pub/player/{accountId}/stats"
         },
         {
           "type": "file",

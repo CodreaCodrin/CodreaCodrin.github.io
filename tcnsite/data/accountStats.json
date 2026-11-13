@@ -1,0 +1,59 @@
+{
+  "cacheMs": 300000,
+  "messages": {
+    "notConfigured": "Riot statistics are not connected yet. The secure API service needs to be configured first.",
+    "unplayed": "Not played",
+    "http": {
+      "403": "The statistics service could not authenticate. Its API key may need renewal.",
+      "404": "Account not found. Check the username or Riot ID and server.",
+      "429": "The API is busy. Please wait a few minutes before trying again.",
+      "503": "The statistics service is not configured or is temporarily unavailable."
+    }
+  },
+  "chess": {
+    "modes": [
+      {
+        "key": "chess_rapid",
+        "label": "Rapid"
+      },
+      {
+        "key": "chess_blitz",
+        "label": "Blitz"
+      }
+    ],
+    "labels": {
+      "games": "Total games played"
+    },
+    "note": "Latest public Chess.com data; their API may refresh only once every 24 hours. This portfolio is not affiliated with Chess.com."
+  },
+  "riot": {
+    "region": "europe",
+    "platform": "eun1",
+    "path": "/stats/riot",
+    "allowedOrigins": [
+      "https://codreacodrin.github.io",
+      "http://localhost:5173",
+      "http://127.0.0.1:5173"
+    ],
+    "apiBase": "https://{route}.api.riotgames.com",
+    "accountPath": "/riot/account/v1/accounts/by-riot-id/{name}/{tag}",
+    "leaguePath": "/lol/league/v4/entries/by-puuid/{puuid}",
+    "cacheSeconds": 300,
+    "timeoutMs": 8000,
+    "queues": [
+      {
+        "key": "RANKED_SOLO_5x5",
+        "label": "Solo / Duo"
+      },
+      {
+        "key": "RANKED_FLEX_SR",
+        "label": "Ranked Flex"
+      }
+    ],
+    "labels": {
+      "unranked": "Unranked",
+      "games": "Ranked games (current season)"
+    },
+    "note": "League of Legends ranked statistics. Cached for up to five minutes. This portfolio is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc."
+  }
+}
