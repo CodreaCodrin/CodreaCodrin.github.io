@@ -1,1 +1,0 @@
-import{f as e,z as t}from"./ReturnHome-CKluOLsJ.js";import{t as n}from"./CollectionView-sj83p0T8.js";import{t as r}from"./manhwaTierlist-l6WqBBv7.js";var i=t(),a=e();function o(){let e=(0,i.c)(1),t;return e[0]===Symbol.for(`react.memo_cache_sentinel`)?(t=(0,a.jsx)(n,{data:r,rated:!0}),e[0]=t):t=e[0],t}export{o as default};
