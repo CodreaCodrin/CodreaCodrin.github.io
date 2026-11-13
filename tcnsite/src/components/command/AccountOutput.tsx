@@ -26,7 +26,7 @@ export default function AccountOutput({ file }: { file: ConsoleFile }) {
       {error ? <p className="terminal-error">{error}</p> : result ? <>
         {result.mode === 'live' && <><span className="eyebrow">{copy.liveLabel}</span>
         <dl className="stats-grid">{result.stats.map(stat => <div key={stat.label}><dt>{stat.label}</dt><dd>{stat.value}</dd></div>)}</dl></>}
-        <p className="muted">{result.note}</p>
+        {result.note && <p className="muted">{result.note}</p>}
       </> : <p className="loading-stats"><LoaderCircle size={14} className="spin" />{copy.loadingStats}</p>}
     </div>}
     {href ? <a className="text-link" href={href} target="_blank" rel="noopener noreferrer">{copy.profileLink}<ExternalLink size={13} /></a>
