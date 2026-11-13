@@ -10,9 +10,10 @@ export default function Modal({ title, children, onClose, className = '' }: {
     const dialog = ref.current;
     const previous = document.activeElement as HTMLElement | null;
     dialog?.showModal();
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { dialog?.close(); document.body.style.overflow = overflow; previous?.focus(); };
+    const root = document.documentElement;
+    const overflow = root.style.overflowY;
+    root.style.overflowY = 'hidden';
+    return () => { dialog?.close(); root.style.overflowY = overflow; previous?.focus(); };
   }, []);
   return <dialog ref={ref} className={`modal ${className}`} aria-label={title}
     onCancel={onClose} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>

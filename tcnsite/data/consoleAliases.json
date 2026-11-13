@@ -1,0 +1,30 @@
+{
+  "commands": [
+    { "name": "l", "command": "ls", "args": [] },
+    { "name": "ll", "command": "ls", "args": ["-l"] },
+    { "name": "la", "command": "ls", "args": ["-a"] },
+    { "name": "lla", "command": "ls", "args": ["-la"] },
+    { "name": "dir", "command": "ls", "args": [] },
+    { "name": "vdir", "command": "ls", "args": ["-l"] },
+    { "name": "less", "command": "cat", "args": [] },
+    { "name": "more", "command": "cat", "args": [] },
+    { "name": "bat", "command": "cat", "args": [] },
+    { "name": "vi", "command": "cat", "args": [] },
+    { "name": "view", "command": "cat", "args": [] },
+    { "name": "nvim", "command": "cat", "args": [] },
+    { "name": "emacs", "command": "cat", "args": [] },
+    { "name": "xdg-open", "command": "open", "args": [] },
+    { "name": "chdir", "command": "cd", "args": [] },
+    { "name": "..", "command": "cd", "args": [".."] },
+    { "name": "...", "command": "cd", "args": ["../.."] },
+    { "name": "cls", "command": "clear", "args": [] },
+    { "name": "reset", "command": "clear", "args": [] },
+    { "name": "?", "command": "help", "args": [] }
+  ],
+  "listing": {
+    "hiddenFlags": ["-a", "-A", "--all", "-all", "--almost-all"],
+    "ignoredFlags": ["--human-readable", "--color", "--color=auto", "--color=always", "--color=never"],
+    "shortFlags": ["a", "A", "l", "h", "F", "1"],
+    "hiddenShortFlags": ["a", "A"]
+  }
+}

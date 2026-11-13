@@ -1,10 +1,9 @@
 {
   "storageKey": "theme",
-  "defaultTheme": "dark",
+  "defaultTheme": "blue",
   "themes": {
     "dark": {
       "label": "Amber Miel",
-      "background": "BlackGoldBackground.jpg",
       "colorScheme": "dark",
       "colors": {
         "--color-primary": "#e87a1e",
@@ -15,12 +14,14 @@
         "--color-text": "#e0e0e0",
         "--color-text-muted": "#a3a3a3",
         "--color-border": "#3a3a3a",
-        "--color-panel": "#111111de"
+        "--color-panel": "#111111de",
+        "--background-glow-opacity": ".16",
+        "--background-line-opacity": ".55",
+        "--background-dot-opacity": ".12"
       }
     },
     "blue": {
       "label": "Midnight Miel",
-      "background": "BlackBlueBackground.jpg",
       "colorScheme": "dark",
       "colors": {
         "--color-primary": "#60a5fa",
@@ -31,47 +32,30 @@
         "--color-text": "#dde4f0",
         "--color-text-muted": "#94a3bd",
         "--color-border": "#2a3550",
-        "--color-panel": "#0d0d14de"
+        "--color-panel": "#0d0d14de",
+        "--background-glow-opacity": ".16",
+        "--background-line-opacity": ".55",
+        "--background-dot-opacity": ".12"
       }
     },
     "light": {
       "label": "Daylight Miel",
       "note": "(don't do this)",
-      "background": "",
       "colorScheme": "light",
       "colors": {
-        "--color-primary": "#a34808",
-        "--color-secondary": "#f7f4ef",
-        "--color-accent": "#b75a0d",
-        "--color-bg": "#f2eee8",
-        "--color-bg-secondary": "#fffcf7",
-        "--color-text": "#29251f",
-        "--color-text-muted": "#716557",
-        "--color-border": "#d6cbbd",
-        "--color-panel": "#fffcf7eb"
+        "--color-primary": "#285c40",
+        "--color-secondary": "#b7c2b7",
+        "--color-accent": "#356e50",
+        "--color-bg": "#c5cec4",
+        "--color-bg-secondary": "#d0d9cf",
+        "--color-text": "#20382a",
+        "--color-text-muted": "#425b49",
+        "--color-border": "#95a492",
+        "--color-panel": "#d5ddd3f2",
+        "--background-glow-opacity": ".07",
+        "--background-line-opacity": ".28",
+        "--background-dot-opacity": ".07"
       }
     }
-  },
-  "backgroundVariants": {
-    "BlackGoldBackground.jpg": [
-      {
-        "path": "BlackGoldBackground-960.jpg",
-        "width": 960
-      },
-      {
-        "path": "BlackGoldBackground-1920.jpg",
-        "width": 1920
-      }
-    ],
-    "BlackBlueBackground.jpg": [
-      {
-        "path": "BlackBlueBackground-960.jpg",
-        "width": 960
-      },
-      {
-        "path": "BlackBlueBackground-1920.jpg",
-        "width": 1920
-      }
-    ]
   }
 }

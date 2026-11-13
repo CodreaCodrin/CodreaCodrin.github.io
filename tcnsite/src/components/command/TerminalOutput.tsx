@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Folder, FileCode, Unlock } from 'lucide-react';
 import type { CommandResult } from './fileSystem';
 import AccountOutput from './AccountOutput';
@@ -5,7 +6,7 @@ import copy from '../../../data/console.json';
 import { format } from '../../lib/format';
 
 export interface TerminalEntry { id: number; command: string; cwd: string; result: CommandResult; message?: string }
-export default function TerminalOutput({ entry }: { entry: TerminalEntry }) {
+function TerminalOutput({ entry }: { entry: TerminalEntry }) {
   const { result } = entry;
   switch (result.kind) {
     case 'error': return <p className="terminal-error">{format(copy[result.error], {
@@ -27,3 +28,5 @@ export default function TerminalOutput({ entry }: { entry: TerminalEntry }) {
     default: return null;
   }
 }
+
+export default memo(TerminalOutput);

@@ -73,18 +73,6 @@ test('configured pages have unique routes, real data files and consistent discov
   }
 });
 
-test('responsive background candidates exist and are smaller than the originals', () => {
-  const themes = read('themes');
-  for (const [original, candidates] of Object.entries(themes.backgroundVariants)) {
-    const originalBytes = readFileSync(new URL('../public/' + original, import.meta.url)).length;
-    for (const candidate of candidates) {
-      assert.ok(candidate.width > 0);
-      const bytes = readFileSync(new URL('../public/' + candidate.path, import.meta.url)).length;
-      assert.ok(bytes < originalBytes);
-    }
-  }
-});
-
 test('root and nested directories expose precisely the requested files', () => {
   assert.deepEqual(command('ls').nodes.map(node => node.name), ['games_folder', 'tierlists', 'art_gallery']);
   assert.deepEqual(command('ls games_folder').nodes.map(node => node.name), ['riot_account', 'chess_account', 'steam_account']);
@@ -209,7 +197,8 @@ test('JSON collection and discovery references are consistent', () => {
     assert.equal(new Set(data.items.map(item => item.id)).size, data.items.length);
     for (const item of data.items) {
       assert.ok(item.width > 0 && item.height > 0 && item.alt && item.title);
-      if (name === 'manhwaTierlist') assert.ok(item.rating >= 0 && item.rating <= 5 && Number.isInteger(item.rating * 2));
+      // Personal decimal scores are valid; the existing renderer rounds stars to halves.
+      if (name === 'manhwaTierlist') assert.ok(Number.isFinite(item.rating) && item.rating >= 0 && item.rating <= 5);
       if (item.image) assert.ok(existsSync(new URL('../public/' + data.assetDirectory + '/' + item.image, import.meta.url)));
       else assert.equal(item.sample, true);
     }

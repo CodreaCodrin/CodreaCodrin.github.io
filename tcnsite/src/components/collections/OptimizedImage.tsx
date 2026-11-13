@@ -3,6 +3,8 @@ import { ImageOff, Image as ImageIcon } from 'lucide-react';
 import type { CollectionItem } from './types';
 import { assetUrl } from '../../lib/format';
 import copy from '../../../data/collections.json';
+import rawVariants from '../../../data/imageVariants.json';
+const variants = rawVariants as Record<string, { variants: { path: string; width: number }[] }>;
 export default function OptimizedImage({ item, directory, priority = false, aspectRatio }: {
   item: CollectionItem; directory: string; priority?: boolean; aspectRatio?: { width: number; height: number };
 }) {
@@ -20,7 +22,7 @@ export default function OptimizedImage({ item, directory, priority = false, aspe
       <span>{failed ? copy.imageUnavailable : copy.imagePlaceholder}</span>
     </div> : <picture>
       {item.sources?.map(source => <source key={source.type} type={source.type} srcSet={srcSet(source.srcSet)} sizes={copy.imageSizes} />)}
-      <img src={url(item.image)} srcSet={item.srcSet ? srcSet(item.srcSet) : undefined} sizes={copy.imageSizes}
+      <img src={url(item.image)} srcSet={item.srcSet ? srcSet(item.srcSet) : variants[`${directory}/${item.image}`]?.variants.map(variant => `${encodeURI(assetUrl(variant.path))} ${variant.width}w`).join(', ')} sizes={copy.imageSizes}
         alt={item.alt} width={item.width} height={item.height} loading={priority ? 'eager' : 'lazy'}
         decoding="async" fetchPriority={priority ? 'high' : 'auto'}
         onLoad={() => setLoaded(true)} onError={() => setFailed(true)} />

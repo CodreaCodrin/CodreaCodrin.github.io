@@ -1,9 +1,11 @@
+import aliases from '../../../data/consoleAliases.json' with { type: 'json' };
+
 export interface Stat { label: string; value: string | number }
 export interface ConsoleFile {
   type: 'file'; name: string; hidden?: boolean; aliases?: string[]; action: 'unlock' | 'account' | 'profile' | 'noop' | 'message';
   message?: string;
   discoveryId?: string; provider?: string; title?: string; description?: string;
-  accountId?: string; profileUrl?: string; endpoint?: string; mockStats?: Stat[];
+  accountId?: string; profileUrl?: string; endpoint?: string;
 }
 export interface Directory { type: 'directory'; name: string; hidden?: boolean; children: FSNode[] }
 export type FSNode = Directory | ConsoleFile;
@@ -59,16 +61,32 @@ export function runCommand(input: string, cwd: string, root: Directory): Command
   const tokens = tokenize(input);
   if (!tokens) return { kind: 'error', error: 'unclosedQuote', value: '' };
   if (!tokens.length) return { kind: 'empty' };
-  const [command, ...rawArgs] = tokens;
+  const [command, ...inputArgs] = tokens;
   const direct = command.startsWith('./');
-  const name = direct ? './' : command;
-  const showHidden = name === 'ls' && rawArgs.includes('-a');
-  const args = name === 'ls' ? rawArgs.filter(argument => argument !== '-a') : rawArgs;
+  const alias = !direct ? aliases.commands.find(item => item.name === command) : undefined;
+  const name = direct ? './' : alias?.command ?? command;
+  const rawArgs = [...(alias?.args ?? []), ...inputArgs];
+  let showHidden = false;
+  let args = rawArgs;
+  if (name === 'ls') {
+    args = [];
+    let options = true;
+    for (const argument of rawArgs) {
+      if (options && argument === '--') { options = false; continue; }
+      if (options && argument.startsWith('-')) {
+        const short = argument.startsWith('--') ? [] : [...argument.slice(1)];
+        if (aliases.listing.hiddenFlags.includes(argument)) showHidden = true;
+        else if (aliases.listing.ignoredFlags.includes(argument)) { /* Same compact listing. */ }
+        else if (short.length && short.every(flag => aliases.listing.shortFlags.includes(flag))) {
+          showHidden ||= short.some(flag => aliases.listing.hiddenShortFlags.includes(flag));
+        } else return { kind: 'error', error: 'invalidArguments', value: name };
+      } else args.push(argument);
+    }
+  }
   const noArgs = ['help', 'pwd', 'clear'].includes(name);
   if (!['ls', 'cd', 'cat', 'open', 'nano', 'vim', './', 'help', 'pwd', 'clear'].includes(name))
     return { kind: 'error', error: 'unknownCommand', value: command };
   if ((noArgs && args.length) || (direct && args.length) || args.length > 1 ||
-      (name === 'ls' && args.some(argument => argument.startsWith('-'))) ||
       (['cat', 'open', 'nano', 'vim'].includes(name) && (!args.length || !args[0])))
     return { kind: 'error', error: 'invalidArguments', value: name };
   if (name === 'help' || name === 'clear') return { kind: name };
@@ -98,7 +116,7 @@ export function completePath(input: string, cwd: string, root: Directory, comman
   const parts = input.split(/\s+/);
   const fragment = parts[parts.length - 1];
   if (parts.length === 1 && !fragment.includes('/')) {
-    const matches = commands.filter(name => name.startsWith(fragment));
+    const matches = [...new Set([...commands, ...aliases.commands.map(item => item.name)])].filter(name => name.startsWith(fragment));
     return matches.length === 1 ? matches[0] + ' ' : input;
   }
   const slash = fragment.lastIndexOf('/');
@@ -109,7 +127,8 @@ export function completePath(input: string, cwd: string, root: Directory, comman
   if ('error' in resolved || resolved.node.type !== 'directory') return input;
   const matches = resolved.node.children.filter(node =>
     ((!node.hidden && !node.name.startsWith('.')) || knownHidden.has(`${resolved.path === '/' ? '' : resolved.path}/${node.name}`))
-    && node.name.startsWith(partial) && (parts[0] !== 'cd' || node.type === 'directory'));
+    && node.name.startsWith(partial) &&
+    ((aliases.commands.find(item => item.name === parts[0])?.command ?? parts[0]) !== 'cd' || node.type === 'directory'));
   if (matches.length !== 1) return input;
   return input.slice(0, input.length - fragment.length) + prefix + matches[0].name + (matches[0].type === 'directory' ? '/' : '');
 }

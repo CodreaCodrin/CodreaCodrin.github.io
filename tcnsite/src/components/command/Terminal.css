@@ -66,3 +66,8 @@
   .terminal { width: calc(100% - 24px); }
   .terminal-nudge { right: 20px; bottom: max(78px, calc(env(safe-area-inset-bottom) + 64px)); width: 206px; padding: 11px 15px; font-size: 11px; max-width: calc(100% - 40px); }
 }
+
+.terminal-opening { animation: terminal-enter 220ms cubic-bezier(.2,.8,.2,1) both; }
+.terminal-closing { animation: terminal-exit 160ms ease both; pointer-events: none; }
+@keyframes terminal-enter { from { opacity: 0; transform: translate3d(0,20px,0) scale(.97); } to { opacity: 1; transform: translate3d(0,0,0) scale(1); } }
+@keyframes terminal-exit { from { opacity: 1; transform: translate3d(0,0,0); } to { opacity: 0; transform: translate3d(0,12px,0); } }

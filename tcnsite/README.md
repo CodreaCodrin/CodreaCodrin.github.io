@@ -1,6 +1,6 @@
 # Miel — personal portfolio
 
-React 19 + TypeScript + Vite, TanStack Router, Tailwind CSS, and Framer Motion. Everything runs in the browser; no Node server is needed in production.
+React 19 + TypeScript + Vite, TanStack Router, Tailwind CSS, and native CSS animations. Everything runs in the browser; no Node server is needed in production.
 
 ## Local workflow
 
@@ -84,7 +84,7 @@ The reading shelf is **Manhwa & Manga Tierlist**, at `/#/manwa-manga-tierlist`. 
 | --- | --- |
 | site.json | Existing page copy, brand, navigation, social URLs, accessible labels |
 | projects.json / tagColors.json | Projects and technology colors |
-| themes.json | Theme names, palettes, background paths, persistence key |
+| themes.json | Theme names, palettes, background intensity, persistence key |
 | console.json | Command help, prompts, errors, timing and output limits |
 | consoleFS.json | Virtual filesystem, account IDs/descriptions, profile URLs, public API endpoints |
 | discovery.json | Unlock IDs, navigation tiles, storage key, notifications |
@@ -160,7 +160,7 @@ Image strategy:
 
 Export the actual responsive variants before referencing them. The app does not pretend to resize/compress originals at runtime, and no image optimization service is required.
 
-Backgrounds load only when their theme is first needed, decode before display, and crossfade as fixed compositor-friendly layers. Other themes' backgrounds are not eagerly downloaded. Collection views fade all background imagery to zero opacity, leaving the solid theme color. Cached images can be reused when returning home.
+The background is drawn with CSS gradients and a small inline SVG: slow orbital curves, sparse dots and ambient light. It requests no background photographs and runs no JavaScript animation loop. It inherits theme colors, fades to a solid matte on collection pages, pauses when the tab is hidden or a matte page is open, and becomes static with reduced-motion preferences. Mobile renders fewer animated layers. Edit geometry and speeds in `data/background.json`, and theme intensity in `data/themes.json`. Unused photograph backgrounds have been removed.
 
 ## Structure and accessibility
 
@@ -173,6 +173,34 @@ Backgrounds load only when their theme is first needed, decode before display, a
 
 Native modal dialogs handle focus containment and Escape for menus/descriptions. The terminal is non-modal so visitors can see the discovery change on the website and interact with unlocked links. It focuses the input when opened and restores focus to its launcher when closed. Navigation uses real links, route changes focus main content, ratings have accessible text, and reduced-motion preferences disable decorative effects.
 
-Both original themes are preserved, with an additional daylight palette. CSS transitions animate actual color properties; background images crossfade instead of attempting to transition background-image.
+Amber, Midnight and Daylight palettes are preserved. CSS transitions smoothly update the procedural background color with the theme. No background image decoding is needed.
 
 For complete editing and page creation instructions, see [PAGE_GUIDE.md](./PAGE_GUIDE.md).
+
+## Performance and image generation
+
+About, Projects, Hobbies and Contact are included in the initial bundle; collection and configurable extra pages load on demand. Terminal, discovery and project entrances use CSS transforms/opacity rather than a JavaScript layout engine. Theme switching retains CSS color transitions on key surfaces and headings, without animating every nested text span. Large panels and modal backdrops no longer repeatedly blur the animated background. Terminal output is memoized so typing does not rerender existing rich output.
+
+`npm run build` (including `npm run deploy`) first runs `npm run optimize:images`. This generates responsive WebP files for collection images and `data/imageVariants.json`, preserving all originals, names, descriptions and crops. Cached content hashes skip unchanged work. Variants larger than the original are discarded; native-resolution originals remain candidates when conversion would be larger. Old generated variants are removed only inside `public/optimized`.
+
+Configure collections, widths and quality in `data/imageOptimization.json`. Add new collection JSON files there when needed. After adding/changing images, run `npm run optimize:images` before local development or tests. Commit the generated manifest and `public/optimized` files with your source. Hand-authored image sources/srcSet still take priority. Lazy loading, explicit dimensions, centered cover cropping and image error fallbacks remain available.
+
+Validation: production build, terminal/filesystem/storage/rating tests, responsive-image size/reference checks, and browser checks of discovery, navigation, dialogs, themes and mobile layouts. Bundle measurements compare production outputs, not development-mode timings; no fixed frame-rate guarantee is implied.
+
+## Background selector and stable layout
+
+The wallpaper button next to the theme button selects Orbital, Flow, or Still. Selection is stored locally using the key in `data/background.json`. Only the selected geometry is mounted: changing variants does not run multiple backgrounds. Still mounts no decorative SVG or animation. Both animated variants use CSS transforms, inherit theme colors and pause on matte pages/hidden tabs. Labels, descriptions and flow paths are in the same JSON.
+
+Critical CSS in `index.html` reserves the vertical scrollbar before the external stylesheet or application loads. Keep it consistent with `src/index.css`: root `overflow-y: scroll`, `scrollbar-gutter: stable` and horizontal overflow clipping. Page minimum heights use `svh` to avoid mobile browser toolbar resizing. Route loading placeholders reserve the page height. Project cards no longer use approximate offscreen heights. Native dialogs lock root scrolling while retaining the reserved gutter.
+
+## Theme defaults and navigation
+
+Midnight Miel (`blue`) is the default for visitors without a valid saved preference; an existing saved theme is preserved. The initial palette is generated from `data/themes.json` in the Vite HTML transform, including a small bootstrap that applies saved colors before first paint. Do not duplicate palette values in CSS. Daylight uses a muted sage/gray palette instead of near-white surfaces. Background timings (22-second light drift, 48-second curve drift, 7-second point pulse) live in `data/background.json`.
+
+The four main navigation pages (About, Projects, Hobbies and Contact) are included in the initial bundle to avoid separate code requests on the first visit. Their components are rendered only when opened. Collection pages, configurable extra pages and the not-found view remain lazy-loaded. Page entrance and theme animations remain enabled.
+
+## Keyboard navigation
+
+`a`: About, `p`: Projects, `h`: Hobbies, `c`: Contact. `Backspace` returns to the previous router history entry; if no previous entry exists, it returns to Home. It never deliberately navigates away from the portfolio. The five main pages are already in the initial bundle.
+
+Bindings are configured in `data/shortcuts.json`. Shortcuts are ignored while typing in inputs/editable content, while the terminal or a dialog/popover is open, for held keys/IME composition, and with Ctrl/Alt/Meta/Shift. The existing terminal shortcut (`~`) remains available.

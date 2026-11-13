@@ -54,7 +54,7 @@ test('browser adapter handles rate limits, malformed JSON, missing Riot endpoint
   await assert.rejects(fetchAccountStats({ accountId: 'user', endpoint: 'https://example.com/limited' }, signal), { message: config.messages.http['429'] });
   globalThis.fetch = async () => new Response('not json');
   await assert.rejects(fetchAccountStats({ accountId: 'user', endpoint: 'https://example.com/invalid' }, signal));
-  const result = await fetchAccountStats(riot, signal);
+  const result = await fetchAccountStats({ ...riot, endpoint: '' }, signal);
   assert.equal(result.mode, 'unconfigured');
   assert.deepEqual(result.stats, []);
   const controller = new AbortController();

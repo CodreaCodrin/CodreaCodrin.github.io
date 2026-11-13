@@ -1,0 +1,142 @@
+{
+  "viewBox": "0 0 1600 1000",
+  "motion": {
+    "fieldSeconds": 22,
+    "orbitSeconds": 48,
+    "pointsSeconds": 7
+  },
+  "orbits": [
+    {
+      "id": "outer",
+      "x": 1220,
+      "y": 400,
+      "radiusX": 970,
+      "radiusY": 620,
+      "rotation": -32,
+      "opacity": 0.45
+    },
+    {
+      "id": "middle",
+      "x": 1220,
+      "y": 400,
+      "radiusX": 860,
+      "radiusY": 510,
+      "rotation": -32,
+      "opacity": 0.65
+    },
+    {
+      "id": "inner",
+      "x": 1220,
+      "y": 400,
+      "radiusX": 750,
+      "radiusY": 400,
+      "rotation": -32,
+      "opacity": 0.4
+    },
+    {
+      "id": "core",
+      "x": 1220,
+      "y": 400,
+      "radiusX": 640,
+      "radiusY": 290,
+      "rotation": -32,
+      "opacity": 0.3
+    },
+    {
+      "id": "counterpoint",
+      "x": 90,
+      "y": 950,
+      "radiusX": 600,
+      "radiusY": 350,
+      "rotation": -32,
+      "opacity": 0.35
+    }
+  ],
+  "points": [
+    {
+      "id": "north",
+      "x": 1100,
+      "y": 145,
+      "radius": 2,
+      "opacity": 0.7
+    },
+    {
+      "id": "east",
+      "x": 1475,
+      "y": 660,
+      "radius": 2.5,
+      "opacity": 0.6
+    },
+    {
+      "id": "west",
+      "x": 190,
+      "y": 455,
+      "radius": 1.5,
+      "opacity": 0.5
+    },
+    {
+      "id": "south",
+      "x": 420,
+      "y": 890,
+      "radius": 2,
+      "opacity": 0.45
+    }
+  ],
+  "storageKey": "miel:background:v1",
+  "defaultBackground": "orbits",
+  "buttonLabel": "Change background",
+  "options": [
+    {
+      "id": "orbits",
+      "label": "Orbital",
+      "description": "Slow curves and distant points."
+    },
+    {
+      "id": "flow",
+      "label": "Flow",
+      "description": "Soft, flowing contour lines."
+    },
+    {
+      "id": "none",
+      "label": "Still",
+      "description": "Just the theme. No animation."
+    }
+  ],
+  "flow": [
+    {
+      "id": "contour-0",
+      "path": "M -300 180 C 200 -100, 350 850, 900 430 S 1450 200, 1900 450",
+      "opacity": 0.25
+    },
+    {
+      "id": "contour-1",
+      "path": "M -300 236 C 200 -52, 350 898, 900 478 S 1450 232, 1900 498",
+      "opacity": 0.3
+    },
+    {
+      "id": "contour-2",
+      "path": "M -300 292 C 200 -4, 350 946, 900 526 S 1450 264, 1900 546",
+      "opacity": 0.35
+    },
+    {
+      "id": "contour-3",
+      "path": "M -300 348 C 200 44, 350 994, 900 574 S 1450 296, 1900 594",
+      "opacity": 0.85
+    },
+    {
+      "id": "contour-4",
+      "path": "M -300 404 C 200 92, 350 1042, 900 622 S 1450 328, 1900 642",
+      "opacity": 0.45
+    },
+    {
+      "id": "contour-5",
+      "path": "M -300 460 C 200 140, 350 1090, 900 670 S 1450 360, 1900 690",
+      "opacity": 0.5
+    },
+    {
+      "id": "contour-6",
+      "path": "M -300 516 C 200 188, 350 1138, 900 718 S 1450 392, 1900 738",
+      "opacity": 0.55
+    }
+  ]
+}

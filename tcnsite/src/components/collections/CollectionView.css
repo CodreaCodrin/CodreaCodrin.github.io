@@ -1,4 +1,4 @@
-.collection-page { max-width: 1180px; margin: 0 auto; padding: 38px 32px 120px; min-height: calc(100dvh - 60px); }
+.collection-page { max-width: 1180px; margin: 0 auto; padding: 38px 32px 120px; min-height: calc(100svh - 60px); }
 .collection-header { margin: 64px 0 40px; }
 .collection-header h1 { font-size: clamp(42px, 6vw, 76px); line-height: 1.1; font-weight: 800; letter-spacing: -3px; margin: 18px 0 20px; }
 .collection-header > p:last-child { max-width: 510px; color: var(--color-text-muted); font-size: 16px; line-height: 1.8; }
@@ -42,3 +42,6 @@
   .collection-image { max-height: 560px; }
   .sample-notice { line-height: 1.8; }
 }
+
+.collection-card { contain: layout style; }
+.collection-image { contain: paint; }

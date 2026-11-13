@@ -24,7 +24,7 @@
     "labels": {
       "games": "Total games played"
     },
-    "note": "Latest public Chess.com data; their API may refresh only once every 24 hours. This portfolio is not affiliated with Chess.com."
+    "note": ""
   },
   "riot": {
     "region": "europe",

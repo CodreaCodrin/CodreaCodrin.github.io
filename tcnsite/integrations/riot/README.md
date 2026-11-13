@@ -30,7 +30,7 @@ The portfolio remains a static GitHub Pages site. Chess.com is called directly f
 - Only GET and OPTIONS at the configured path are accepted. CORS allows the GitHub Pages origin and local Vite origins listed in JSON. CORS is a browser access rule, not authentication. This endpoint intentionally exposes only your public account statistics; it cannot be used as an arbitrary Riot proxy.
 - 403: key invalid/expired or permission missing. 404: check Riot ID, platform and account availability. 429: wait before trying again. 503: missing secret/configuration. 502: unexpected upstream response, outage or timeout. Provider bodies and keys are never forwarded to the browser.
 - The default local origins use port 5173. Add your actual origin to `riot.allowedOrigins` if necessary; redeploy the Worker afterward.
-- The account description appears immediately. Loading statistics starts after the existing one-second terminal delay. Leaving/clearing terminal output cancels its browser request.
+- The account description appears immediately. Statistics requests start immediately; the artificial delay is disabled (`console.fetchDelayMs` is 0). Leaving/clearing terminal output cancels its browser request.
 
 ## Official references
 

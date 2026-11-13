@@ -1,11 +1,9 @@
-# Site-ul meu personal
+# Miel — personal portfolio
 
-<img width="322" height="144" alt="Screenshot 2026-03-09 173149" src="https://github.com/user-attachments/assets/c895cdd5-1454-4445-96e4-e5668f811b9f" />
-<br></br>
+React + TypeScript portfolio hosted on GitHub Pages.
 
-Ar fi fain sa
+- [Project setup and deployment](tcnsite/README.md)
+- [Content and page editing guide](tcnsite/PAGE_GUIDE.md)
+- [Riot statistics service](tcnsite/integrations/riot/README.md)
 
-- sa am o componenta terminal ce foloseste comenzi bash pentru a afla informatii ce nu sunt disponibile pe site
-- sa afisez in consola formatat frumos esti obraznic sau ceva de genul
-- sa am si un manual pentru ce comenzi bash am eu
-- sa am si un blog pe site mai incolo poate
+Run application commands from `tcnsite/`. Content and appearance settings live in `tcnsite/data/`.

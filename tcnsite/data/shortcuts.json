@@ -1,0 +1,10 @@
+{
+  "backKey": "Backspace",
+  "homePath": "/",
+  "pages": [
+    { "key": "a", "path": "/aboutme" },
+    { "key": "p", "path": "/projects" },
+    { "key": "h", "path": "/hobbies" },
+    { "key": "c", "path": "/contactme" }
+  ]
+}

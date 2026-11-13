@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { motion } from 'framer-motion';
 import PageWrapper from '../../components/layout/PageWrapper';
 import OnPageNavButton from '../../components/navigation/onPageNavButton';
 import SocialLinks from '../../components/navigation/SocialLinks';
@@ -25,9 +24,9 @@ export default function Home() {
     </section>
     {found.length > 0 && <section className="discovered-section">
       <p className="eyebrow">{copy.home.discoveredLabel}</p>
-      <div className="home-navigation">{found.map(item => <motion.div key={item.id} layout initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+      <div className="home-navigation">{found.map(item => <div key={item.id} className="discovery-enter">
         <OnPageNavButton {...item} discovered />
-      </motion.div>)}</div>
+      </div>)}</div>
     </section>}
     {found.length < discovery.items.length && <p className="discovery-hint">{copy.home.discoveryHint}</p>}
   </PageWrapper></div>;

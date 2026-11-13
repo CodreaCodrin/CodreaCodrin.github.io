@@ -14,11 +14,10 @@
   "outputLabel": "Terminal output",
   "maxHistory": 80,
   "maxInputLength": 500,
-  "fetchDelayMs": 1000,
+  "fetchDelayMs": 0,
   "fetchTimeoutMs": 10000,
   "loadingStats": "Loading account statistics…",
-  "mockLabel": "PREVIEW · NOT LIVE DATA",
-  "liveLabel": "LIVE STATISTICS",
+  "liveLabel": "Situația curentă",
   "missingAccount": "Account ID not configured yet.",
   "missingProfile": "Profile link not configured yet.",
   "profileLink": "Visit profile",
@@ -36,12 +35,12 @@
     {
       "name": "ls",
       "usage": "ls [path]",
-      "description": "List a directory or file."
+      "description": "List the contents of the directory. If no path is provided, it lists the current directory."
     },
     {
       "name": "cd",
       "usage": "cd [folder]",
-      "description": "Change directory. Supports .., /, ~ and nested paths."
+      "description": "Change directory. Navigate through directories. Supports .. (\"cd ..\" navigates back or up), /, ~ and nested paths."
     },
     {
       "name": "help",

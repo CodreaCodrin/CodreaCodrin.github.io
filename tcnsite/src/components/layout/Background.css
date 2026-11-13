@@ -1,0 +1,29 @@
+/* No image requests, canvas loop, external libraries or expensive blur filters. */
+.site-background { overflow: hidden; contain: strict; }
+.background-art { position: absolute; inset: 0; opacity: 1; color: var(--color-primary); transition: opacity 700ms ease, color 500ms ease; }
+.site-background[data-matte="true"] .background-art { opacity: 0; }
+.background-light { position: absolute; width: 74vmax; height: 74vmax; border-radius: 50%; background: radial-gradient(ellipse, currentColor, transparent 65%); opacity: var(--background-glow-opacity); animation: background-breathe var(--field-duration) ease-in-out infinite alternate; }
+.background-light-primary { top: -51vmax; right: -20vmax; }
+.background-light-secondary { bottom: -54vmax; left: -32vmax; opacity: calc(var(--background-glow-opacity) * .6); animation-direction: alternate-reverse; }
+.background-dots { position: absolute; inset: 0; background-image: radial-gradient(currentColor .7px, transparent .9px); background-size: 38px 38px; opacity: var(--background-dot-opacity); mask-image: linear-gradient(90deg, #000, transparent 35%, transparent 65%, #000); }
+.background-orbits { position: absolute; inset: 0; width: 100%; height: 100%; opacity: var(--background-line-opacity); stroke-width: 1; transform-origin: 76% 40%; animation: background-orbit var(--orbit-duration) ease-in-out infinite alternate; will-change: transform; }
+.background-orbit-drift { transform: none; }
+.background-orbit-points { animation: background-signal var(--points-duration) ease-in-out infinite alternate; }
+.background-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, var(--color-bg) 0%, transparent 75%); opacity: .48; }
+.site-background[data-paused="true"] .background-art * { animation-play-state: paused; }
+@keyframes background-breathe { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-3%, 6%, 0); } }
+@keyframes background-orbit { from { transform: rotate(-5deg) translate3d(0, 0, 0); } to { transform: rotate(8deg) translate3d(-2%, 2%, 0); } }
+@keyframes background-signal { from { opacity: .4; } to { opacity: .85; } }
+@media (max-width: 600px) {
+  .background-dots { background-size: 32px 32px; }
+  .background-light-secondary { display: none; }
+  .background-orbits { opacity: calc(var(--background-line-opacity) * .7); }
+  .background-orbit-points { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .background-art, .background-art * { animation: none !important; transition: none !important; }
+}
+
+.background-flow { transform-origin: center; animation-name: background-flow; }
+@keyframes background-flow { from { transform: translate3d(-2%, -1%, 0); } to { transform: translate3d(2%, 2%, 0); } }
+@media (prefers-reduced-motion: reduce) { .background-flow { animation: none !important; } }

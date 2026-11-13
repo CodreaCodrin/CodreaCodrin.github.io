@@ -16,7 +16,8 @@ All paths below are relative to `tcnsite/`. Run commands from that directory. Pr
 | Artwork entries | `data/artGallery.json` |
 | Manhwa and manga entries and ratings | `data/manhwaTierlist.json` |
 | Shared collection labels and responsive image sizes | `data/collections.json` |
-| Theme colors, background filenames and responsive variants | `data/themes.json` |
+| Theme colors and procedural background intensity | `data/themes.json` |
+| Background geometry and animation speeds | `data/background.json` |
 | Shared layout, home tiles and theme transitions | `src/index.css` |
 | Terminal layout and suggestion arrow | `src/components/command/Terminal.css` |
 | Collection layout | `src/components/collections/CollectionView.css` |
@@ -144,7 +145,7 @@ Put the image in `public/photography/mountain-light.jpg`. Add a registry entry:
 }
 ```
 
-Add matching discovery and filesystem entries as in section 4. `matte: true` fades background photography out and uses the theme's solid color. `matte: false` retains it. Without an explicit value, discovery routes use matte backgrounds.
+Add matching discovery and filesystem entries as in section 4. `matte: true` fades the procedural background out and uses the theme's solid color. `matte: false` retains it. Without an explicit value, discovery routes use matte backgrounds.
 
 For a public collection, use `"discoveryId": ""` in its data, omit the registry's discoveryId, and add a regular site navigation entry. For a secret collection, keep the same discoveryId in all four places: collection data, registry, discovery item, terminal file.
 
@@ -180,11 +181,13 @@ Create those files before referencing them. All versions should have the same cr
 
 ### Theme backgrounds
 
-`themes.json` maps each theme to its original `background` filename. `backgroundVariants` maps that filename to optimized candidates with `path` and numeric `width`. The browser chooses based on viewport width and pixel density, so a high-density phone may choose the 1920 version.
+Backgrounds are generated entirely in code; no photograph is loaded. `src/components/layout/Background.tsx` renders the inline SVG and CSS layers; `Background.css` controls their appearance.
 
-The included 960/1920 JPEG versions are much smaller than the originals. Keep originals as source assets. When replacing a background, export matching variants and update both the theme background and its variants entry. JPEG quality around 75-85 and a desktop width around 1920 are useful starting points; inspect fine lines/gradients before accepting compression. WebP/AVIF can save more bytes but require corresponding source handling if you want format fallbacks.
+Edit `data/background.json` to change the SVG viewBox, ellipse centers/radii/rotation/opacity, decorative points, and `motion.fieldSeconds` / `motion.orbitSeconds`. Larger durations mean slower motion. Keep counts small for mobile performance.
 
-Only requested theme backgrounds download. The previous decoded image remains visible until its replacement is ready. Switching to daylight or a matte page intentionally fades imagery away. Fixed layers crossfade instead of animating background-image. Smaller files reduce network/decode delay; removing blur from phone panels reduces GPU work. A cold download can still take time on a slow connection.
+Each theme in `data/themes.json` inherits its primary color and defines `--background-glow-opacity`, `--background-line-opacity`, and `--background-dot-opacity` (values from 0 to 1). Reduce these values for a quieter background. The obsolete background JPEGs have been removed.
+
+Matte pages fade all decorative layers out, leaving the theme's solid base. Animation pauses on matte pages and hidden tabs; reduced-motion preferences disable it completely. Phones omit the secondary glow and point pulsing. No canvas, WebGL, pointer tracking or animation package is needed.
 
 ## 7. Terminal customization
 
@@ -261,3 +264,25 @@ If a page fails: confirm exact filenames/case, valid JSON, unique route paths, m
 The Home discovery hint is only shown while at least one configured discovery is still locked. The hidden coffin file uses the generic message action; its response is stored in consoleFS.json.
 
 Terminal Tab always attempts completion and keeps input focus even if there is no match. Shift+Tab still moves focus for keyboard navigation. Hidden entries become completion candidates only after an `ls -a` listing actually reveals them; knowledge is tracked by absolute path for the current app session, survives clear/closing the terminal, and resets on a full page reload.
+
+## Automatic image optimization
+
+Add images and JSON entries as usual. Run `npm run optimize:images` before development/tests; production builds and deploys run it automatically. Settings live in `data/imageOptimization.json`. Do not edit `data/imageVariants.json` or files under `public/optimized` by hand. Include them in Git commits; originals remain the source of truth. Cached variants regenerate only when the source/settings change. This does not change cover cropping, titles, ratings or sorting.
+
+## Background selector and stable layout
+
+The wallpaper button next to the theme button selects Orbital, Flow, or Still. Selection is stored locally using the key in `data/background.json`. Only the selected geometry is mounted: changing variants does not run multiple backgrounds. Still mounts no decorative SVG or animation. Both animated variants use CSS transforms, inherit theme colors and pause on matte pages/hidden tabs. Labels, descriptions and flow paths are in the same JSON.
+
+Critical CSS in `index.html` reserves the vertical scrollbar before the external stylesheet or application loads. Keep it consistent with `src/index.css`: root `overflow-y: scroll`, `scrollbar-gutter: stable` and horizontal overflow clipping. Page minimum heights use `svh` to avoid mobile browser toolbar resizing. Route loading placeholders reserve the page height. Project cards no longer use approximate offscreen heights. Native dialogs lock root scrolling while retaining the reserved gutter.
+
+## Keyboard navigation
+
+`a`: About, `p`: Projects, `h`: Hobbies, `c`: Contact. `Backspace` returns to the previous router history entry; if no previous entry exists, it returns to Home. It never deliberately navigates away from the portfolio. The five main pages are already in the initial bundle.
+
+Bindings are configured in `data/shortcuts.json`. Shortcuts are ignored while typing in inputs/editable content, while the terminal or a dialog/popover is open, for held keys/IME composition, and with Ctrl/Alt/Meta/Shift. The existing terminal shortcut (`~`) remains available.
+
+## Unadvertised terminal aliases
+
+`data/consoleAliases.json` defines compatibility aliases independently of the public help list. `l`, `ll`, `la`, `lla`, `dir` and `vdir` reuse `ls`; `la`/`lla` include hidden entries. `ls -all`, `--all`, `-A`, `--almost-all`, `-la`, `-al` and `-lah` reveal the same hidden files as `ls -a`. Formatting flags (`-l`, `-h`, `-F`, `-1`, and color flags) retain the existing compact listing; no detailed or recursive listing is implemented. `--` ends option parsing.
+
+`less`, `more`, `bat`, `vi`, `view`, `nvim`, `emacs` and `xdg-open` reuse file execution, without actual editors or paging. `chdir`, `..` and `...` reuse directory navigation. `cls`/`reset` clear the output, and `?` shows the existing help. Aliases participate in completion; hidden files still require discovery first. None of these aliases are added to `console.commands` or help.

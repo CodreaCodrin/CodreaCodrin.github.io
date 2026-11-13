@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Github, Play } from 'lucide-react';
 import PageWrapper from '../../components/layout/PageWrapper';
 import projects from '../../../data/projects.json';
@@ -10,28 +9,22 @@ const tagColors: Record<string, string> = colors;
 export default function Projects() {
   return (
     <PageWrapper className="max-w-5xl">
-      <motion.h1
-        className="text-5xl md:text-6xl font-extrabold text-center mb-10"
+      <h1
+        className="project-heading text-5xl md:text-6xl font-extrabold text-center mb-10"
         style={{ color: "var(--color-primary)" }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
       >
         {copy.projects.title}
-      </motion.h1>
+      </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        {projects.map((project, i) => (
-          <motion.div
+        {projects.map((project) => (
+          <div
             key={project.projectName}
-            className="rounded-xl p-6 flex flex-col justify-between transition-colors duration-200"
+            className="project-card rounded-xl p-6 flex flex-col justify-between transition-colors duration-200"
             style={{
               backgroundColor: "var(--color-bg-secondary)",
               border: "1px solid var(--color-border)",
             }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
             onMouseEnter={e => {
               e.currentTarget.style.borderColor = "var(--color-primary)";
             }}
@@ -100,7 +93,7 @@ export default function Projects() {
                 </span>
               ))}
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </PageWrapper>

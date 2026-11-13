@@ -1,7 +1,6 @@
 import './Terminal.css';
-import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { Terminal as TerminalIcon, X, CornerDownLeft } from 'lucide-react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import rawFS from '../../../data/consoleFS.json';
 import copy from '../../../data/console.json';
 import discovery from '../../../data/discovery.json';
@@ -13,6 +12,7 @@ import { format } from '../../lib/format';
 const fs = rawFS as Directory;
 export default function Terminal() {
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
   const [hintSeen, setHintSeen] = useState(false);
   const [cwd, setCwd] = useState('/');
   const [input, setInput] = useState('');
@@ -28,8 +28,7 @@ export default function Terminal() {
   const content = useRef<HTMLDivElement>(null);
   const followOutput = useRef(true);
   const { unlock } = useDiscovery();
-  const reduced = useReducedMotion();
-  const close = () => { setOpen(false); launcher.current?.focus(); };
+  const close = useCallback(() => { setClosing(true); setOpen(false); launcher.current?.focus(); }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -51,14 +50,12 @@ export default function Terminal() {
       if (document.querySelector('dialog[open]')) return;
       event.preventDefault();
       setHintSeen(true);
-      setOpen(previous => {
-        if (previous) launcher.current?.focus();
-        return !previous;
-      });
+      if (open) close();
+      else { setClosing(false); setOpen(true); }
     }
     window.addEventListener('keydown', shortcut);
     return () => window.removeEventListener('keydown', shortcut);
-  }, []);
+  }, [open, close]);
 
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -96,11 +93,9 @@ export default function Terminal() {
     }
   }
   return <>
-    <AnimatePresence>
-      {open && <motion.section id="portfolio-terminal" role="dialog" aria-modal="false" aria-label={copy.title}
-        className="terminal" initial={{ opacity: 0, y: reduced ? 0 : 20, scale: reduced ? 1 : 0.97 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduced ? 0 : 12 }}
-        transition={{ duration: reduced ? 0 : 0.22 }} onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); close(); } }}>
+      {(open || closing) && <section id="portfolio-terminal" role="dialog" aria-modal="false" aria-label={copy.title}
+        className={`terminal ${closing ? 'terminal-closing' : 'terminal-opening'}`}
+        onAnimationEnd={event => { if (event.target === event.currentTarget && closing) setClosing(false); }} onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); close(); } }}>
         <header className="terminal-bar"><span className="terminal-lights" aria-hidden="true"><i /><i /><i /></span><span>{copy.title}</span>
           <button className="icon-button" onClick={close} aria-label={copy.closeLabel}><X size={17} /></button>
         </header>
@@ -127,14 +122,13 @@ export default function Terminal() {
           <button className="icon-button" type="submit" aria-label={copy.submitLabel}><CornerDownLeft size={17} /></button>
         </form>
         <footer className="terminal-footer">{copy.footer}</footer>
-      </motion.section>}
-    </AnimatePresence>
-    {!open && !hintSeen && <button className="terminal-nudge" onClick={() => { setHintSeen(true); setOpen(true); }}>
+      </section>}
+    {!open && !hintSeen && <button className="terminal-nudge" onClick={() => { setHintSeen(true); setClosing(false); setOpen(true); }}>
       <span>{copy.suggestion}</span>
     </button>}
     <button ref={launcher} className="terminal-launcher" aria-label={open ? copy.closeLabel : copy.openLabel}
       title={copy.shortcutHint} aria-keyshortcuts="~" aria-expanded={open} aria-controls={open ? 'portfolio-terminal' : undefined}
-      onClick={() => { setHintSeen(true); if (open) close(); else setOpen(true); }}>
+      onClick={() => { setHintSeen(true); if (open) close(); else { setClosing(false); setOpen(true); } }}>
       <TerminalIcon size={19} /><span>{copy.launcher}</span><span className="status-dot" aria-hidden="true" />
     </button>
   </>;

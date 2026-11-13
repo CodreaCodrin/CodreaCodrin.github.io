@@ -4,7 +4,7 @@ import './NotFound.css';
 
 export default function NotFound() {
     return (
-        <div className="flex h-screen w-full flex-col items-center justify-center bg-[#0a0a0a] text-white font-mono overflow-hidden relative">
+        <div className="not-found-page flex w-full flex-col items-center justify-center bg-[#0a0a0a] text-white font-mono overflow-hidden relative">
             {/* Scanlines overlay */}
             <div className="absolute inset-0 scanlines pointer-events-none z-10 opacity-70"></div>
 
