@@ -9,6 +9,7 @@
         {
           "type": "file",
           "name": "riot_account",
+          "hidden": true,
           "action": "account",
           "provider": "riot",
           "title": "Riot Games",
@@ -31,6 +32,7 @@
         {
           "type": "file",
           "name": "steam_account",
+          "hidden": true,
           "action": "profile",
           "title": "Steam",
           "accountId": "Codrin Mielul",

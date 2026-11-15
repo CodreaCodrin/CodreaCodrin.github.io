@@ -2,6 +2,8 @@
 
 All paths below are relative to `tcnsite/`. Run commands from that directory. Production is a static Vite build hosted on GitHub Pages; there is no production Node server.
 
+**Pentru a adăuga o poză sau un cover, începe cu [IMAGES_GUIDE.md](IMAGES_GUIDE.md).** Are pași compleți în română și exemple pentru colecțiile existente.
+
 ## 1. Quick reference
 
 | What to change | File |
@@ -149,35 +151,32 @@ Add matching discovery and filesystem entries as in section 4. `matte: true` fad
 
 For a public collection, use `"discoveryId": ""` in its data, omit the registry's discoveryId, and add a regular site navigation entry. For a secret collection, keep the same discoveryId in all four places: collection data, registry, discovery item, terminal file.
 
-Use `type: "tierlist"` to place titles above images and ratings below. Add `rating` to each item: 0 through 5 in increments of 0.5. `type: "gallery"` places titles below images. An omitted/empty description makes a card non-interactive; a supplied description opens a modal. Use unique item IDs. Set `items: []` for an intentional empty state.
+Use `type: "tierlist"` to place titles above images and ratings below. Add `rating` to each item: 0 through 5; stars are displayed rounded to half-star increments. `type: "gallery"` places titles below images. An omitted/empty description makes a card non-interactive; a supplied description opens a modal. Use unique item IDs. Set `items: []` for an intentional empty state.
 
 To edit the original Art Gallery or Manhwa & Manga Tierlist, change their existing JSON files directly. Their routes are already registered; do not duplicate them in pages.json.
 
 ## 6. Images and performance
 
-The initial sample cards have empty image filenames and `sample: true`. Replace filenames and text, then remove `sample` or set it to false. Delete unused sample entries. Alternative text should describe the real image. Width and height must match its aspect ratio to reserve the right amount of space.
+Pentru pașii detaliați și exemplele JSON, folosește **[ghidul de imagini](IMAGES_GUIDE.md)**. Optimizarea este automată; nu trebuie să creezi manual fișiere responsive.
 
-Images are never embedded in JSON. Gallery filenames are relative to `assetDirectory`, which is relative to `public/`. Do not put `public/` at the front of an image path. New/modified images must be rebuilt and deployed with the site.
+| Colecție existentă | Originale | JSON editabil |
+| --- | --- | --- |
+| Art Gallery | `public/artGallery/` | `data/artGallery.json` |
+| Manhwa & Manga Tierlist | `public/tierlists/manhwa/` | `data/manhwaTierlist.json` |
 
-Optional responsive versions:
+Adaugă originalul și un obiect în `items` cu `id`, `title`, `image`, `alt`, `width`, `height`; la tierlist și `rating`. `image` este numele originalului, iar dimensiunile sunt cele originale în pixeli. Nu copia `sources`/`srcSet` de la alt card. Descrierea este opțională.
 
-```json
-{
-  "id": "mountain-light",
-  "title": "Mountain light",
-  "image": "mountain-1200.jpg",
-  "alt": "Evening sunlight on a mountain ridge",
-  "width": 1200,
-  "height": 800,
-  "srcSet": "mountain-600.jpg 600w, mountain-1200.jpg 1200w",
-  "sources": [
-    { "type": "image/avif", "srcSet": "mountain-600.avif 600w, mountain-1200.avif 1200w" },
-    { "type": "image/webp", "srcSet": "mountain-600.webp 600w, mountain-1200.webp 1200w" }
-  ]
-}
+Din `tcnsite/`:
+
+```powershell
+npm run optimize:images
+npm test
+npm run dev
 ```
 
-Create those files before referencing them. All versions should have the same crop/aspect ratio. Browsers select a format and resolution using `picture`, `srcSet`, and the `collections.imageSizes` setting. Below-the-fold images use native lazy loading; the first image loads eagerly. Decoding is asynchronous, dimensions reserve space, and failed images show a fallback. No runtime image transformation service is needed.
+După verificare, oprește serverul cu Ctrl+C, fă Commit + Push inclusiv pentru `data/imageVariants.json` și `public/optimized/`, apoi rulează `npm run deploy`. Build-ul și deploy-ul generează automat variantele, însă `npm run dev` și `npm test` nu fac asta: după imagini noi, optimizarea trebuie rulată înaintea lor.
+
+Nu edita manual manifestul sau variantele generate și nu pune pozele în `dist/`. Originalele nu sunt rescrise. Browserul alege rezoluția potrivită și încarcă imaginile de sub zona vizibilă progresiv. Câmpurile avansate `srcSet`/`sources` rămân suportate pentru variante pregătite manual, dar nu sunt necesare în fluxul normal.
 
 ### Theme backgrounds
 
@@ -241,13 +240,13 @@ Add customRoute to rootRoute.addChildren. Add regular navigation or discovery/fi
 ## 10. Verify and deploy
 
 ```sh
-npm run dev
+npm run optimize:images
 npm test
 npm run build
 npm run preview
 ```
 
-Use the Local URL printed by each command. Test direct links and refresh, Home and menu links, new discoveries and repeat execution, keyboard operation, card descriptions, no-description cards, and a narrow phone viewport. Confirm that long tile labels wrap and the panel grows with additional rows. Test a private window to see the locked state.
+Use the Local URL printed by the preview command. For development, run `npm run dev` separately; stop either server with Ctrl+C before continuing in the same terminal. Test direct links and refresh, Home and menu links, new discoveries and repeat execution, keyboard operation, card descriptions, no-description cards, and a narrow phone viewport. Confirm that long tile labels wrap and the panel grows with additional rows. Test a private window to see the locked state.
 
 The tests check command/path behavior, storage failure handling and JSON references. The build checks TypeScript and produces static files in dist. Neither command publishes the site.
 
@@ -267,7 +266,7 @@ Terminal Tab always attempts completion and keeps input focus even if there is n
 
 ## Automatic image optimization
 
-Add images and JSON entries as usual. Run `npm run optimize:images` before development/tests; production builds and deploys run it automatically. Settings live in `data/imageOptimization.json`. Do not edit `data/imageVariants.json` or files under `public/optimized` by hand. Include them in Git commits; originals remain the source of truth. Cached variants regenerate only when the source/settings change. This does not change cover cropping, titles, ratings or sorting.
+See [IMAGES_GUIDE.md](IMAGES_GUIDE.md) for the complete workflow. Add one original and one JSON item; run `npm run optimize:images` before local development/tests. Build and deploy already run it automatically. Commit the generated manifest and image variants together with the originals. No manual resizing or WebP preparation is needed.
 
 ## Background selector and stable layout
 

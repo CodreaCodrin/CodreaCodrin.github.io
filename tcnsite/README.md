@@ -2,11 +2,14 @@
 
 React 19 + TypeScript + Vite, TanStack Router, Tailwind CSS, and native CSS animations. Everything runs in the browser; no Node server is needed in production.
 
+Pentru poze și cover-uri noi: **[ghid pas cu pas, în română](IMAGES_GUIDE.md)**. Adaugi originalul și un obiect în JSON; variantele optimizate se generează automat.
+
 ## Local workflow
 
 Run from this directory:
 
 - `npm install` (only when dependencies are missing)
+- `npm run optimize:images` (after adding/replacing images or image entries, before dev/tests)
 - `npm run dev`
 - `npm test` — behavioral tests using Node's test runner (Node 22.18+)
 - `npm run build` — TypeScript checks and static production output
@@ -30,6 +33,7 @@ This project already uses the `gh-pages` npm package. The source code stays on y
    ```powershell
    Set-Location 'C:\Alpine Studio\Projects\PersonalSite\CodreaCodrin.github.io\tcnsite'
    npm ci
+   npm run optimize:images
    npm test
    npm run deploy
    ```
@@ -50,20 +54,20 @@ The repository is a user site at the domain root, so Vite's default `base: '/'` 
 
 ### Every later update
 
-1. Edit your source files, JSON content or images.
-2. In GitHub Desktop, review your changes, write a commit message, click **Commit**, and **Push origin** on your normal source branch. This saves your editable project on GitHub.
-3. In PowerShell, from `tcnsite`, run:
+1. Editează sursa, JSON-ul sau imaginile originale. Pentru poze, urmează [IMAGES_GUIDE.md](IMAGES_GUIDE.md).
+2. Deschide PowerShell în `tcnsite/`. Dacă dependențele s-au schimbat sau lipsește node_modules, rulează `npm ci` înainte de pașii următori.
+3. Generează variantele **înainte de teste**, apoi verifică proiectul:
 
    ```powershell
+   npm run optimize:images
    npm test
-   npm run deploy
    ```
 
-   If dependencies changed or node_modules is missing, run `npm ci` first. There is no need to run `npm run build` separately before deploy: predeploy already does that.
+4. În GitHub Desktop verifică și salvează prin **Commit + Push** sursa, JSON-ul, originalele, `data/imageVariants.json` și modificările din `public/optimized/`. Optimizarea trebuie făcută înainte de acest commit pentru a include și fișierele generate.
+5. Din `tcnsite/`, rulează `npm run deploy`. Comanda construiește și publică site-ul; build-ul rulează automat optimizarea încă o dată, reutilizând imaginile neschimbate.
+6. Verifică publicarea în tabul Actions de pe GitHub, apoi reîncarcă site-ul. Dacă apare versiunea veche, încearcă Ctrl+F5.
 
-4. Wait for the Pages deployment to finish in GitHub's Actions tab, then refresh the live site. If it appears stale, use **Ctrl+F5** or a private browser window.
-
-Pushing source commits alone does not update the live website with this manual deployment setup. `npm run deploy` uploads the production build; it does not commit or push your editable source changes. Keep both steps in your workflow. `npm run dev` and `npm run preview` only start local servers.
+Push-ul sursei și publicarea site-ului sunt operații separate. `npm run dev` și `npm run preview` pornesc servere locale și nu publică nimic. Pentru build/publicare nu trebuie să rulezi separat `npm run build` înainte de deploy.
 
 ### Troubleshooting
 
@@ -126,39 +130,23 @@ All account IDs/descriptions/endpoints remain in `data/consoleFS.json`; labels, 
 
 ## Images
 
-Put artwork in `public/artGallery/` and covers in `public/tierlists/manhwa/`. Reference filenames relative to the respective JSON `assetDirectory`.
+**Nu trebuie să pregătești manual miniaturi, WebP-uri, `sources` sau `srcSet`.** Procesul obișnuit este:
 
-An entry can look like:
+| Colecție | Originalul se copiază în | Cardul se adaugă în lista `items` din |
+| --- | --- | --- |
+| Art Gallery | `public/artGallery/` | `data/artGallery.json` |
+| Manhwa & Manga Tierlist | `public/tierlists/manhwa/` | `data/manhwaTierlist.json` |
 
-```json
-{
-  "id": "my-piece",
-  "title": "My piece",
-  "image": "my-piece-800.jpg",
-  "alt": "Describe the actual artwork",
-  "width": 800,
-  "height": 1000,
-  "srcSet": "my-piece-400.jpg 400w, my-piece-800.jpg 800w",
-  "sources": [
-    { "type": "image/avif", "srcSet": "my-piece-400.avif 400w, my-piece-800.avif 800w" },
-    { "type": "image/webp", "srcSet": "my-piece-400.webp 400w, my-piece-800.webp 800w" }
-  ],
-  "description": "Optional story behind this piece."
-}
-```
+1. Copiază originalul în folderul potrivit.
+2. Adaugă un obiect cu ID unic, titlu, numele exact al fișierului, alt text și dimensiunile originale în pixeli. La tierlist adaugă și `rating` (de exemplu 0). `description` este opțională.
+3. Din `tcnsite/`, rulează `npm run optimize:images`, apoi `npm test` și `npm run dev` pentru verificare locală. Oprește serverul cu Ctrl+C înainte de alte comenzi în aceeași fereastră.
+4. Fă Commit + Push inclusiv pentru manifestul și variantele generate, apoi `npm run deploy` pentru publicare.
 
-Manhwa and manga entries also include `rating` from 0 to 5 in steps of 0.5. Omit a description to make a card non-interactive. Set `sample: false` or omit it on real entries.
+**O poză copiată în folder nu apare singură pe site: trebuie și obiectul din JSON.** În `image` scrii numele originalului (de exemplu `noua-serie.jpg`), nu calea din `public/optimized`. Nu edita manual `data/imageVariants.json` sau `public/optimized/`.
 
-Image strategy:
-- Native `loading="lazy"` for below-the-fold images, with eager/high-priority loading for the first potential LCP image.
-- Explicit dimensions and aspect ratios reserve space to prevent layout shifts.
-- Asynchronous decoding and a short opacity reveal.
-- Optional AVIF/WebP `picture` sources and width-based `srcSet`/`sizes` let browsers download the appropriate resolution.
-- Missing images have a stable, accessible fallback.
-- Small collection views are bundled with the app to avoid a separate route-loading failure; image bytes still load on demand.
-- JSON is metadata only; image bytes stay out of JavaScript.
+[Ghidul complet pentru imagini](IMAGES_GUIDE.md) conține obiecte JSON gata de adaptat pentru ambele colecții, aflarea dimensiunilor în Windows, înlocuirea/ștergerea pozelor și depanare. Explică și fișierele generate automat. Cover-urile sunt încadrate din centru la afișare; nu trebuie tăiate manual la 7:10.
 
-Export the actual responsive variants before referencing them. The app does not pretend to resize/compress originals at runtime, and no image optimization service is required.
+Galeria și tierlistul se încarcă la accesare; imaginile folosesc dimensiuni rezervate, decodare asincronă și lazy loading. Originalele rămân sursa de adevăr și fallback-ul de afișare. Câmpurile manuale `sources`/`srcSet` sunt numai o opțiune avansată, nu o cerință pentru carduri noi.
 
 The background is drawn with CSS gradients and a small inline SVG: slow orbital curves, sparse dots and ambient light. It requests no background photographs and runs no JavaScript animation loop. It inherits theme colors, fades to a solid matte on collection pages, pauses when the tab is hidden or a matte page is open, and becomes static with reduced-motion preferences. Mobile renders fewer animated layers. Edit geometry and speeds in `data/background.json`, and theme intensity in `data/themes.json`. Unused photograph backgrounds have been removed.
 
