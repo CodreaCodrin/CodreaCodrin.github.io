@@ -40,6 +40,15 @@
       "width": 750,
       "height": 1000,
       "description": "The apparatus for creating the nectar of the gods."
+    },
+    {
+      "id": "Photo-03",
+      "title": "Opel cold start",
+      "image": "OpelColdStart.jpeg",
+      "alt": "Placeholder for the fifth artwork",
+      "width": 800,
+      "height": 1200,
+      "description": "Its very cold so it will not get out of his bed"
     }
   ]
 }

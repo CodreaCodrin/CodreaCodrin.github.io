@@ -79,6 +79,23 @@
       }
     ]
   },
+  "artGallery/OpelColdStart.jpeg": {
+    "signature": "535e407d306db12f",
+    "variants": [
+      {
+        "path": "optimized/artGallery/Photo-03-535e407d306db12f-320.webp",
+        "width": 320
+      },
+      {
+        "path": "optimized/artGallery/Photo-03-535e407d306db12f-640.webp",
+        "width": 640
+      },
+      {
+        "path": "artGallery/OpelColdStart.jpeg",
+        "width": 868
+      }
+    ]
+  },
   "tierlists/manhwa/Arctic Cold War.jpg": {
     "signature": "8b7f1e257ce44597",
     "variants": [
