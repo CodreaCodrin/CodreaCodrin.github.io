@@ -57,10 +57,7 @@ export default function Terminal() {
     return () => window.removeEventListener('keydown', shortcut);
   }, [open, close]);
 
-  function submit(event: FormEvent) {
-    event.preventDefault();
-    if (!input.trim()) return;
-    const command = input.trim();
+  const execute = useCallback((command: string, listAfterCd = false) => {
     const result = runCommand(command, cwd, fs);
     if (result.kind === 'list' && result.revealedPaths?.length) {
       setKnownHidden(previous => new Set([...previous, ...result.revealedPaths!]));
@@ -75,9 +72,16 @@ export default function Terminal() {
     }
     if (result.kind === 'cd') setCwd(result.path);
     if (result.kind === 'clear') setEntries([]);
-    else setEntries(previous => [...previous, { id: nextId.current++, command, cwd, result, message }].slice(-copy.maxHistory));
+    else {
+      const output = listAfterCd && result.kind === 'cd' ? runCommand('ls', result.path, fs) : result;
+      setEntries(previous => [...previous, { id: nextId.current++, command, cwd, result: output, message }].slice(-copy.maxHistory));
+    }
     setHistory(previous => [...previous, command].slice(-copy.maxHistory));
     setInput(''); setHistoryIndex(-1); draft.current = ''; followOutput.current = true;
+  }, [cwd, unlock]);
+  function submit(event: FormEvent) {
+    event.preventDefault();
+    if (input.trim()) execute(input.trim());
   }
   function keys(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -108,7 +112,7 @@ export default function Terminal() {
             <div role="log" aria-label={copy.outputLabel} aria-live="polite" aria-relevant="additions">
               {entries.map(entry => <div key={entry.id} className="terminal-entry">
                 <p className="command-echo"><span>{copy.prompt}</span><span>{entry.cwd}</span>{copy.promptSymbol} {entry.command}</p>
-                <TerminalOutput entry={entry} />
+                <TerminalOutput entry={entry} onExecute={execute} onNavigate={close} />
               </div>)}
             </div>
           </div>

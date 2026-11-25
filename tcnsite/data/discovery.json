@@ -17,10 +17,16 @@
       "path": "/art-gallery"
     },
     {
+      "id": "manga-tierlist",
+      "title": "Mg",
+      "text": "Manga Tierlist",
+      "path": "/manga-tierlist"
+    },
+    {
       "id": "manhwa-tierlist",
       "title": "Mt",
-      "text": "Manhwa & Manga Tierlist",
-      "path": "/manwa-manga-tierlist"
+      "text": "Manhwa Tierlist",
+      "path": "/manhwa-tierlist"
     }
   ]
 }

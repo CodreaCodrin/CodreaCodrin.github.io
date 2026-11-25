@@ -50,7 +50,7 @@ This project already uses the `gh-pages` npm package. The source code stays on y
 
 4. Check the repository's **Actions** tab for the Pages build/deployment result. Once it succeeds, visit https://CodreaCodrin.github.io/. Publication can take several minutes.
 
-The repository is a user site at the domain root, so Vite's default `base: '/'` is correct. Do not change it to `/tcnsite/` or `/CodreaCodrin.github.io/`. The local folder name does not become part of the live URL. Routes retain the hash, for example `https://CodreaCodrin.github.io/#/manwa-manga-tierlist`.
+The repository is a user site at the domain root, so Vite's default `base: '/'` is correct. Do not change it to `/tcnsite/` or `/CodreaCodrin.github.io/`. The local folder name does not become part of the live URL. Routes retain the hash, for example `https://CodreaCodrin.github.io/#/manga-tierlist`.
 
 ### Every later update
 
@@ -82,7 +82,7 @@ Official references: [GitHub Pages publishing source](https://docs.github.com/en
 
 ## Content belongs in data/
 
-The reading shelf is **Manhwa & Manga Tierlist**, at `/#/manwa-manga-tierlist`. Unlock it with `cd tierlists` followed by `./manwa-manga-tierlist`. The old `/#/manhwa-tierlist` URL redirects to the new URL, and the old terminal filename `manhwa_tierlist` remains an alias. The internal discovery ID stays `manhwa-tierlist` so existing visitors keep their unlocks. Both kinds of titles share `data/manhwaTierlist.json` and `public/tierlists/manhwa/`; those storage names do not limit the content.
+The two reading shelves are **Manga Tierlist** at `/#/manga-tierlist` and **Manhwa Tierlist** at `/#/manhwa-tierlist`. In the terminal, run `ls -a tierlists` to reveal both hidden files, then click either file to unlock its page. You can also run `cd tierlists` and execute `./manga-tierlist` or `./manhwa-tierlist`. The old combined URL and terminal aliases lead to Manhwa Tierlist. Existing unlocks still apply to that page.
 
 | File | Content |
 | --- | --- |
@@ -93,7 +93,7 @@ The reading shelf is **Manhwa & Manga Tierlist**, at `/#/manwa-manga-tierlist`. 
 | consoleFS.json | Virtual filesystem, account IDs/descriptions, profile URLs, public API endpoints |
 | discovery.json | Unlock IDs, navigation tiles, storage key, notifications |
 | artGallery.json | Gallery copy and artwork entries |
-| manhwaTierlist.json | Reading shelf copy, covers, half-star ratings |
+| mangaTierlist.json, manhwaTierlist.json | Reading shelf copy, covers, half-star ratings |
 | collections.json | Shared card labels, image sizes and rating text |
 
 Sample collection entries are explicitly labeled. Replace them with your own images and text, or set `items` to an empty array for an intentional empty state. No personal account IDs or artwork were invented.
@@ -111,10 +111,13 @@ open chess_account
 cd ..
 ./art_gallery
 cd tierlists
-./manwa-manga-tierlist
+./manga-tierlist
+./manhwa-tierlist
 ```
 
 `cat`, `open`, `nano`, `vim`, and `./` all execute files. `ls` accepts optional paths; `cd` supports absolute/relative paths, `..`, `.`, `~`, and no argument (root). Commands support quoted paths, up/down history, Tab completion, `pwd`, `help`, and `clear`. This is a virtual shell: input is never passed to eval, the OS, or a real shell.
+
+Click a listed file to run its action or click a folder to enter it and see its contents. Both work automatically for new entries in `data/consoleFS.json`.
 
 Discoveries add tiles to Home and the top-right menu with a short glitch. Executing a discovery never navigates. Unlocks are saved under the key configured in discovery.json, synchronized between tabs, and validated when loaded. Blocked storage falls back to in-memory state and reports that it cannot persist. Hidden routes show a discovery prompt until unlocked. This is a playful UI mechanic, not access control.
 
@@ -135,7 +138,8 @@ All account IDs/descriptions/endpoints remain in `data/consoleFS.json`; labels, 
 | Colecție | Originalul se copiază în | Cardul se adaugă în lista `items` din |
 | --- | --- | --- |
 | Art Gallery | `public/artGallery/` | `data/artGallery.json` |
-| Manhwa & Manga Tierlist | `public/tierlists/manhwa/` | `data/manhwaTierlist.json` |
+| Manga Tierlist | `public/tierlists/manga/` | `data/mangaTierlist.json` |
+| Manhwa Tierlist | `public/tierlists/manhwa/` | `data/manhwaTierlist.json` |
 
 1. Copiază originalul în folderul potrivit.
 2. Adaugă un obiect cu ID unic, titlu, numele exact al fișierului, alt text și dimensiunile originale în pixeli. La tierlist adaugă și `rating` (de exemplu 0). `description` este opțională.
@@ -144,9 +148,9 @@ All account IDs/descriptions/endpoints remain in `data/consoleFS.json`; labels, 
 
 **O poză copiată în folder nu apare singură pe site: trebuie și obiectul din JSON.** În `image` scrii numele originalului (de exemplu `noua-serie.jpg`), nu calea din `public/optimized`. Nu edita manual `data/imageVariants.json` sau `public/optimized/`.
 
-[Ghidul complet pentru imagini](IMAGES_GUIDE.md) conține obiecte JSON gata de adaptat pentru ambele colecții, aflarea dimensiunilor în Windows, înlocuirea/ștergerea pozelor și depanare. Explică și fișierele generate automat. Cover-urile sunt încadrate din centru la afișare; nu trebuie tăiate manual la 7:10.
+[Ghidul complet pentru imagini](IMAGES_GUIDE.md) conține exemple JSON pentru galerie și tierlisturi, cu pași pentru aflarea dimensiunilor în Windows, înlocuirea pozelor și depanare. Explică și fișierele generate automat. Cover-urile sunt încadrate din centru la afișare; nu trebuie tăiate manual la 7:10.
 
-Galeria și tierlistul se încarcă la accesare; imaginile folosesc dimensiuni rezervate, decodare asincronă și lazy loading. Originalele rămân sursa de adevăr și fallback-ul de afișare. Câmpurile manuale `sources`/`srcSet` sunt numai o opțiune avansată, nu o cerință pentru carduri noi.
+Galeria și tierlisturile se încarcă la accesare; imaginile folosesc dimensiuni rezervate, decodare asincronă și lazy loading. Originalele rămân sursa de adevăr și fallback-ul de afișare. Câmpurile manuale `sources`/`srcSet` sunt numai o opțiune avansată, nu o cerință pentru carduri noi.
 
 The background is drawn with CSS gradients and a small inline SVG: slow orbital curves, sparse dots and ambient light. It requests no background photographs and runs no JavaScript animation loop. It inherits theme colors, fades to a solid matte on collection pages, pauses when the tab is hidden or a matte page is open, and becomes static with reduced-motion preferences. Mobile renders fewer animated layers. Edit geometry and speeds in `data/background.json`, and theme intensity in `data/themes.json`. Unused photograph backgrounds have been removed.
 

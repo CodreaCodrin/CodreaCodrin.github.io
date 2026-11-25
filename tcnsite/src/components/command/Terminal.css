@@ -18,6 +18,8 @@
 .command-echo > span:nth-child(2) { color: var(--color-text-muted); margin-right: 7px; }
 .terminal-files { display: flex; flex-wrap: wrap; gap: 8px 20px; }
 .terminal-files li { display: flex; align-items: center; gap: 6px; }
+.terminal-entry-button { display: flex; align-items: center; gap: 6px; }
+.terminal-entry-button:hover, .terminal-entry-button:focus-visible { color: var(--color-primary); text-decoration: underline; }
 .terminal-files .directory { color: var(--color-primary); }
 .terminal-error { color: var(--color-accent); }
 .terminal-help > div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; margin: 8px 0; }

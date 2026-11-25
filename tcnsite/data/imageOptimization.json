@@ -1,5 +1,5 @@
 {
-  "collections": ["artGallery.json", "manhwaTierlist.json"],
+  "collections": ["artGallery.json", "manhwaTierlist.json", "mangaTierlist.json"],
   "outputDirectory": "optimized",
   "widths": [320, 640, 960, 1440],
   "quality": 82

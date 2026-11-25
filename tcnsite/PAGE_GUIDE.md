@@ -16,7 +16,8 @@ All paths below are relative to `tcnsite/`. Run commands from that directory. Pr
 | Terminal files, folders, accounts and unlock actions | `data/consoleFS.json` |
 | Terminal messages, hint, command guide and timing | `data/console.json` |
 | Artwork entries | `data/artGallery.json` |
-| Manhwa and manga entries and ratings | `data/manhwaTierlist.json` |
+| Manga entries and ratings | `data/mangaTierlist.json` |
+| Manhwa entries and ratings | `data/manhwaTierlist.json` |
 | Shared collection labels and responsive image sizes | `data/collections.json` |
 | Theme colors and procedural background intensity | `data/themes.json` |
 | Background geometry and animation speeds | `data/background.json` |
@@ -153,7 +154,7 @@ For a public collection, use `"discoveryId": ""` in its data, omit the registry'
 
 Use `type: "tierlist"` to place titles above images and ratings below. Add `rating` to each item: 0 through 5; stars are displayed rounded to half-star increments. `type: "gallery"` places titles below images. An omitted/empty description makes a card non-interactive; a supplied description opens a modal. Use unique item IDs. Set `items: []` for an intentional empty state.
 
-To edit the original Art Gallery or Manhwa & Manga Tierlist, change their existing JSON files directly. Their routes are already registered; do not duplicate them in pages.json.
+To edit Art Gallery, Manga Tierlist, or Manhwa Tierlist, change their existing JSON files directly. Their routes are already registered; do not duplicate them in pages.json.
 
 ## 6. Images and performance
 
@@ -162,7 +163,8 @@ Pentru pașii detaliați și exemplele JSON, folosește **[ghidul de imagini](IM
 | Colecție existentă | Originale | JSON editabil |
 | --- | --- | --- |
 | Art Gallery | `public/artGallery/` | `data/artGallery.json` |
-| Manhwa & Manga Tierlist | `public/tierlists/manhwa/` | `data/manhwaTierlist.json` |
+| Manga Tierlist | `public/tierlists/manga/` | `data/mangaTierlist.json` |
+| Manhwa Tierlist | `public/tierlists/manhwa/` | `data/manhwaTierlist.json` |
 
 Adaugă originalul și un obiect în `items` cu `id`, `title`, `image`, `alt`, `width`, `height`; la tierlist și `rating`. `image` este numele originalului, iar dimensiunile sunt cele originale în pixeli. Nu copia `sources`/`srcSet` de la alt card. Descrierea este opțională.
 
@@ -256,7 +258,7 @@ If a page fails: confirm exact filenames/case, valid JSON, unique route paths, m
 
 ## Reading shelf ordering and cover crops
 
-`manhwaTierlist.json` uses `"sort": "rating"`: highest rating first, then alphabetical title for equal ratings. Editing ratings automatically changes the displayed order after reload/rebuild. Use `"sort": "title"` for alphabetical order alone, or remove sort to preserve array order. Other collections can use the same settings.
+`mangaTierlist.json` and `manhwaTierlist.json` use `"sort": "rating"`: highest rating first, then alphabetical title for equal ratings. Editing ratings automatically changes the displayed order after reload/rebuild. Use `"sort": "title"` for alphabetical order alone, or remove sort to preserve array order. Other collections can use the same settings.
 
 `"coverAspectRatio": { "width": 7, "height": 10 }` gives every cover the proportions of Houseki no Kuni (840 x 1200). The browser scales each image to fill that frame, then crops excess from the center with object-fit: cover. This automatically zooms/crops unusually wide or tall images without stretching them or editing originals. Keep original width/height metadata in each item. Remove coverAspectRatio to use each original aspect ratio, as the art gallery does.
 

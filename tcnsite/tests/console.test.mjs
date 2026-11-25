@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import { sortByTitle, sortByRating } from '../src/components/collections/sortByTitle.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
-import { runCommand, resolvePath, completePath, tokenize } from '../src/components/command/fileSystem.ts';
+import { runCommand, resolvePath, completePath, tokenize, commandForListedNode } from '../src/components/command/fileSystem.ts';
 import { validDiscoveries, readStored, writeStored } from '../src/lib/storage.ts';
 
 const read = name => JSON.parse(readFileSync(new URL('../data/' + name + '.json', import.meta.url), 'utf8').replace(/^\uFEFF/, ''));
@@ -47,14 +47,16 @@ test('alphabetical ordering is independent of rating and preserves source data',
 });
 
 test('tierlist cover proportions match Houseki no Kuni while retaining image dimensions', () => {
-  const data = read('manhwaTierlist');
-  const reference = data.items.find(item => item.title === 'Houseki no Kuni');
-  assert.equal(data.coverAspectRatio.width / data.coverAspectRatio.height, reference.width / reference.height);
-  assert.equal(data.sort, 'rating');
+  const manga = read('mangaTierlist');
+  const reference = manga.items.find(item => item.title === 'Houseki no Kuni');
+  for (const data of [manga, read('manhwaTierlist')]) {
+    assert.equal(data.coverAspectRatio.width / data.coverAspectRatio.height, reference.width / reference.height);
+    assert.equal(data.sort, 'rating');
+  }
 });
 
 test('configured pages have unique routes, real data files and consistent discovery IDs', () => {
-  const reserved = ['/', '/aboutme', '/projects', '/hobbies', '/contactme', '/art-gallery', '/manwa-manga-tierlist', '/manhwa-tierlist'];
+  const reserved = ['/', '/aboutme', '/projects', '/hobbies', '/contactme', '/art-gallery', '/manwa-manga-tierlist', '/manhwa-tierlist', '/manga-tierlist'];
   const pages = read('pages');
   const paths = [...reserved, ...pages.map(page => page.path)];
   assert.equal(new Set(paths).size, paths.length, 'Duplicate route path');
@@ -77,7 +79,8 @@ test('root and nested directories expose precisely the requested files', () => {
   assert.deepEqual(command('ls').nodes.map(node => node.name), ['games_folder', 'tierlists', 'art_gallery']);
   assert.deepEqual(command('ls games_folder').nodes.map(node => node.name), ['chess_account']);
   assert.deepEqual(command('ls -a games_folder').nodes.map(node => node.name), ['riot_account', 'chess_account', 'steam_account']);
-  assert.deepEqual(command('ls /tierlists').nodes.map(node => node.name), ['games_tierlist', 'manwa-manga-tierlist']);
+  assert.deepEqual(command('ls /tierlists').nodes.map(node => node.name), ['games_tierlist']);
+  assert.deepEqual(command('ls -a /tierlists').nodes.map(node => node.name), ['games_tierlist', 'manga-tierlist', 'manhwa-tierlist']);
 });
 test('cd handles relative, absolute, parent, home, repeated slashes and root boundaries', () => {
   for (const [input, cwd, path] of [
@@ -128,10 +131,38 @@ test('all execution aliases resolve to the same file', () => {
   const expected = command('cat /art_gallery').file;
   for (const input of ['cat art_gallery', 'open art_gallery', './art_gallery', 'cat "./art_gallery"'])
     assert.deepEqual(command(input).file, expected);
-  assert.equal(command('./manhwa_tierlist', '/tierlists').file.discoveryId, 'manhwa-tierlist');
-  assert.deepEqual(command('./manwa-manga-tierlist', '/tierlists').file, command('./manhwa_tierlist', '/tierlists').file);
-  assert.equal(read('discovery').items.find(item => item.id === 'manhwa-tierlist').path, '/manwa-manga-tierlist');
+  for (const id of ['manga-tierlist', 'manhwa-tierlist']) {
+    assert.equal(command('./' + id, '/tierlists').file.discoveryId, id);
+    assert.equal(read('discovery').items.find(item => item.id === id).path, '/' + id);
+  }
+  assert.deepEqual(command('./manga_tierlist', '/tierlists').file, command('./manga-tierlist', '/tierlists').file);
+  for (const alias of ['manhwa_tierlist', 'manwa-manga-tierlist'])
+    assert.deepEqual(command('./' + alias, '/tierlists').file, command('./manhwa-tierlist', '/tierlists').file);
   assert.equal(command('open ../art_gallery', '/games_folder').file.discoveryId, 'art-gallery');
+});
+test('listing entries generate commands that work from other directories', () => {
+  const rootListing = command('ls -a');
+  const folder = rootListing.nodes.find(node => node.name === 'tierlists');
+  assert.deepEqual(command(commandForListedNode(rootListing, folder), '/games_folder'), { kind: 'cd', path: '/tierlists' });
+  for (const input of ['ls -a /', 'ls -a /tierlists', 'ls -a /games_folder']) {
+    const listing = command(input);
+    for (const file of listing.nodes.filter(node => node.type === 'file'))
+      assert.equal(command(commandForListedNode(listing, file), '/games_folder').file, file);
+  }
+  const single = command('ls /tierlists/manga-tierlist', '/games_folder');
+  assert.equal(single.isDirectory, false);
+  assert.equal(command(commandForListedNode(single, single.nodes[0]), '/games_folder').file, single.nodes[0]);
+
+  const file = { type: 'file', name: `New file's "note"`, action: 'message', message: 'Hello' };
+  const directory = { type: 'directory', name: 'New folder', children: [file] };
+  const fixture = { type: 'directory', name: '/', children: [directory] };
+  const folders = runCommand('ls', '/', fixture);
+  const change = runCommand(commandForListedNode(folders, directory), '/', fixture);
+  assert.deepEqual(change, { kind: 'cd', path: '/New folder' });
+  const files = runCommand('ls', change.path, fixture);
+  const open = commandForListedNode(files, file);
+  assert.equal(runCommand(open, '/', fixture).file, file);
+  assert.equal(runCommand(open.replace(/^open /, 'vim '), '/', fixture).file, file);
 });
 test('file paths are walked without skipping invalid intermediate components', () => {
   for (const input of ['cd art_gallery', 'cd art_gallery/..', 'cat art_gallery/'])
@@ -165,6 +196,18 @@ test('completion supports directories, executable paths and ambiguous prefixes',
   assert.equal(completePath('./art', '/', root, commands), './art_gallery');
   assert.equal(completePath('cat /games_folder/ch', '/', root, commands), 'cat /games_folder/chess_account');
   assert.equal(completePath('c', '/', root, commands), 'c');
+  const revealed = new Set(command('ls -a /tierlists').revealedPaths);
+  for (const [input, cwd, expected] of [
+    ['./mang', '/tierlists', './manga-tierlist'],
+    ['./manh', '/tierlists', './manhwa-tierlist'],
+    ['./manw', '/tierlists', './manwa-manga-tierlist'],
+    ['cat manga_t', '/tierlists', 'cat manga_tierlist'],
+    ['open /tierlists/manhwa_t', '/', 'open /tierlists/manhwa_tierlist'],
+  ]) {
+    assert.equal(completePath(input, cwd, root, commands), input);
+    assert.equal(completePath(input, cwd, root, commands, revealed), expected);
+    assert.equal(command(expected, cwd).kind, 'execute');
+  }
 });
 test('persisted discoveries reject invalid shapes, unknown IDs and duplicates', () => {
   const allowed = read('discovery').items.map(item => item.id);
@@ -192,14 +235,14 @@ test('JSON collection and discovery references are consistent', () => {
   const files = root.children.flatMap(node => node.type === 'directory' ? node.children : [node]);
   for (const file of files.filter(item => item.action === 'unlock'))
     assert.ok(discoveries.some(item => item.id === file.discoveryId));
-  for (const name of ['artGallery', 'manhwaTierlist']) {
+  for (const name of ['artGallery', 'mangaTierlist', 'manhwaTierlist']) {
     const data = read(name);
     assert.ok(discoveries.some(item => item.id === data.discoveryId));
     assert.equal(new Set(data.items.map(item => item.id)).size, data.items.length);
     for (const item of data.items) {
       assert.ok(item.width > 0 && item.height > 0 && item.alt && item.title);
       // Personal decimal scores are valid; the existing renderer rounds stars to halves.
-      if (name === 'manhwaTierlist') assert.ok(Number.isFinite(item.rating) && item.rating >= 0 && item.rating <= 5);
+      if (name !== 'artGallery') assert.ok(Number.isFinite(item.rating) && item.rating >= 0 && item.rating <= 5);
       if (item.image) assert.ok(existsSync(new URL('../public/' + data.assetDirectory + '/' + item.image, import.meta.url)));
       else assert.equal(item.sample, true);
     }

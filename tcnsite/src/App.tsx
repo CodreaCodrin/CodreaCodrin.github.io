@@ -16,6 +16,7 @@ import copy from '../data/site.json';
 import discovery from '../data/discovery.json';
 const ArtGallery = lazy(() => import('./pages/ArtGallery/ArtGallery'));
 const ManhwaTierlist = lazy(() => import('./pages/ManhwaTierlist/ManhwaTierlist'));
+const MangaTierlist = lazy(() => import('./pages/MangaTierlist/MangaTierlist'));
 import pages from '../data/pages.json';
 import type { PageDefinition } from './pages/ConfiguredPage';
 const ConfiguredPage = lazy(() => import('./pages/ConfiguredPage'));
@@ -64,10 +65,11 @@ const projectsRoute = createRoute({ getParentRoute: () => rootRoute, path: '/pro
 const hobbiesRoute = createRoute({ getParentRoute: () => rootRoute, path: '/hobbies', component: Hobbies });
 const contactRoute = createRoute({ getParentRoute: () => rootRoute, path: '/contactme', component: Contact });
 const artRoute = createRoute({ getParentRoute: () => rootRoute, path: '/art-gallery', component: ArtGallery });
-const manhwaRoute = createRoute({ getParentRoute: () => rootRoute, path: '/manwa-manga-tierlist', component: ManhwaTierlist });
-const legacyManhwaRoute = createRoute({ getParentRoute: () => rootRoute, path: '/manhwa-tierlist', beforeLoad: () => { throw redirect({ to: '/manwa-manga-tierlist', replace: true }); } });
+const mangaRoute = createRoute({ getParentRoute: () => rootRoute, path: '/manga-tierlist', component: MangaTierlist });
+const manhwaRoute = createRoute({ getParentRoute: () => rootRoute, path: '/manhwa-tierlist', component: ManhwaTierlist });
+const legacyManhwaRoute = createRoute({ getParentRoute: () => rootRoute, path: '/manwa-manga-tierlist', beforeLoad: () => { throw redirect({ to: '/manhwa-tierlist', replace: true }); } });
 const extraRoutes = configuredPages.map(page => createRoute({ getParentRoute: () => rootRoute, path: page.path, component: () => <ConfiguredPage page={page} /> }));
-const routeTree = rootRoute.addChildren([...extraRoutes,indexRoute, aboutRoute, projectsRoute, hobbiesRoute, contactRoute, artRoute, manhwaRoute, legacyManhwaRoute]);
+const routeTree = rootRoute.addChildren([...extraRoutes,indexRoute, aboutRoute, projectsRoute, hobbiesRoute, contactRoute, artRoute, mangaRoute, manhwaRoute, legacyManhwaRoute]);
 const router = createRouter({ routeTree, history: createHashHistory(), defaultNotFoundComponent: NotFound });
 declare module '@tanstack/react-router' { interface Register { router: typeof router } }
 export default function App() {

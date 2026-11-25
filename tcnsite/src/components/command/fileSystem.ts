@@ -12,11 +12,17 @@ export type FSNode = Directory | ConsoleFile;
 export type ShellError = 'notFound' | 'notDirectory' | 'isDirectory' | 'unknownCommand' | 'invalidArguments' | 'unclosedQuote';
 export type CommandResult =
   | { kind: 'error'; error: ShellError; value: string }
-  | { kind: 'list'; nodes: FSNode[]; revealedPaths?: string[] }
+  | { kind: 'list'; nodes: FSNode[]; path: string; isDirectory: boolean; revealedPaths?: string[] }
   | { kind: 'cd'; path: string }
   | { kind: 'execute'; file: ConsoleFile }
   | { kind: 'pwd'; path: string }
   | { kind: 'help' | 'clear' | 'empty' };
+
+export function commandForListedNode(list: Extract<CommandResult, { kind: 'list' }>, node: FSNode) {
+  const path = list.isDirectory ? `${list.path.replace(/\/$/, '')}/${node.name}` : list.path;
+  const argument = /[\s"']/.test(path) ? `'${path.replaceAll("'", `'"'"'`)}'` : path;
+  return `${node.type === 'directory' ? 'cd' : 'open'} ${argument}`;
+}
 
 // Tokenize without eval: quotes are supported, pipes and substitutions never execute.
 export function tokenize(input: string): string[] | null {
@@ -101,7 +107,8 @@ export function runCommand(input: string, cwd: string, root: Directory): Command
     const nodes = result.node.type === 'directory'
       ? result.node.children.filter(node => showHidden || (!node.hidden && !node.name.startsWith('.')))
       : [result.node];
-    return { kind: 'list', nodes, ...(showHidden ? { revealedPaths: nodes
+    return { kind: 'list', nodes, path: result.path, isDirectory: result.node.type === 'directory',
+      ...(showHidden ? { revealedPaths: nodes
       .filter(node => node.hidden || node.name.startsWith('.'))
       .map(node => result.node.type === 'directory'
         ? `${result.path === '/' ? '' : result.path}/${node.name}` : result.path) } : {}) };
@@ -125,10 +132,14 @@ export function completePath(input: string, cwd: string, root: Directory, comman
   const partial = fragment.slice(slash + 1);
   const resolved = resolvePath(root, cwd, directory);
   if ('error' in resolved || resolved.node.type !== 'directory') return input;
-  const matches = resolved.node.children.filter(node =>
+  const command = aliases.commands.find(item => item.name === parts[0])?.command ?? parts[0];
+  const candidates = resolved.node.children.filter(node =>
     ((!node.hidden && !node.name.startsWith('.')) || knownHidden.has(`${resolved.path === '/' ? '' : resolved.path}/${node.name}`))
-    && node.name.startsWith(partial) &&
-    ((aliases.commands.find(item => item.name === parts[0])?.command ?? parts[0]) !== 'cd' || node.type === 'directory'));
+    && (command !== 'cd' || node.type === 'directory'));
+  const names = candidates.filter(node => node.name.startsWith(partial))
+    .map(node => node.name + (node.type === 'directory' ? '/' : ''));
+  const matches = names.length ? names : candidates.flatMap(node =>
+    node.type === 'file' ? (node.aliases ?? []).filter(name => name.startsWith(partial)) : []);
   if (matches.length !== 1) return input;
-  return input.slice(0, input.length - fragment.length) + prefix + matches[0].name + (matches[0].type === 'directory' ? '/' : '');
+  return input.slice(0, input.length - fragment.length) + prefix + matches[0];
 }

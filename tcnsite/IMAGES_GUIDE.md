@@ -9,11 +9,12 @@ Toate căile de mai jos sunt relative la `tcnsite/`.
 | Unde apare poza | Unde copiezi originalul | JSON-ul pe care îl editezi |
 | --- | --- | --- |
 | Art Gallery | `public/artGallery/` | `data/artGallery.json` |
-| Manhwa & Manga Tierlist | `public/tierlists/manhwa/` | `data/manhwaTierlist.json` |
+| Manga Tierlist | `public/tierlists/manga/` | `data/mangaTierlist.json` |
+| Manhwa Tierlist | `public/tierlists/manhwa/` | `data/manhwaTierlist.json` |
 
 **Simpla copiere a pozei în folder nu creează un card.** Cardurile sunt definite în lista `items` din JSON.
 
-Pentru operațiile obișnuite nu modifici componente React, `pages.json`, `assetDirectory` sau setările optimizării. Denumirea reală a folderului este `manhwa`, chiar dacă URL-ul paginii folosește `manwa-manga-tierlist`.
+Pentru operațiile obișnuite nu modifici componente React, `pages.json`, `assetDirectory` sau setările optimizării.
 
 ## 2. Copiază originalul
 
@@ -66,7 +67,7 @@ Presupunem că ai copiat `noua-serie.jpg` în `public/tierlists/manhwa/`, iar di
 | --- | --- |
 | `id` | Identificator unic în colecție, de preferat litere mici și cratime. Nu copia ID-ul altui card. |
 | `title` | Titlul afișat pe card. |
-| `image` | Numele originalului, exact, cu extensie. Pentru folderele actuale nu adaugi `public/`, `artGallery/` sau `tierlists/manhwa/` în acest câmp. |
+| `image` | Numele originalului, exact, cu extensie. Pentru folderele actuale nu adaugi `public/`, `artGallery/`, `tierlists/manga/` sau `tierlists/manhwa/` în acest câmp. |
 | `alt` | Descriere scurtă a imaginii pentru accesibilitate. |
 | `width`, `height` | Dimensiunile originale în pixeli, ca numere fără ghilimele. Nu dimensiunea cardului și nu dimensiunile WebP-urilor generate. |
 | `description` | Opțional. Dacă există text, cardul poate fi apăsat pentru descriere. Dacă nu dorești asta, șterge câmpul. |
@@ -107,9 +108,10 @@ npm run dev
 Deschide adresa Local afișată de Vite. În terminalul site-ului execută:
 
 - Pentru galerie: `cat art_gallery`, apoi apasă butonul Art Gallery de pe Home sau din meniu.
-- Pentru tierlist: `cat tierlists/manwa-manga-tierlist`, apoi apasă butonul Manhwa & Manga Tierlist.
+- Pentru Manga Tierlist, rulează `cat tierlists/manga-tierlist`, apoi apasă butonul Manga Tierlist.
+- Pentru Manhwa Tierlist, rulează `cat tierlists/manhwa-tierlist`, apoi apasă butonul Manhwa Tierlist.
 
-Executarea comenzii deblochează butonul; nu deschide singură pagina. Deblocarea este păstrată pentru adresa/browserul respectiv.
+Poți și să rulezi `ls -a tierlists` și să apeși numele fișierului ascuns din listă. După deblocare, terminalul afișează un link direct către pagină. Deblocarea este păstrată în browser pentru adresa respectivă.
 
 Verifică titlul, imaginea, crop-ul și descrierea. Tierlistul se sortează după notă descrescător, apoi alfabetic la egalitate: un card nou cu nota 0 poate apărea jos, nu lângă primul card. Galeria actuală păstrează ordinea din `items`.
 
@@ -138,8 +140,8 @@ Actualizarea site-ului public și salvarea sursei sunt operații diferite: **Com
 
 | Fișier/folder | Rol | Îl editezi manual? |
 | --- | --- | --- |
-| Originalele din cele două foldere ale colecțiilor | Sursa imaginilor și fallback pentru afișare | Da, aici adaugi/înlocuiești pozele. |
-| `data/artGallery.json`, `data/manhwaTierlist.json` | Carduri, titluri, descrieri și note | Da. |
+| Originalele din folderele colecțiilor | Sursa imaginilor și fallback pentru afișare | Da, aici adaugi/înlocuiești pozele. |
+| `data/artGallery.json`, `data/mangaTierlist.json`, `data/manhwaTierlist.json` | Carduri, titluri, descrieri și note | Da. |
 | `public/optimized/` | Variante responsive, cu ID/hash/dimensiune în nume | Nu. Scriptul le generează și curăță variantele vechi. |
 | `data/imageVariants.json` | Legătura dintre fiecare original și variantele sale | Nu. Se regenerează automat. |
 | `data/imageOptimization.json` | Colecțiile procesate, dimensiunile și calitatea | Numai când schimbi strategia sau adaugi altă colecție, nu pentru fiecare poză. |

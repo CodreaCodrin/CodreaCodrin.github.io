@@ -31,6 +31,7 @@
   "invalidArguments": "Unexpected arguments. Usage: {usage}",
   "unclosedQuote": "Unclosed quote. Close the quote and try again.",
   "unsupportedFile": "This file has no supported action.",
+  "openDiscovery": "Open {title}",
   "commands": [
     {
       "name": "ls",

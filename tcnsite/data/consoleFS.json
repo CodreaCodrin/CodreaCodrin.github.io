@@ -56,11 +56,23 @@
         },
         {
           "type": "file",
-          "name": "manwa-manga-tierlist",
+          "name": "manga-tierlist",
+          "hidden": true,
+          "action": "unlock",
+          "discoveryId": "manga-tierlist",
+          "aliases": [
+            "manga_tierlist"
+          ]
+        },
+        {
+          "type": "file",
+          "name": "manhwa-tierlist",
+          "hidden": true,
           "action": "unlock",
           "discoveryId": "manhwa-tierlist",
           "aliases": [
-            "manhwa_tierlist"
+            "manhwa_tierlist",
+            "manwa-manga-tierlist"
           ]
         }
       ]

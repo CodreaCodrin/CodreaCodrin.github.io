@@ -17,7 +17,7 @@ test('responsive images exist and never replace an original with a larger downlo
 });
 
 test('every collection image has responsive variants without changing original filenames', () => {
-  for (const name of ['artGallery', 'manhwaTierlist']) {
+  for (const name of ['artGallery', 'mangaTierlist', 'manhwaTierlist']) {
     const collection = JSON.parse(readFileSync(new URL('../data/' + name + '.json', import.meta.url)));
     for (const item of collection.items) {
       if (item.image) assert.ok(manifest[`${collection.assetDirectory}/${item.image}`]);
