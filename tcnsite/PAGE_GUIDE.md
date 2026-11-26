@@ -157,7 +157,7 @@ Use `type: "tierlist"` to place titles above images and ratings below. Add `rati
 
 To edit Art Gallery, Manga Tierlist, or Manhwa Tierlist, change their existing JSON files directly. Their routes are already registered; do not duplicate them in pages.json.
 
-Use `type: "watchlist"` for alphabetical poster cards. Add `"netflix": true` to an item to show its Netflix label. The Movie Watchlist and Series Watchlist are already registered in `data/pages.json`.
+Use `type: "watchlist"` for alphabetical poster cards. Set `streamingServices` to a list of IDs from `data/streamingServices.json`, for example `["netflix", "disney_plus"]`. Existing entries with `"netflix": true` still show Netflix. Both watchlists are already registered in `data/pages.json`.
 
 ## 6. Images and performance
 

@@ -1,0 +1,7 @@
+[
+  { "id": "netflix", "label": "Netflix" },
+  { "id": "disney_plus", "label": "Disney+" },
+  { "id": "hbo", "label": "HBO" },
+  { "id": "prime_video", "label": "Prime Video" },
+  { "id": "voyo", "label": "Voyo" }
+]

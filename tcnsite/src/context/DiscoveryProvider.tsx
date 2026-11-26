@@ -34,5 +34,7 @@ export default function DiscoveryProvider({ children }: { children: ReactNode })
     window.addEventListener('storage', sync);
     return () => { clearTimeout(noticeTimer.current); window.removeEventListener('storage', sync); };
   }, []);
-  return <DiscoveryContext.Provider value={{ unlocked, glitchKey, notification, unlock }}>{children}</DiscoveryContext.Provider>;
+  const previewId = import.meta.env.DEV ? new URLSearchParams(window.location.search).get('portfolio_preview') : null;
+  const visible = previewId && ids.includes(previewId) && !unlocked.includes(previewId) ? [...unlocked, previewId] : unlocked;
+  return <DiscoveryContext.Provider value={{ unlocked: visible, glitchKey, notification, unlock }}>{children}</DiscoveryContext.Provider>;
 }

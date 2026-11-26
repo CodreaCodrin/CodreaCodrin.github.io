@@ -6,8 +6,9 @@
 .collection-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; align-items: start; }
 .collection-card { display: block; width: 100%; text-align: left; min-width: 0; border-radius: 3px; }
 .collection-card h2 { font-size: 17px; font-weight: 600; letter-spacing: -.3px; }
-.cover-title-grid .collection-card > h2 { margin-bottom: 14px; }
-.watchlist-platform { display: inline-block; margin-inline-start: .65rem; font-size: .75rem; color: var(--color-text-muted); }
+.cover-title-grid .collection-card > h2, .watchlist-heading { margin-bottom: 14px; }
+.watchlist-platforms { display: flex; flex-wrap: wrap; gap: 5px 8px; list-style: none; margin: 5px 0 0; padding: 0; font-size: .8125rem; color: var(--color-text-muted); }
+.watchlist-platforms > li { border: 1px solid var(--color-border); border-radius: 3px; padding: 1px 6px; }
 .collection-image { width: 100%; position: relative; overflow: hidden; background: var(--color-bg-secondary); border: 1px solid var(--color-border); }
 .collection-image picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
 .collection-image.normalized-cover { max-height: none; }

@@ -10,6 +10,7 @@ import type { CollectionData, CollectionItem } from './types';
 import { sortByTitle, sortByRating } from './sortByTitle';
 import copy from '../../../data/collections.json';
 import discovery from '../../../data/discovery.json';
+import streamingServices from '../../../data/streamingServices.json';
 export default function CollectionView({ data, layout = 'gallery' }: {
   data: CollectionData; layout?: 'gallery' | 'tierlist' | 'watchlist';
 }) {
@@ -29,8 +30,15 @@ export default function CollectionView({ data, layout = 'gallery' }: {
     {data.sampleNotice && data.items.some(item => item.sample) && <p className="sample-notice">{data.sampleNotice}</p>}
     <div className={`collection-grid ${titleAbove ? 'cover-title-grid' : ''}`}>
       {items.map((item, index) => {
+        const platforms = watchlist ? streamingServices.filter(service =>
+          item.streamingServices?.includes(service.id) || (service.id === 'netflix' && item.netflix)) : [];
         const content = <>
-          {titleAbove && <h2>{item.title}{watchlist && item.netflix && <span className="watchlist-platform">Netflix</span>}</h2>}
+          {watchlist ? <div className="watchlist-heading">
+            <h2>{item.title}</h2>
+            {platforms.length > 0 && <ul className="watchlist-platforms" aria-label="Streaming services">
+              {platforms.map(service => <li key={service.id}>{service.label}</li>)}
+            </ul>}
+          </div> : titleAbove && <h2>{item.title}</h2>}
           <OptimizedImage key={`${data.assetDirectory}/${item.image}`} item={item} directory={data.assetDirectory} priority={index === 0} aspectRatio={data.coverAspectRatio} />
           {!watchlist && <div className="card-caption">
             {!showRating && <h2>{item.title}</h2>}

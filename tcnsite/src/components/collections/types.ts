@@ -1,6 +1,7 @@
 export interface CollectionItem {
   id: string; title: string; image: string; alt: string; width: number; height: number;
   description?: string; rating?: number; sample?: boolean; netflix?: boolean;
+  streamingServices?: string[];
   sources?: { type: string; srcSet: string }[];
   srcSet?: string;
 }

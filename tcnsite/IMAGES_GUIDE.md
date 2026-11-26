@@ -112,7 +112,7 @@ Deschide adresa Local afișată de Vite. În terminalul site-ului execută:
 - Pentru galerie: `cat art_gallery`, apoi apasă butonul Art Gallery de pe Home sau din meniu.
 - Pentru Manga Tierlist, rulează `cat tierlists/manga_tierlist`, apoi apasă butonul Manga Tierlist.
 - Pentru Manhwa Tierlist, rulează `cat tierlists/manhwa_tierlist`, apoi apasă butonul Manhwa Tierlist.
-- Pentru watchlist-uri, deschide `future_plans/movies` în terminal. Cardurile sunt ordonate după titlu. Folosește `_` în ID-uri și în numele posterelor, de exemplu `alien_worlds.webp`. Poți adăuga `"netflix": true` pentru eticheta Netflix și `posterSource` pentru a păstra sursa imaginii în JSON.
+- Pentru watchlist-uri, deschide `future_plans/movies` în terminal. Cardurile sunt ordonate după titlu. Folosește `_` în ID-uri și în numele posterelor, de exemplu `alien_worlds.webp`. Poți adăuga `"streamingServices": ["netflix", "disney_plus"]` pentru etichetele serviciilor și `posterSource` pentru sursa imaginii.
 
 Poți și să rulezi `ls -a tierlists` și să apeși numele fișierului ascuns din listă. După deblocare, terminalul afișează un link direct către pagină. Deblocarea este păstrată în browser pentru adresa respectivă.
 
