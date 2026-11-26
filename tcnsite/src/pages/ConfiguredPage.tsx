@@ -8,7 +8,7 @@ import type { CollectionData } from '../components/collections/types';
 export interface PageDefinition {
   path: string;
   dataFile: string;
-  type: 'content' | 'gallery' | 'tierlist';
+  type: 'content' | 'gallery' | 'tierlist' | 'watchlist';
   matte?: boolean;
   discoveryId?: string;
 }
@@ -25,7 +25,7 @@ export default function ConfiguredPage({ page }: { page: PageDefinition }) {
     <ReturnHome /><div className="locked-view"><h1>{discovery.lockedTitle}</h1><p>{discovery.lockedDescription}</p></div>
   </div>;
   const data = pageData(page);
-  if (page.type !== 'content') return <CollectionView data={data} rated={page.type === 'tierlist'} />;
+  if (page.type !== 'content') return <CollectionView data={data} layout={page.type} />;
   return <PageWrapper className="max-w-5xl"><h1 className="page-title">{data.title}</h1>
     <div className="prose-sections">{data.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
   </PageWrapper>;

@@ -16,7 +16,7 @@ Run from this directory:
 - `npm run preview` — serve the production build
 - `npm run deploy` — build and publish `dist` with the existing gh-pages setup
 
-Routes use hash history, for example `/#/art-gallery`. This makes direct links and refreshes work on GitHub Pages without server rewrites. Existing navigation paths are retained after the hash. Old external links such as `/aboutme` still need to be updated to `/#/aboutme`.
+Routes use hash history, for example `/#/art_gallery`. This makes direct links and refreshes work on GitHub Pages without server rewrites. Existing navigation paths are retained after the hash. Old external links such as `/aboutme` still need to be updated to `/#/aboutme`.
 
 ## Uploading and updating the site on GitHub Pages
 
@@ -50,7 +50,7 @@ This project already uses the `gh-pages` npm package. The source code stays on y
 
 4. Check the repository's **Actions** tab for the Pages build/deployment result. Once it succeeds, visit https://CodreaCodrin.github.io/. Publication can take several minutes.
 
-The repository is a user site at the domain root, so Vite's default `base: '/'` is correct. Do not change it to `/tcnsite/` or `/CodreaCodrin.github.io/`. The local folder name does not become part of the live URL. Routes retain the hash, for example `https://CodreaCodrin.github.io/#/manga-tierlist`.
+The repository is a user site at the domain root, so Vite's default `base: '/'` is correct. Do not change it to `/tcnsite/` or `/CodreaCodrin.github.io/`. The local folder name does not become part of the live URL. Routes retain the hash, for example `https://CodreaCodrin.github.io/#/manga_tierlist`.
 
 ### Every later update
 
@@ -82,7 +82,9 @@ Official references: [GitHub Pages publishing source](https://docs.github.com/en
 
 ## Content belongs in data/
 
-The two reading shelves are **Manga Tierlist** at `/#/manga-tierlist` and **Manhwa Tierlist** at `/#/manhwa-tierlist`. In the terminal, run `ls -a tierlists` to reveal both hidden files, then click either file to unlock its page. You can also run `cd tierlists` and execute `./manga-tierlist` or `./manhwa-tierlist`. The old combined URL and terminal aliases lead to Manhwa Tierlist. Existing unlocks still apply to that page.
+The two reading shelves are **Manga Tierlist** at `/#/manga_tierlist` and **Manhwa Tierlist** at `/#/manhwa_tierlist`. In the terminal, run `ls -a tierlists` to reveal both hidden files, then click either file to unlock its page. You can also run `cd tierlists` and execute `./manga_tierlist` or `./manhwa_tierlist`. Older browser links redirect to the current URLs, and existing unlocks still apply.
+
+Open `future_plans/movies` in the terminal to find `movie_watchlist` and `series_watchlist`. Their cards and poster filenames are in `data/movie_watchlist.json` and `data/series_watchlist.json`.
 
 | File | Content |
 | --- | --- |
@@ -111,8 +113,8 @@ open chess_account
 cd ..
 ./art_gallery
 cd tierlists
-./manga-tierlist
-./manhwa-tierlist
+./manga_tierlist
+./manhwa_tierlist
 ```
 
 `cat`, `open`, `nano`, `vim`, and `./` all execute files. `ls` accepts optional paths; `cd` supports absolute/relative paths, `..`, `.`, `~`, and no argument (root). Commands support quoted paths, up/down history, Tab completion, `pwd`, `help`, and `clear`. This is a virtual shell: input is never passed to eval, the OS, or a real shell.
@@ -175,7 +177,7 @@ About, Projects, Hobbies and Contact are included in the initial bundle; collect
 
 `npm run build` (including `npm run deploy`) first runs `npm run optimize:images`. This generates responsive WebP files for collection images and `data/imageVariants.json`, preserving all originals, names, descriptions and crops. Cached content hashes skip unchanged work. Variants larger than the original are discarded; native-resolution originals remain candidates when conversion would be larger. Old generated variants are removed only inside `public/optimized`.
 
-Configure collections, widths and quality in `data/imageOptimization.json`. Add new collection JSON files there when needed. After adding/changing images, run `npm run optimize:images` before local development or tests. Commit the generated manifest and `public/optimized` files with your source. Hand-authored image sources/srcSet still take priority. Lazy loading, explicit dimensions, centered cover cropping and image error fallbacks remain available.
+`data/imageOptimization.json` sets the widths, quality and collections with dedicated routes. Collections registered in `data/pages.json` are included automatically. After adding/changing images, run `npm run optimize:images` before local development or tests. Commit the generated manifest and `public/optimized` files with your source. Hand-authored image sources/srcSet still take priority. Lazy loading, explicit dimensions, centered cover cropping and image error fallbacks remain available.
 
 Validation: production build, terminal/filesystem/storage/rating tests, responsive-image size/reference checks, and browser checks of discovery, navigation, dialogs, themes and mobile layouts. Bundle measurements compare production outputs, not development-mode timings; no fixed frame-rate guarantee is implied.
 

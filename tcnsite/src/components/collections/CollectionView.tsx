@@ -10,28 +10,33 @@ import type { CollectionData, CollectionItem } from './types';
 import { sortByTitle, sortByRating } from './sortByTitle';
 import copy from '../../../data/collections.json';
 import discovery from '../../../data/discovery.json';
-export default function CollectionView({ data, rated = false }: { data: CollectionData; rated?: boolean }) {
+export default function CollectionView({ data, layout = 'gallery' }: {
+  data: CollectionData; layout?: 'gallery' | 'tierlist' | 'watchlist';
+}) {
   const { unlocked } = useDiscovery();
   const [selected, setSelected] = useState<CollectionItem | null>(null);
-  const items = data.sort === 'rating' ? sortByRating(data.items)
+  const showRating = layout === 'tierlist';
+  const watchlist = layout === 'watchlist';
+  const titleAbove = showRating || watchlist;
+  const items = watchlist ? sortByTitle(data.items) : data.sort === 'rating' ? sortByRating(data.items)
     : data.sort === 'title' ? sortByTitle(data.items) : data.items;
   if (data.discoveryId && !unlocked.includes(data.discoveryId)) return <div className="collection-page"><ReturnHome /><div className="locked-view">
     <LockKeyhole size={32} /><h1>{discovery.lockedTitle}</h1><p>{discovery.lockedDescription}</p>
   </div></div>;
   return <div className="collection-page">
     <ReturnHome />
-    <header className="collection-header"><p className="eyebrow">{data.eyebrow}</p><h1>{data.title}</h1><p>{data.description}</p></header>
+    <header className="collection-header">{data.eyebrow && <p className="eyebrow">{data.eyebrow}</p>}<h1>{data.title}</h1>{data.description && <p>{data.description}</p>}</header>
     {data.sampleNotice && data.items.some(item => item.sample) && <p className="sample-notice">{data.sampleNotice}</p>}
-    <div className={`collection-grid ${rated ? 'rated-grid' : ''}`}>
+    <div className={`collection-grid ${titleAbove ? 'cover-title-grid' : ''}`}>
       {items.map((item, index) => {
         const content = <>
-          {rated && <h2>{item.title}</h2>}
+          {titleAbove && <h2>{item.title}{watchlist && item.netflix && <span className="watchlist-platform">Netflix</span>}</h2>}
           <OptimizedImage key={`${data.assetDirectory}/${item.image}`} item={item} directory={data.assetDirectory} priority={index === 0} aspectRatio={data.coverAspectRatio} />
-          <div className="card-caption">
-            {!rated && <h2>{item.title}</h2>}
-            {rated && <StarRating value={item.rating ?? 0} />}
+          {!watchlist && <div className="card-caption">
+            {!showRating && <h2>{item.title}</h2>}
+            {showRating && <StarRating value={item.rating ?? 0} />}
             <div className="card-meta">{item.sample && <span>{copy.sample}</span>}{item.description?.trim() && <span className="card-story">{copy.viewDescription}<ArrowUpRight size={14} /></span>}</div>
-          </div>
+          </div>}
         </>;
         return item.description?.trim()
           ? <button key={item.id} className="collection-card clickable-card" onClick={() => setSelected(item)} aria-haspopup="dialog">{content}</button>
@@ -41,7 +46,7 @@ export default function CollectionView({ data, rated = false }: { data: Collecti
     {!data.items.length && <p className="empty-collection">{data.emptyMessage}</p>}
     {selected && <Modal title={selected.title} onClose={() => setSelected(null)} className="description-modal">
       <p className="eyebrow">{data.eyebrow}</p><h2>{selected.title}</h2>
-      {rated && <StarRating value={selected.rating ?? 0} />}
+      {showRating && <StarRating value={selected.rating ?? 0} />}
       <p className="description-copy">{selected.description}</p>
     </Modal>}
   </div>;

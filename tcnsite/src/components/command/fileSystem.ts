@@ -2,8 +2,9 @@ import aliases from '../../../data/consoleAliases.json' with { type: 'json' };
 
 export interface Stat { label: string; value: string | number }
 export interface ConsoleFile {
-  type: 'file'; name: string; hidden?: boolean; aliases?: string[]; action: 'unlock' | 'account' | 'profile' | 'noop' | 'message';
+  type: 'file'; name: string; hidden?: boolean; aliases?: string[]; action: 'unlock' | 'account' | 'profile' | 'noop' | 'message' | 'page';
   message?: string;
+  path?: string;
   discoveryId?: string; provider?: string; title?: string; description?: string;
   accountId?: string; profileUrl?: string; endpoint?: string;
 }
@@ -56,7 +57,7 @@ export function resolvePath(root: Directory, cwd: string, input: string):
     if (part === '..') { if (stack.length > 1) { stack.pop(); names.pop(); } continue; }
     const next = current.children.find(node => node.name === part || (node.type === 'file' && node.aliases?.includes(part)));
     if (!next) return { error: 'notFound' };
-    stack.push(next); names.push(part);
+    stack.push(next); names.push(next.name);
   }
   const node = stack[stack.length - 1];
   if (expanded.endsWith('/') && node.type !== 'directory') return { error: 'notDirectory' };

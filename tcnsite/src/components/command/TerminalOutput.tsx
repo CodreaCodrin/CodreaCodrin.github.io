@@ -38,6 +38,9 @@ function TerminalOutput({ entry, onExecute, onNavigate }: {
         </div></div>;
       }
       if (file.action === 'message') return <p>{file.message}</p>;
+      if (file.action === 'page' && file.path) return <Link className="text-link" to={file.path} onClick={onNavigate}>
+        {file.title ?? file.name}
+      </Link>;
       return ['account', 'profile'].includes(file.action) ? <AccountOutput file={file} /> : <p>{copy.unsupportedFile}</p>;
     }
     default: return null;

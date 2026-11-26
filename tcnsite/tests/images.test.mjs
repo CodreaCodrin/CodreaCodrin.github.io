@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 
 const manifest = JSON.parse(readFileSync(new URL('../data/imageVariants.json', import.meta.url)));
+const optimizer = JSON.parse(readFileSync(new URL('../data/imageOptimization.json', import.meta.url)));
+const pages = JSON.parse(readFileSync(new URL('../data/pages.json', import.meta.url)));
 test('responsive images exist and never replace an original with a larger download', () => {
   for (const [original, entry] of Object.entries(manifest)) {
     const size = statSync(new URL('../public/' + original, import.meta.url)).size;
@@ -17,10 +19,19 @@ test('responsive images exist and never replace an original with a larger downlo
 });
 
 test('every collection image has responsive variants without changing original filenames', () => {
-  for (const name of ['artGallery', 'mangaTierlist', 'manhwaTierlist']) {
-    const collection = JSON.parse(readFileSync(new URL('../data/' + name + '.json', import.meta.url)));
+  const collections = new Set([...optimizer.collections, ...pages.filter(page => page.type !== 'content').map(page => page.dataFile)]);
+  const watchlists = new Set(pages.filter(page => page.type === 'watchlist').map(page => page.dataFile));
+  for (const filename of collections) {
+    const collection = JSON.parse(readFileSync(new URL('../data/' + filename, import.meta.url)));
     for (const item of collection.items) {
-      if (item.image) assert.ok(manifest[`${collection.assetDirectory}/${item.image}`]);
+      if (!item.image) continue;
+      const entry = manifest[`${collection.assetDirectory}/${item.image}`];
+      assert.ok(entry);
+      if (watchlists.has(filename)) {
+        assert.doesNotMatch(item.id, /-/);
+        assert.doesNotMatch(item.image, /-/);
+        for (const variant of entry.variants) assert.doesNotMatch(variant.path, /-/);
+      }
     }
   }
 });

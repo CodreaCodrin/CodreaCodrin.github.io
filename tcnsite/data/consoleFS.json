@@ -56,24 +56,17 @@
         },
         {
           "type": "file",
-          "name": "manga-tierlist",
+          "name": "manga_tierlist",
           "hidden": true,
           "action": "unlock",
-          "discoveryId": "manga-tierlist",
-          "aliases": [
-            "manga_tierlist"
-          ]
+          "discoveryId": "manga-tierlist"
         },
         {
           "type": "file",
-          "name": "manhwa-tierlist",
+          "name": "manhwa_tierlist",
           "hidden": true,
           "action": "unlock",
-          "discoveryId": "manhwa-tierlist",
-          "aliases": [
-            "manhwa_tierlist",
-            "manwa-manga-tierlist"
-          ]
+          "discoveryId": "manhwa-tierlist"
         }
       ]
     },
@@ -82,6 +75,44 @@
       "name": "art_gallery",
       "action": "unlock",
       "discoveryId": "art-gallery"
+    },
+    {
+      "type": "directory",
+      "name": "future_plans",
+      "children": [
+        {
+          "type": "directory",
+          "name": "movies",
+          "children": [
+            {
+              "type": "file",
+              "name": "movie_watchlist",
+              "action": "page",
+              "title": "Movie Watchlist",
+              "path": "/future_plans/movies/movie_watchlist"
+            },
+            {
+              "type": "file",
+              "name": "series_watchlist",
+              "action": "page",
+              "title": "Series Watchlist",
+              "path": "/future_plans/movies/series_watchlist"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "projects",
+          "children": [
+            {
+              "type": "file",
+              "name": "canva_dog_life",
+              "action": "message",
+              "message": "A canvas painting I thought of while sitting in the barber's chair."
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "file",

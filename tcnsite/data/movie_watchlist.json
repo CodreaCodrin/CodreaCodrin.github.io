@@ -1,0 +1,257 @@
+{
+  "discoveryId": "",
+  "eyebrow": "",
+  "title": "Movie Watchlist",
+  "description": "",
+  "assetDirectory": "watchlists/movies",
+  "emptyMessage": "This watchlist is empty.",
+  "coverAspectRatio": {
+    "width": 2,
+    "height": 3
+  },
+  "items": [
+    {
+      "id": "3_days_to_kill",
+      "title": "3 Days to Kill",
+      "image": "3_days_to_kill.jpg",
+      "alt": "3 Days to Kill poster",
+      "width": 250,
+      "height": 371,
+      "posterSource": "https://en.wikipedia.org/wiki/File:3_Days_to_Kill_poster.jpg"
+    },
+    {
+      "id": "ballerina",
+      "title": "Ballerina",
+      "image": "ballerina.jpg",
+      "alt": "Ballerina poster",
+      "width": 250,
+      "height": 370,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Ballerina_(2025_film)_poster.jpg"
+    },
+    {
+      "id": "blood_and_bones",
+      "title": "Blood and Bones",
+      "image": "blood_and_bones.webp",
+      "alt": "Blood and Bones poster",
+      "width": 300,
+      "height": 450,
+      "posterSource": "https://www.themoviedb.org/movie/21966"
+    },
+    {
+      "id": "carrie",
+      "title": "Carrie",
+      "image": "carrie.jpg",
+      "alt": "Carrie poster",
+      "width": 250,
+      "height": 374,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Carrieposter.jpg"
+    },
+    {
+      "id": "detachment",
+      "title": "Detachment",
+      "image": "detachment.webp",
+      "alt": "Detachment poster",
+      "width": 300,
+      "height": 450,
+      "posterSource": "https://www.themoviedb.org/movie/74308-detachment"
+    },
+    {
+      "id": "elysium",
+      "title": "Elysium",
+      "image": "elysium.jpg",
+      "alt": "Elysium poster",
+      "width": 250,
+      "height": 370,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Elysium_Poster.jpg"
+    },
+    {
+      "id": "expend4bles",
+      "title": "Expend4bles",
+      "image": "expend4bles.jpg",
+      "alt": "Expend4bles poster",
+      "width": 250,
+      "height": 385,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Expendables_4_Poster.jpg"
+    },
+    {
+      "id": "f1",
+      "title": "F1",
+      "image": "f1.png",
+      "alt": "F1 poster",
+      "width": 250,
+      "height": 370,
+      "posterSource": "https://en.wikipedia.org/wiki/File:F1_(2025_film).png"
+    },
+    {
+      "id": "fack_ju_gohte",
+      "title": "Fack ju Göhte",
+      "image": "fack_ju_gohte.jpg",
+      "alt": "Fack ju Göhte poster",
+      "width": 385,
+      "height": 544,
+      "posterSource": "https://www.filmportal.de/bild/fack-ju-goehte-1"
+    },
+    {
+      "id": "ford_v_ferrari",
+      "title": "Ford v Ferrari",
+      "image": "ford_v_ferrari.png",
+      "alt": "Ford v Ferrari poster",
+      "width": 240,
+      "height": 356,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Ford_v._Ferrari_(2019_film_poster).png"
+    },
+    {
+      "id": "hacksaw_ridge",
+      "title": "Hacksaw Ridge",
+      "image": "hacksaw_ridge.png",
+      "alt": "Hacksaw Ridge poster",
+      "width": 250,
+      "height": 386,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Hacksaw_Ridge_poster.png"
+    },
+    {
+      "id": "lamborghini_the_man_behind_the_legend",
+      "title": "Lamborghini: The Man Behind the Legend",
+      "image": "lamborghini_the_man_behind_the_legend.png",
+      "alt": "Lamborghini: The Man Behind the Legend poster",
+      "width": 250,
+      "height": 371,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Lamborghini_-_The_Man_Behind_the_Legend_poster.png"
+    },
+    {
+      "id": "livid",
+      "title": "Livid",
+      "image": "livid.webp",
+      "alt": "Livid poster",
+      "width": 300,
+      "height": 450,
+      "posterSource": "https://www.themoviedb.org/movie/83900-livide"
+    },
+    {
+      "id": "rush",
+      "title": "Rush",
+      "image": "rush.jpg",
+      "alt": "Rush poster",
+      "width": 220,
+      "height": 328,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Rush_UK_poster.jpeg"
+    },
+    {
+      "id": "schindlers_list",
+      "title": "Schindler's List",
+      "image": "schindlers_list.jpg",
+      "alt": "Schindler's List poster",
+      "width": 220,
+      "height": 330,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Schindler's_List_movie.jpg"
+    },
+    {
+      "id": "snowpiercer",
+      "title": "Snowpiercer",
+      "image": "snowpiercer.webp",
+      "alt": "Snowpiercer poster",
+      "width": 300,
+      "height": 450,
+      "posterSource": "https://www.themoviedb.org/movie/110415"
+    },
+    {
+      "id": "the_devils_advocate",
+      "title": "The Devil's Advocate",
+      "image": "the_devils_advocate.jpg",
+      "alt": "The Devil's Advocate poster",
+      "width": 250,
+      "height": 355,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Devilsadvocate.jpg"
+    },
+    {
+      "id": "the_first_purge",
+      "title": "The First Purge",
+      "image": "the_first_purge.png",
+      "alt": "The First Purge poster",
+      "width": 220,
+      "height": 329,
+      "posterSource": "https://en.wikipedia.org/wiki/File:The_First_Purge_poster.png"
+    },
+    {
+      "id": "the_forever_purge",
+      "title": "The Forever Purge",
+      "image": "the_forever_purge.jpg",
+      "alt": "The Forever Purge poster",
+      "width": 246,
+      "height": 370,
+      "posterSource": "https://en.wikipedia.org/wiki/File:Forever_Purge_poster.jpg"
+    },
+    {
+      "id": "the_grand_budapest_hotel",
+      "title": "The Grand Budapest Hotel",
+      "image": "the_grand_budapest_hotel.png",
+      "alt": "The Grand Budapest Hotel poster",
+      "width": 220,
+      "height": 344,
+      "posterSource": "https://en.wikipedia.org/wiki/File:The_Grand_Budapest_Hotel.png"
+    },
+    {
+      "id": "the_inevitable_defeat_of_mister_pete",
+      "title": "The Inevitable Defeat of Mister & Pete",
+      "image": "the_inevitable_defeat_of_mister_pete.webp",
+      "alt": "The Inevitable Defeat of Mister & Pete poster",
+      "width": 220,
+      "height": 330,
+      "posterSource": "https://www.themoviedb.org/movie/158908-the-inevitable-defeat-of-mister-pete"
+    },
+    {
+      "id": "the_lighthouse",
+      "title": "The Lighthouse",
+      "image": "the_lighthouse.jpg",
+      "alt": "The Lighthouse poster",
+      "width": 250,
+      "height": 370,
+      "posterSource": "https://en.wikipedia.org/wiki/File:The_Lighthouse.jpeg"
+    },
+    {
+      "id": "the_platform_2",
+      "title": "The Platform 2",
+      "image": "the_platform_2.jpg",
+      "alt": "The Platform 2 poster",
+      "width": 250,
+      "height": 369,
+      "posterSource": "https://en.wikipedia.org/wiki/File:The_Platform_2_poster.jpg"
+    },
+    {
+      "id": "the_purge",
+      "title": "The Purge",
+      "image": "the_purge.jpg",
+      "alt": "The Purge poster",
+      "width": 250,
+      "height": 374,
+      "posterSource": "https://en.wikipedia.org/wiki/File:The_Purge_film_poster.jpg"
+    },
+    {
+      "id": "the_purge_anarchy",
+      "title": "The Purge: Anarchy",
+      "image": "the_purge_anarchy.webp",
+      "alt": "The Purge: Anarchy poster",
+      "width": 220,
+      "height": 330,
+      "posterSource": "https://www.themoviedb.org/movie/238636-the-purge-anarchy/images/posters"
+    },
+    {
+      "id": "the_purge_election_year",
+      "title": "The Purge: Election Year",
+      "image": "the_purge_election_year.png",
+      "alt": "The Purge: Election Year poster",
+      "width": 220,
+      "height": 329,
+      "posterSource": "https://en.wikipedia.org/wiki/File:The_Purge_Election_Year.png"
+    },
+    {
+      "id": "the_upside",
+      "title": "The Upside",
+      "image": "the_upside.png",
+      "alt": "The Upside poster",
+      "width": 220,
+      "height": 326,
+      "posterSource": "https://en.wikipedia.org/wiki/File:The_Upside.png"
+    }
+  ]
+}

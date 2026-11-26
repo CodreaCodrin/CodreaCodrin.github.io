@@ -14,19 +14,19 @@
       "id": "art-gallery",
       "title": "Ag",
       "text": "Art Gallery",
-      "path": "/art-gallery"
+      "path": "/art_gallery"
     },
     {
       "id": "manga-tierlist",
       "title": "Mg",
       "text": "Manga Tierlist",
-      "path": "/manga-tierlist"
+      "path": "/manga_tierlist"
     },
     {
       "id": "manhwa-tierlist",
       "title": "Mt",
       "text": "Manhwa Tierlist",
-      "path": "/manhwa-tierlist"
+      "path": "/manhwa_tierlist"
     }
   ]
 }

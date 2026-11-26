@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "path": "/future_plans/movies/movie_watchlist",
+    "type": "watchlist",
+    "dataFile": "movie_watchlist.json",
+    "matte": true
+  },
+  {
+    "path": "/future_plans/movies/series_watchlist",
+    "type": "watchlist",
+    "dataFile": "series_watchlist.json",
+    "matte": true
+  }
+]

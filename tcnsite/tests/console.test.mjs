@@ -56,13 +56,13 @@ test('tierlist cover proportions match Houseki no Kuni while retaining image dim
 });
 
 test('configured pages have unique routes, real data files and consistent discovery IDs', () => {
-  const reserved = ['/', '/aboutme', '/projects', '/hobbies', '/contactme', '/art-gallery', '/manwa-manga-tierlist', '/manhwa-tierlist', '/manga-tierlist'];
+  const reserved = ['/', '/aboutme', '/projects', '/hobbies', '/contactme', '/art_gallery', '/manhwa_tierlist', '/manga_tierlist', '/art-gallery', '/manwa-manga-tierlist', '/manhwa-tierlist', '/manga-tierlist'];
   const pages = read('pages');
   const paths = [...reserved, ...pages.map(page => page.path)];
   assert.equal(new Set(paths).size, paths.length, 'Duplicate route path');
   for (const page of pages) {
     assert.ok(page.path.startsWith('/') && !page.path.includes('#'));
-    assert.ok(['content', 'gallery', 'tierlist'].includes(page.type));
+    assert.ok(['content', 'gallery', 'tierlist', 'watchlist'].includes(page.type));
     assert.ok(!page.dataFile.includes('..') && page.dataFile.endsWith('.json'));
     const data = read(page.dataFile.replace(/\.json$/, ''));
     assert.ok(data.title);
@@ -76,11 +76,14 @@ test('configured pages have unique routes, real data files and consistent discov
 });
 
 test('root and nested directories expose precisely the requested files', () => {
-  assert.deepEqual(command('ls').nodes.map(node => node.name), ['games_folder', 'tierlists', 'art_gallery']);
+  assert.deepEqual(command('ls').nodes.map(node => node.name), ['games_folder', 'tierlists', 'art_gallery', 'future_plans']);
   assert.deepEqual(command('ls games_folder').nodes.map(node => node.name), ['chess_account']);
   assert.deepEqual(command('ls -a games_folder').nodes.map(node => node.name), ['riot_account', 'chess_account', 'steam_account']);
   assert.deepEqual(command('ls /tierlists').nodes.map(node => node.name), ['games_tierlist']);
-  assert.deepEqual(command('ls -a /tierlists').nodes.map(node => node.name), ['games_tierlist', 'manga-tierlist', 'manhwa-tierlist']);
+  assert.deepEqual(command('ls -a /tierlists').nodes.map(node => node.name), ['games_tierlist', 'manga_tierlist', 'manhwa_tierlist']);
+  assert.deepEqual(command('ls future_plans').nodes.map(node => node.name), ['movies', 'projects']);
+  assert.deepEqual(command('ls future_plans/movies').nodes.map(node => node.name), ['movie_watchlist', 'series_watchlist']);
+  assert.deepEqual(command('ls future_plans/projects').nodes.map(node => node.name), ['canva_dog_life']);
 });
 test('cd handles relative, absolute, parent, home, repeated slashes and root boundaries', () => {
   for (const [input, cwd, path] of [
@@ -132,24 +135,24 @@ test('all execution aliases resolve to the same file', () => {
   for (const input of ['cat art_gallery', 'open art_gallery', './art_gallery', 'cat "./art_gallery"'])
     assert.deepEqual(command(input).file, expected);
   for (const id of ['manga-tierlist', 'manhwa-tierlist']) {
-    assert.equal(command('./' + id, '/tierlists').file.discoveryId, id);
-    assert.equal(read('discovery').items.find(item => item.id === id).path, '/' + id);
+    const name = id.replaceAll('-', '_');
+    assert.equal(command('./' + name, '/tierlists').file.discoveryId, id);
+    assert.equal(read('discovery').items.find(item => item.id === id).path, '/' + name);
+    assert.equal(command('./' + id, '/tierlists').error, 'notFound');
   }
-  assert.deepEqual(command('./manga_tierlist', '/tierlists').file, command('./manga-tierlist', '/tierlists').file);
-  for (const alias of ['manhwa_tierlist', 'manwa-manga-tierlist'])
-    assert.deepEqual(command('./' + alias, '/tierlists').file, command('./manhwa-tierlist', '/tierlists').file);
+  assert.equal(command('./manwa-manga-tierlist', '/tierlists').error, 'notFound');
   assert.equal(command('open ../art_gallery', '/games_folder').file.discoveryId, 'art-gallery');
 });
 test('listing entries generate commands that work from other directories', () => {
   const rootListing = command('ls -a');
   const folder = rootListing.nodes.find(node => node.name === 'tierlists');
   assert.deepEqual(command(commandForListedNode(rootListing, folder), '/games_folder'), { kind: 'cd', path: '/tierlists' });
-  for (const input of ['ls -a /', 'ls -a /tierlists', 'ls -a /games_folder']) {
+  for (const input of ['ls -a /', 'ls -a /tierlists', 'ls -a /games_folder', 'ls /future_plans/movies', 'ls /future_plans/projects']) {
     const listing = command(input);
     for (const file of listing.nodes.filter(node => node.type === 'file'))
       assert.equal(command(commandForListedNode(listing, file), '/games_folder').file, file);
   }
-  const single = command('ls /tierlists/manga-tierlist', '/games_folder');
+  const single = command('ls /tierlists/manga_tierlist', '/games_folder');
   assert.equal(single.isDirectory, false);
   assert.equal(command(commandForListedNode(single, single.nodes[0]), '/games_folder').file, single.nodes[0]);
 
@@ -198,9 +201,8 @@ test('completion supports directories, executable paths and ambiguous prefixes',
   assert.equal(completePath('c', '/', root, commands), 'c');
   const revealed = new Set(command('ls -a /tierlists').revealedPaths);
   for (const [input, cwd, expected] of [
-    ['./mang', '/tierlists', './manga-tierlist'],
-    ['./manh', '/tierlists', './manhwa-tierlist'],
-    ['./manw', '/tierlists', './manwa-manga-tierlist'],
+    ['./mang', '/tierlists', './manga_tierlist'],
+    ['./manh', '/tierlists', './manhwa_tierlist'],
     ['cat manga_t', '/tierlists', 'cat manga_tierlist'],
     ['open /tierlists/manhwa_t', '/', 'open /tierlists/manhwa_tierlist'],
   ]) {
@@ -208,6 +210,19 @@ test('completion supports directories, executable paths and ambiguous prefixes',
     assert.equal(completePath(input, cwd, root, commands, revealed), expected);
     assert.equal(command(expected, cwd).kind, 'execute');
   }
+});
+test('future plans files open the configured watchlists and show the project description', () => {
+  const watchlists = command('ls /future_plans/movies');
+  for (const file of watchlists.nodes) {
+    assert.equal(file.action, 'page');
+    assert.ok(read('pages').some(page => page.type === 'watchlist' && page.path === file.path));
+    for (const method of ['cat', 'open', 'vim', 'nano'])
+      assert.equal(command(`${method} ${file.name}`, watchlists.path).file, file);
+    assert.equal(command(`./${file.name}`, watchlists.path).file, file);
+  }
+  assert.equal(completePath('open /future_plans/movies/ser', '/', root, ['open']), 'open /future_plans/movies/series_watchlist');
+  assert.equal(command('cat /future_plans/projects/canva_dog_life').file.message,
+    "A canvas painting I thought of while sitting in the barber's chair.");
 });
 test('persisted discoveries reject invalid shapes, unknown IDs and duplicates', () => {
   const allowed = read('discovery').items.map(item => item.id);

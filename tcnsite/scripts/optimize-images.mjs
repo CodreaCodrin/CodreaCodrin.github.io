@@ -7,12 +7,16 @@ import sharp from 'sharp';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = async file => JSON.parse((await fs.readFile(file, 'utf8')).replace(/^\uFEFF/, ''));
 const config = await read(path.join(root, 'data/imageOptimization.json'));
+const pages = await read(path.join(root, 'data/pages.json'));
+const collections = new Set([...config.collections, ...pages.filter(page => page.type !== 'content').map(page => page.dataFile)]);
+const watchlists = new Set(pages.filter(page => page.type === 'watchlist').map(page => page.dataFile));
 const manifestPath = path.join(root, 'data/imageVariants.json');
 const previous = await read(manifestPath).catch(() => ({}));
 const manifest = {};
 let originalBytes = 0, optimizedBytes = 0, processed = 0;
-for (const collection of config.collections) {
+for (const collection of collections) {
   const data = await read(path.join(root, 'data', collection));
+  const separator = watchlists.has(collection) ? '_' : '-';
   for (const item of data.items) {
     if (!item.image) continue;
     const key = `${data.assetDirectory}/${item.image}`;
@@ -21,15 +25,20 @@ for (const collection of config.collections) {
     const buffer = await fs.readFile(input);
     originalBytes += buffer.length;
     const signature = createHash('sha256').update(buffer).update(JSON.stringify(config)).update('v2').digest('hex').slice(0, 16);
-    if (previous[key]?.signature === signature && (await Promise.all(previous[key].variants.map(v => fs.access(path.join(root, 'public', v.path)).then(() => true, () => false)))).every(Boolean)) {
-      manifest[key] = previous[key];
+    const variantPrefix = `${config.outputDirectory}/${path.basename(collection, '.json')}/${item.id}${separator}${signature}${separator}`;
+    const cached = previous[key];
+    const hasCurrentPaths = cached?.signature === signature && cached.variants.every(variant =>
+      variant.path === key || variant.path.startsWith(variantPrefix));
+    if (hasCurrentPaths && (await Promise.all(cached.variants.map(variant =>
+      fs.access(path.join(root, 'public', variant.path)).then(() => true, () => false)))).every(Boolean)) {
+      manifest[key] = cached;
     } else {
       const meta = await sharp(buffer).rotate().metadata();
       const width = meta.autoOrient?.width ?? meta.width;
       const sizes = [...new Set(config.widths.map(size => Math.min(size, width)))];
       const variants = [];
       for (const size of sizes) {
-        const filename = `${config.outputDirectory}/${path.basename(collection, '.json')}/${item.id}-${signature}-${size}.webp`;
+        const filename = `${variantPrefix}${size}.webp`;
         const output = path.resolve(root, 'public', filename);
         if (!output.startsWith(path.resolve(root, 'public', config.outputDirectory) + path.sep)) throw new Error('Invalid output path');
         await fs.mkdir(path.dirname(output), { recursive: true });

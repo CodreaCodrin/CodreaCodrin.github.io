@@ -1,0 +1,117 @@
+{
+  "discoveryId": "",
+  "eyebrow": "",
+  "title": "Series Watchlist",
+  "description": "",
+  "assetDirectory": "watchlists/series",
+  "emptyMessage": "This watchlist is empty.",
+  "coverAspectRatio": {
+    "width": 2,
+    "height": 3
+  },
+  "items": [
+    {
+      "id": "alien_worlds",
+      "title": "Alien Worlds",
+      "image": "alien_worlds.webp",
+      "alt": "Alien Worlds poster",
+      "width": 300,
+      "height": 450,
+      "netflix": true,
+      "posterSource": "https://www.themoviedb.org/tv/113178-alien-worlds"
+    },
+    {
+      "id": "dexter",
+      "title": "Dexter",
+      "image": "dexter.jpg",
+      "alt": "Dexter poster",
+      "width": 491,
+      "height": 655,
+      "netflix": true,
+      "posterSource": "https://www.filmtv.it/serie-tv/112498/dexter/"
+    },
+    {
+      "id": "from",
+      "title": "From",
+      "image": "from.jpg",
+      "alt": "From poster",
+      "width": 210,
+      "height": 295,
+      "posterSource": "https://www.tvmaze.com/shows/54723/from"
+    },
+    {
+      "id": "iron_fist",
+      "title": "Iron Fist",
+      "image": "iron_fist.jpg",
+      "alt": "Iron Fist poster",
+      "width": 210,
+      "height": 295,
+      "posterSource": "https://www.tvmaze.com/shows/2175/marvels-iron-fist"
+    },
+    {
+      "id": "manifest",
+      "title": "Manifest",
+      "image": "manifest.webp",
+      "alt": "Manifest poster",
+      "width": 300,
+      "height": 450,
+      "netflix": true,
+      "posterSource": "https://www.themoviedb.org/tv/79696-manifest"
+    },
+    {
+      "id": "mobland",
+      "title": "MobLand",
+      "image": "mobland.webp",
+      "alt": "MobLand poster",
+      "width": 300,
+      "height": 450,
+      "posterSource": "https://www.themoviedb.org/tv/247718-mobland"
+    },
+    {
+      "id": "mr_inbetween",
+      "title": "Mr Inbetween",
+      "image": "mr_inbetween.jpg",
+      "alt": "Mr Inbetween poster",
+      "width": 250,
+      "height": 365,
+      "posterSource": "https://en.wikipedia.org/wiki/File:MrInbetweenSeason2Poster.jpg"
+    },
+    {
+      "id": "scorpion",
+      "title": "Scorpion",
+      "image": "scorpion.webp",
+      "alt": "Scorpion poster",
+      "width": 220,
+      "height": 330,
+      "posterSource": "https://www.themoviedb.org/tv/60797-scorpion/images/posters"
+    },
+    {
+      "id": "shadowhunters",
+      "title": "Shadowhunters",
+      "image": "shadowhunters.webp",
+      "alt": "Shadowhunters poster",
+      "width": 300,
+      "height": 450,
+      "posterSource": "https://www.themoviedb.org/tv/63210-shadowhunters"
+    },
+    {
+      "id": "sherlock",
+      "title": "Sherlock",
+      "image": "sherlock.jpg",
+      "alt": "Sherlock poster",
+      "width": 210,
+      "height": 295,
+      "posterSource": "https://www.tvmaze.com/shows/335/sherlock"
+    },
+    {
+      "id": "the_100",
+      "title": "The 100",
+      "image": "the_100.webp",
+      "alt": "The 100 poster",
+      "width": 300,
+      "height": 450,
+      "netflix": true,
+      "posterSource": "https://www.themoviedb.org/tv/48866-the-100"
+    }
+  ]
+}

@@ -12,6 +12,7 @@ All paths below are relative to `tcnsite/`. Run commands from that directory. Pr
 | Project cards | `data/projects.json` |
 | Technology badge colors | `data/tagColors.json` |
 | New pages using existing layouts | `data/pages.json` plus a page JSON file |
+| Movie and series watchlists | `data/movie_watchlist.json` and `data/series_watchlist.json` |
 | Secret navigation tiles and discovery messages | `data/discovery.json` |
 | Terminal files, folders, accounts and unlock actions | `data/consoleFS.json` |
 | Terminal messages, hint, command guide and timing | `data/console.json` |
@@ -53,7 +54,7 @@ Create `data/readingNotes.json`:
 }
 ```
 
-Add this entry to the array in `data/pages.json` (initially an empty array):
+Add this entry to the array in `data/pages.json`:
 
 ```json
 [
@@ -156,6 +157,8 @@ Use `type: "tierlist"` to place titles above images and ratings below. Add `rati
 
 To edit Art Gallery, Manga Tierlist, or Manhwa Tierlist, change their existing JSON files directly. Their routes are already registered; do not duplicate them in pages.json.
 
+Use `type: "watchlist"` for alphabetical poster cards. Add `"netflix": true` to an item to show its Netflix label. The Movie Watchlist and Series Watchlist are already registered in `data/pages.json`.
+
 ## 6. Images and performance
 
 Pentru pașii detaliați și exemplele JSON, folosește **[ghidul de imagini](IMAGES_GUIDE.md)**. Optimizarea este automată; nu trebuie să creezi manual fișiere responsive.
@@ -210,13 +213,15 @@ Directory shape:
 
 Add directory objects inside other directories' children to nest them. Use unique sibling names and avoid slashes in names. The virtual shell supports ls, cd, pwd, help, clear, cat, open, nano, vim and ./, including relative/absolute paths and parent traversal. No real OS commands execute.
 
+Use `action: "page"` with the `path` from `data/pages.json` to open a page directly, or `action: "message"` with `message` to print text. The files in `future_plans` provide examples of both.
+
 Account files use `action: "account"` for delayed statistics or `action: "profile"` for an immediate description/link. Edit IDs, descriptions and URLs in `data/consoleFS.json`. Chess.com uses its public player-stats endpoint directly, with an encoded `{accountId}`. For Riot, follow [the secure Worker setup guide](integrations/riot/README.md); the frontend never receives the API key. Set the public Worker URL as the Riot endpoint once deployed. Labels, API routes, allowed origins, queue names and cache settings live in `data/accountStats.json`. Custom non-Chess endpoints return `{ "stats": [{ "label": "Rank", "value": "Gold" }] }` over HTTPS with browser CORS access. A missing endpoint shows a configuration notice, not fake statistics. Redeploy the Worker as well as the site if its shared JSON configuration changes.
 
 Adding a new command or executable action requires TypeScript changes to the pure engine and/or output renderer under `src/components/command/`, plus its help copy in console.json. Adding ordinary folders, account files or discovery files needs JSON only.
 
 ## 8. Add a page with a completely custom layout
 
-JSON page types cover paragraphs, galleries and tierlists. For a new interaction/layout, create a component under `src/pages/YourPage/`, put its text/items in `data/yourPage.json`, import the JSON, and reuse PageWrapper or ReturnHome. Reuse CollectionView, OptimizedImage, StarRating, Modal and SocialLinks where useful.
+JSON page types cover paragraphs, galleries, tierlists and watchlists. For a new interaction/layout, create a component under `src/pages/YourPage/`, put its text/items in `data/yourPage.json`, import the JSON, and reuse PageWrapper or ReturnHome. Reuse CollectionView, OptimizedImage, StarRating, Modal and SocialLinks where useful.
 
 Import the component in App.tsx and create a route following the existing aboutRoute pattern:
 

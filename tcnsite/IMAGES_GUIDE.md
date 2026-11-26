@@ -11,6 +11,8 @@ Toate căile de mai jos sunt relative la `tcnsite/`.
 | Art Gallery | `public/artGallery/` | `data/artGallery.json` |
 | Manga Tierlist | `public/tierlists/manga/` | `data/mangaTierlist.json` |
 | Manhwa Tierlist | `public/tierlists/manhwa/` | `data/manhwaTierlist.json` |
+| Movie Watchlist | `public/watchlists/movies/` | `data/movie_watchlist.json` |
+| Series Watchlist | `public/watchlists/series/` | `data/series_watchlist.json` |
 
 **Simpla copiere a pozei în folder nu creează un card.** Cardurile sunt definite în lista `items` din JSON.
 
@@ -108,8 +110,9 @@ npm run dev
 Deschide adresa Local afișată de Vite. În terminalul site-ului execută:
 
 - Pentru galerie: `cat art_gallery`, apoi apasă butonul Art Gallery de pe Home sau din meniu.
-- Pentru Manga Tierlist, rulează `cat tierlists/manga-tierlist`, apoi apasă butonul Manga Tierlist.
-- Pentru Manhwa Tierlist, rulează `cat tierlists/manhwa-tierlist`, apoi apasă butonul Manhwa Tierlist.
+- Pentru Manga Tierlist, rulează `cat tierlists/manga_tierlist`, apoi apasă butonul Manga Tierlist.
+- Pentru Manhwa Tierlist, rulează `cat tierlists/manhwa_tierlist`, apoi apasă butonul Manhwa Tierlist.
+- Pentru watchlist-uri, deschide `future_plans/movies` în terminal. Cardurile sunt ordonate după titlu. Folosește `_` în ID-uri și în numele posterelor, de exemplu `alien_worlds.webp`. Poți adăuga `"netflix": true` pentru eticheta Netflix și `posterSource` pentru a păstra sursa imaginii în JSON.
 
 Poți și să rulezi `ls -a tierlists` și să apeși numele fișierului ascuns din listă. După deblocare, terminalul afișează un link direct către pagină. Deblocarea este păstrată în browser pentru adresa respectivă.
 
@@ -144,7 +147,7 @@ Actualizarea site-ului public și salvarea sursei sunt operații diferite: **Com
 | `data/artGallery.json`, `data/mangaTierlist.json`, `data/manhwaTierlist.json` | Carduri, titluri, descrieri și note | Da. |
 | `public/optimized/` | Variante responsive, cu ID/hash/dimensiune în nume | Nu. Scriptul le generează și curăță variantele vechi. |
 | `data/imageVariants.json` | Legătura dintre fiecare original și variantele sale | Nu. Se regenerează automat. |
-| `data/imageOptimization.json` | Colecțiile procesate, dimensiunile și calitatea | Numai când schimbi strategia sau adaugi altă colecție, nu pentru fiecare poză. |
+| `data/imageOptimization.json` | Colecțiile cu rute dedicate, dimensiunile și calitatea | Când schimbi setările de optimizare. |
 | `dist/` | Rezultatul build-ului pentru publicare | Nu. Nu adăuga poze aici. |
 
 Scriptul poate crea variante la 320, 640, 960 și 1440 px lățime, fără să mărească imaginile mici. Păstrează o variantă WebP numai dacă ocupă mai puțin decât originalul. Unele poze pot rămâne servite din original; nu este o eroare. La următoarea rulare, imaginile neschimbate sunt reutilizate.
@@ -157,7 +160,7 @@ Browserul alege varianta potrivită și încarcă imaginile de mai jos doar cân
 - **Redenumești originalul:** redenumește fișierul și actualizează `image` în JSON, apoi rulează optimizarea.
 - **Modifici doar titlul, descrierea sau nota:** editează câmpul în JSON; nu este necesară regenerarea pozelor. Publică din nou pentru site-ul live.
 - **Ștergi un card:** elimină obiectul din `items`. Poți șterge originalul dacă nu este folosit în altă parte. Rulează optimizarea: scriptul curăță variantele generate care nu mai sunt referite, dar nu șterge originalele în locul tău.
-- **Adaugi altă colecție:** urmează `PAGE_GUIDE.md`, apoi adaugă numele noului JSON în `collections` din `data/imageOptimization.json`. Pentru cele două colecții existente nu schimbi această configurație.
+- **Adaugi altă colecție:** urmează `PAGE_GUIDE.md`. Optimizarea include automat colecțiile înregistrate în `data/pages.json`.
 
 ## Dacă poza nu apare sau apare cea veche
 

@@ -1,6 +1,7 @@
 import './Terminal.css';
 import { useCallback, useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { Terminal as TerminalIcon, X, CornerDownLeft } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
 import rawFS from '../../../data/consoleFS.json';
 import copy from '../../../data/console.json';
 import discovery from '../../../data/discovery.json';
@@ -28,6 +29,7 @@ export default function Terminal() {
   const content = useRef<HTMLDivElement>(null);
   const followOutput = useRef(true);
   const { unlock } = useDiscovery();
+  const navigate = useNavigate();
   const close = useCallback(() => { setClosing(true); setOpen(false); launcher.current?.focus(); }, []);
 
   useEffect(() => {
@@ -70,6 +72,10 @@ export default function Terminal() {
       message = status === 'invalid' ? copy.unsupportedFile : format(
         status === 'existing' ? discovery.alreadyUnlocked : discovery.unlocked, { title });
     }
+    if (result.kind === 'execute' && result.file.action === 'page' && result.file.path) {
+      close();
+      void navigate({ to: result.file.path });
+    }
     if (result.kind === 'cd') setCwd(result.path);
     if (result.kind === 'clear') setEntries([]);
     else {
@@ -78,7 +84,7 @@ export default function Terminal() {
     }
     setHistory(previous => [...previous, command].slice(-copy.maxHistory));
     setInput(''); setHistoryIndex(-1); draft.current = ''; followOutput.current = true;
-  }, [cwd, unlock]);
+  }, [close, cwd, navigate, unlock]);
   function submit(event: FormEvent) {
     event.preventDefault();
     if (input.trim()) execute(input.trim());

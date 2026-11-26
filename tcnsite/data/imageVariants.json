@@ -707,5 +707,355 @@
         "width": 640
       }
     ]
+  },
+  "watchlists/movies/3_days_to_kill.jpg": {
+    "signature": "7df0fac73bb15671",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/3_days_to_kill_7df0fac73bb15671_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/ballerina.jpg": {
+    "signature": "9c9c1e6592b76e82",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/ballerina_9c9c1e6592b76e82_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/blood_and_bones.webp": {
+    "signature": "19353d51c2c14609",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/blood_and_bones_19353d51c2c14609_300.webp",
+        "width": 300
+      }
+    ]
+  },
+  "watchlists/movies/carrie.jpg": {
+    "signature": "f31dc58192c94e9c",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/carrie_f31dc58192c94e9c_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/detachment.webp": {
+    "signature": "f6c9f8c8b6a29909",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/detachment_f6c9f8c8b6a29909_300.webp",
+        "width": 300
+      }
+    ]
+  },
+  "watchlists/movies/elysium.jpg": {
+    "signature": "765eb41a3a38d9c9",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/elysium_765eb41a3a38d9c9_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/expend4bles.jpg": {
+    "signature": "cae81ae9452317e5",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/expend4bles_cae81ae9452317e5_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/f1.png": {
+    "signature": "8337b434759527cd",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/f1_8337b434759527cd_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/fack_ju_gohte.jpg": {
+    "signature": "51e37d4e1ce7a09f",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/fack_ju_gohte_51e37d4e1ce7a09f_320.webp",
+        "width": 320
+      },
+      {
+        "path": "watchlists/movies/fack_ju_gohte.jpg",
+        "width": 385
+      }
+    ]
+  },
+  "watchlists/movies/ford_v_ferrari.png": {
+    "signature": "0b4c8d68c68c21cb",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/ford_v_ferrari_0b4c8d68c68c21cb_240.webp",
+        "width": 240
+      }
+    ]
+  },
+  "watchlists/movies/hacksaw_ridge.png": {
+    "signature": "09f20589c93dfcb9",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/hacksaw_ridge_09f20589c93dfcb9_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/lamborghini_the_man_behind_the_legend.png": {
+    "signature": "794c89add3f3c69f",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/lamborghini_the_man_behind_the_legend_794c89add3f3c69f_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/livid.webp": {
+    "signature": "1c7c8caf4f2bcad4",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/livid_1c7c8caf4f2bcad4_300.webp",
+        "width": 300
+      }
+    ]
+  },
+  "watchlists/movies/rush.jpg": {
+    "signature": "c59e67066962d85a",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/rush_c59e67066962d85a_220.webp",
+        "width": 220
+      }
+    ]
+  },
+  "watchlists/movies/schindlers_list.jpg": {
+    "signature": "d78925587c5a056e",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/schindlers_list_d78925587c5a056e_220.webp",
+        "width": 220
+      }
+    ]
+  },
+  "watchlists/movies/snowpiercer.webp": {
+    "signature": "bcad726eeb4350bb",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/snowpiercer_bcad726eeb4350bb_300.webp",
+        "width": 300
+      }
+    ]
+  },
+  "watchlists/movies/the_devils_advocate.jpg": {
+    "signature": "657e6faa8a1fe1ac",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_devils_advocate_657e6faa8a1fe1ac_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/the_first_purge.png": {
+    "signature": "f192e4d5f4676cd8",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_first_purge_f192e4d5f4676cd8_220.webp",
+        "width": 220
+      }
+    ]
+  },
+  "watchlists/movies/the_forever_purge.jpg": {
+    "signature": "d80911b03cfcf702",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_forever_purge_d80911b03cfcf702_246.webp",
+        "width": 246
+      }
+    ]
+  },
+  "watchlists/movies/the_grand_budapest_hotel.png": {
+    "signature": "20d15943700148f3",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_grand_budapest_hotel_20d15943700148f3_220.webp",
+        "width": 220
+      }
+    ]
+  },
+  "watchlists/movies/the_inevitable_defeat_of_mister_pete.webp": {
+    "signature": "a33de1fcb1b64776",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_inevitable_defeat_of_mister_pete_a33de1fcb1b64776_220.webp",
+        "width": 220
+      }
+    ]
+  },
+  "watchlists/movies/the_lighthouse.jpg": {
+    "signature": "deaa87cd782676fc",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_lighthouse_deaa87cd782676fc_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/the_platform_2.jpg": {
+    "signature": "9ced5e033859e79c",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_platform_2_9ced5e033859e79c_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/the_purge.jpg": {
+    "signature": "ead30b425bd167d8",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_purge_ead30b425bd167d8_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/movies/the_purge_anarchy.webp": {
+    "signature": "7f424d315715c862",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_purge_anarchy_7f424d315715c862_220.webp",
+        "width": 220
+      }
+    ]
+  },
+  "watchlists/movies/the_purge_election_year.png": {
+    "signature": "18c2956c8a9ea33d",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_purge_election_year_18c2956c8a9ea33d_220.webp",
+        "width": 220
+      }
+    ]
+  },
+  "watchlists/movies/the_upside.png": {
+    "signature": "16f35f4a44c6eb21",
+    "variants": [
+      {
+        "path": "optimized/movie_watchlist/the_upside_16f35f4a44c6eb21_220.webp",
+        "width": 220
+      }
+    ]
+  },
+  "watchlists/series/alien_worlds.webp": {
+    "signature": "964827b6eeb29ead",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/alien_worlds_964827b6eeb29ead_300.webp",
+        "width": 300
+      }
+    ]
+  },
+  "watchlists/series/dexter.jpg": {
+    "signature": "8cfcb9e48df03d9b",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/dexter_8cfcb9e48df03d9b_320.webp",
+        "width": 320
+      },
+      {
+        "path": "optimized/series_watchlist/dexter_8cfcb9e48df03d9b_491.webp",
+        "width": 491
+      }
+    ]
+  },
+  "watchlists/series/from.jpg": {
+    "signature": "4a95f54b3e88b3bf",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/from_4a95f54b3e88b3bf_210.webp",
+        "width": 210
+      }
+    ]
+  },
+  "watchlists/series/iron_fist.jpg": {
+    "signature": "9750121089f6da10",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/iron_fist_9750121089f6da10_210.webp",
+        "width": 210
+      }
+    ]
+  },
+  "watchlists/series/manifest.webp": {
+    "signature": "491d813df446dcb6",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/manifest_491d813df446dcb6_300.webp",
+        "width": 300
+      }
+    ]
+  },
+  "watchlists/series/mobland.webp": {
+    "signature": "0664d5105416208f",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/mobland_0664d5105416208f_300.webp",
+        "width": 300
+      }
+    ]
+  },
+  "watchlists/series/mr_inbetween.jpg": {
+    "signature": "34515df98dc19d49",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/mr_inbetween_34515df98dc19d49_250.webp",
+        "width": 250
+      }
+    ]
+  },
+  "watchlists/series/scorpion.webp": {
+    "signature": "1dfe0387de55497f",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/scorpion_1dfe0387de55497f_220.webp",
+        "width": 220
+      }
+    ]
+  },
+  "watchlists/series/shadowhunters.webp": {
+    "signature": "26ed9a415371ff9e",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/shadowhunters_26ed9a415371ff9e_300.webp",
+        "width": 300
+      }
+    ]
+  },
+  "watchlists/series/sherlock.jpg": {
+    "signature": "1c5b79abc020dcbb",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/sherlock_1c5b79abc020dcbb_210.webp",
+        "width": 210
+      }
+    ]
+  },
+  "watchlists/series/the_100.webp": {
+    "signature": "fe3807592ce15dc9",
+    "variants": [
+      {
+        "path": "optimized/series_watchlist/the_100_fe3807592ce15dc9_300.webp",
+        "width": 300
+      }
+    ]
   }
 }
